@@ -8,6 +8,5 @@ nbactions.xml
 nb-configuration.xml
 
 nbproject/
-setup/
 build.xml
 /src/conf/MANIFEST.MF
