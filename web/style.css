@@ -1,0 +1,20 @@
+.container-fluid{
+    margin : 0;
+}
+
+.card:hover{
+    transform: scale(1.01);
+}
+
+.card{
+    transition: transform .2s;
+}
+
+#menu{
+    transition: all .2s;
+
+}
+
+#menu:hover{
+    transform: scale(1.05);
+}
