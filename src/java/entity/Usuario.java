@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author X430F
+ * @author Usuario
  */
 @Entity
 @Table(name = "usuario")
@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")})
 public class Usuario implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario1")
+    private List<Pujadores> pujadoresList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -66,7 +69,7 @@ public class Usuario implements Serializable {
     private List<Producto> productoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendedor")
     private List<Subasta> subastaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comprador")
+    @OneToMany(mappedBy = "comprador")
     private List<Subasta> subastaList1;
 
     public Usuario() {
@@ -174,6 +177,15 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entity.Usuario[ idUSUARIO=" + idUSUARIO + " ]";
+    }
+
+    @XmlTransient
+    public List<Pujadores> getPujadoresList() {
+        return pujadoresList;
+    }
+
+    public void setPujadoresList(List<Pujadores> pujadoresList) {
+        this.pujadoresList = pujadoresList;
     }
     
 }

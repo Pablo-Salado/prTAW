@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author X430F
+ * @author Usuario
  */
 @Entity
 @Table(name = "producto")
@@ -55,10 +55,10 @@ public class Producto implements Serializable {
     @Size(max = 45)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @Size(max = 45)
+    @Size(max = 100)
     @Column(name = "URL_FOTO")
     private String urlFoto;
-    @Size(max = 45)
+    @Size(max = 9)
     @Column(name = "ESTADO")
     private String estado;
     @Size(max = 16)
@@ -72,7 +72,7 @@ public class Producto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
     private List<Subasta> subastaList;
     @JoinColumn(name = "SUBASTA", referencedColumnName = "idSUBASTA")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Subasta subasta;
 
     public Producto() {

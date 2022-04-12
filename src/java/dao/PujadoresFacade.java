@@ -5,7 +5,7 @@
  */
 package dao;
 
-import entity.Subasta;
+import entity.Pujadores;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Usuario
  */
 @Stateless
-public class SubastaFacade extends AbstractFacade<Subasta> {
+public class PujadoresFacade extends AbstractFacade<Pujadores> {
 
     @PersistenceContext(unitName = "ProyectoTAWPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
         return em;
     }
 
-    public SubastaFacade() {
-        super(Subasta.class);
+    public PujadoresFacade() {
+        super(Pujadores.class);
     }
     
 }

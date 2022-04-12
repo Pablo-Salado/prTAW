@@ -3,28 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servelet;
 
-import dao.UsuarioFacade;
-import entity.Usuario;
+import dao.SubastaFacade;
+import entity.Subasta;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author X430F
+ * @author Usuario
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
-    @EJB UsuarioFacade uf;
-
+public class servletListadoSubastas extends TAWServlet {
+    @EJB SubastaFacade subastaFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,20 +33,14 @@ public class loginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");
+        if(super.comprobarSession(request, response)){
+            
+        List<Subasta> subastas = this.subastaFacade.findAll();
        
-        Usuario admin = this.uf.comprobarUsuario(usuario, clave);
-        
-        if(admin== null){
-          String strError = "Se ha producido un error";
-          request.setAttribute("error", strError);
-          request.getRequestDispatcher("login.jsp").forward(request, response); 
-        }else{
-              HttpSession session = request.getSession();
-              session.setAttribute("usuario", admin);
-              response.sendRedirect(request.getContextPath() + "/CustomerServlet"); 
+        request.setAttribute("subastas", subastas);
+        request.getRequestDispatcher("subastas.jsp").forward(request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

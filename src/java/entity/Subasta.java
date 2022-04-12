@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author X430F
+ * @author Usuario
  */
 @Entity
 @Table(name = "subasta")
@@ -40,9 +40,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Subasta.findByApertura", query = "SELECT s FROM Subasta s WHERE s.apertura = :apertura")
     , @NamedQuery(name = "Subasta.findByCierre", query = "SELECT s FROM Subasta s WHERE s.cierre = :cierre")
     , @NamedQuery(name = "Subasta.findByPujaMaxima", query = "SELECT s FROM Subasta s WHERE s.pujaMaxima = :pujaMaxima")
-    , @NamedQuery(name = "Subasta.findByPrecioInicial", query = "SELECT s FROM Subasta s WHERE s.precioInicial = :precioInicial")
-    , @NamedQuery(name = "Subasta.findBySUBASTAcol", query = "SELECT s FROM Subasta s WHERE s.sUBASTAcol = :sUBASTAcol")})
+    , @NamedQuery(name = "Subasta.findByPrecioInicial", query = "SELECT s FROM Subasta s WHERE s.precioInicial = :precioInicial")})
 public class Subasta implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subasta1")
+    private List<Pujadores> pujadoresList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,9 +64,6 @@ public class Subasta implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRECIO_INICIAL")
     private Double precioInicial;
-    @Size(max = 45)
-    @Column(name = "SUBASTAcol")
-    private String sUBASTAcol;
     @JoinColumn(name = "PRODUCTO", referencedColumnName = "idPRODUCTO")
     @ManyToOne(optional = false)
     private Producto producto;
@@ -72,9 +71,9 @@ public class Subasta implements Serializable {
     @ManyToOne(optional = false)
     private Usuario vendedor;
     @JoinColumn(name = "COMPRADOR", referencedColumnName = "idUSUARIO")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Usuario comprador;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subasta")
+    @OneToMany(mappedBy = "subasta")
     private List<Producto> productoList;
 
     public Subasta() {
@@ -122,14 +121,6 @@ public class Subasta implements Serializable {
 
     public void setPrecioInicial(Double precioInicial) {
         this.precioInicial = precioInicial;
-    }
-
-    public String getSUBASTAcol() {
-        return sUBASTAcol;
-    }
-
-    public void setSUBASTAcol(String sUBASTAcol) {
-        this.sUBASTAcol = sUBASTAcol;
     }
 
     public Producto getProducto() {
@@ -188,6 +179,15 @@ public class Subasta implements Serializable {
     @Override
     public String toString() {
         return "entity.Subasta[ idSUBASTA=" + idSUBASTA + " ]";
+    }
+
+    @XmlTransient
+    public List<Pujadores> getPujadoresList() {
+        return pujadoresList;
+    }
+
+    public void setPujadoresList(List<Pujadores> pujadoresList) {
+        this.pujadoresList = pujadoresList;
     }
     
 }
