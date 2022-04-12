@@ -2,15 +2,15 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>servletListadoSubastas</servlet-name>
-        <servlet-class>servelet.servletListadoSubastas</servlet-class>
+        <servlet-class>servlet.servletListadoSubastas</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletLogin</servlet-name>
-        <servlet-class>servelet.servletLogin</servlet-class>
+        <servlet-class>servlet.servletLogin</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TAWServlet</servlet-name>
-        <servlet-class>servelet.TAWServlet</servlet-class>
+        <servlet-class>servlet.TAWServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>

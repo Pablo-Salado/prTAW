@@ -3,25 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servelet;
-
-import dao.SubastaFacade;
-import entity.Subasta;
+package servlet;
+import javax.ejb.EJB;
+import dao.UsuarioFacade;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Usuario
  */
-public class servletListadoSubastas extends TAWServlet {
-    @EJB SubastaFacade subastaFacade;
+public class servletLogin extends HttpServlet {
+    @EJB UsuarioFacade af;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,14 +32,20 @@ public class servletListadoSubastas extends TAWServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(super.comprobarSession(request, response)){
-            
-        List<Subasta> subastas = this.subastaFacade.findAll();
-       
-        request.setAttribute("subastas", subastas);
-        request.getRequestDispatcher("subastas.jsp").forward(request, response);
+        String usuario = request.getParameter("usuario");
+        String clave = request.getParameter("clave");        
+        
+        Usuario user = this.af.comprobarUsuario(usuario, clave);
+        
+        if (user == null) {
+            String strError = "El usuario o la clave son incorrectos";
+            request.setAttribute("error", strError);
+            request.getRequestDispatcher("login.jsp").forward(request, response);                
+        } else {
+            HttpSession session = request.getSession();
+            session.setAttribute("usuario", user);
+            response.sendRedirect(request.getContextPath() + "/servletListadoSubastas");                
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
