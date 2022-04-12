@@ -12,6 +12,14 @@
         <servlet-name>TAWServlet</servlet-name>
         <servlet-class>servlet.TAWServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletRegistro</servlet-name>
+        <servlet-class>servlet.servletRegistro</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletGuardar</servlet-name>
+        <servlet-class>servlet.servletGuardar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>TAWServlet</servlet-name>
         <url-pattern>/TAWServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletRegistro</servlet-name>
+        <url-pattern>/servletRegistro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletGuardar</servlet-name>
+        <url-pattern>/servletGuardar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

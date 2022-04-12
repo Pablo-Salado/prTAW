@@ -40,6 +40,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")})
 public class Usuario implements Serializable {
 
+    @Size(max = 45)
+    @Column(name = "DOMICILIO")
+    private String domicilio;
+    @Size(max = 45)
+    @Column(name = "CIUDAD_RESIDENCIA")
+    private String ciudadResidencia;
+    @Column(name = "EDAD")
+    private Integer edad;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario1")
     private List<Pujadores> pujadoresList;
 
@@ -186,6 +195,30 @@ public class Usuario implements Serializable {
 
     public void setPujadoresList(List<Pujadores> pujadoresList) {
         this.pujadoresList = pujadoresList;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public String getCiudadResidencia() {
+        return ciudadResidencia;
+    }
+
+    public void setCiudadResidencia(String ciudadResidencia) {
+        this.ciudadResidencia = ciudadResidencia;
+    }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
     }
     
 }

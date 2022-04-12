@@ -24,5 +24,6 @@
             Clave: <input type="password" name="clave" value="" /><br/> <br/>            
             <input type="submit" value="Enviar" />
         </form>
+        <a href="servletRegistro">Registrarse ... </a>
     </body>
 </html>
