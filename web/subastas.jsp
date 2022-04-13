@@ -14,6 +14,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+         <jsp:include page="/cabecera.jsp" /> 
       
         <table border="1">
             <tr>
@@ -30,6 +31,7 @@
             <td><%= sub.getApertura() %></td>
             <td><%= sub.getPrecioInicial() %></td>       
             <td><%= sub.getVendedor().getNombre() %></td>   
+        
                            
                     
         </tr>
