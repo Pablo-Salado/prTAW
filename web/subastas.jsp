@@ -138,7 +138,7 @@
                     
                     <div class="card shadow" style="width: 18rem;">
                       <div class="card-header">
-                        Categoría:
+                          Categoría: <%=sub.getProducto().getCategoria() %>
                       </div>
                         <img src=<%= sub.getProducto().getUrlFoto() %> class="card-img-top" alt=<%= sub.getProducto().getTitulo() %> style="max-height: 150px; object-fit: contain;">
                              <hr>  
