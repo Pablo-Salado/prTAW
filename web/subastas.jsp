@@ -84,11 +84,18 @@
             <form method="post" action="servletListadoSubastas">
             <div class="row align-items-center">
               <div class="col">
-                <select class="form-select" aria-label="Default select example" style="width: auto;">
-                  <option selected>Categorías</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
+                  <option selected>CATEGORIAS</option>
+                  <option value="MOTOR">MOTOR</option>
+                  <option value="DEPORTE">DEPORTE</option>
+                  <option value="HOGAR">HOGAR</option>
+                  <option value="INFORMATICA">INFORMATICA</option>
+                  <option value="IMAGEN Y SONIDO">IMAGEN Y SONIDO</option>
+                  <option value="TELEFONIA">TELEFONIA</option>
+                  <option value="MODA">MODA</option>
+                  <option value="JUEGOS">JUEGOS</option>
+                  <option value="AFICIONES Y OCIO">AFICIONES Y OCIO</option>
+                  <option value="OTROS">OTROS</option>
                 </select>
               </div>
               <div class="col-auto">

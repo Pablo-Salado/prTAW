@@ -35,12 +35,38 @@ public class servletListadoSubastas extends TAWServlet {
             throws ServletException, IOException {
         if(super.comprobarSession(request, response)){
             
-        List<Subasta> subastas = this.subastaFacade.findAll();
+         String min = request.getParameter("minPrice");
+        String max = request.getParameter("maxPrice");
+        String cat = request.getParameter("categoria");
+        List<Subasta> subastas = null;
+        if(cat == null || cat.contains("CATEGORIAS")){
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
+                subastas = this.subastaFacade.findAll();
+            }else if ((min.length()>0 && max.length() > 0)){
+                subastas = this.subastaFacade.findByPrecio(min,max);
+            }else if(min.length()> 0 && max.length() == 0){
+                subastas = this.subastaFacade.findByMin(min);
+            }else if(min.length()== 0 && max.length() > 0){
+                subastas = this.subastaFacade.findByMax(max);
+            }
+        }else{
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
+                subastas = this.subastaFacade.findByCategoria(cat);
+            }else if ((min.length()>0 && max.length() > 0)){
+                subastas = this.subastaFacade.findByCategoriaPrecio(cat,min,max);
+            }else if(min.length()> 0 && max.length() == 0){
+                subastas = this.subastaFacade.findByCategoriaMin(cat,min);
+            }else if(min.length()== 0 && max.length() > 0){
+                subastas = this.subastaFacade.findByCategoriaMax(cat,max);
+            }
+        }
+        
+        
        
         request.setAttribute("subastas", subastas);
         request.getRequestDispatcher("subastas.jsp").forward(request, response);
-        }
 
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
