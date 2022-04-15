@@ -5,16 +5,8 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
-import dao.SubastaFacade;
-import dao.UsuarioFacade;
-import entity.Producto;
-import entity.Subasta;
-import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Usuario
  */
-public class servletPublicarProducto extends HttpServlet {
- @EJB ProductoFacade productoFC;
- @EJB UsuarioFacade usuarioFC;
- @EJB SubastaFacade subastaFC;
+public class servletModificarSubasta extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,44 +29,19 @@ public class servletPublicarProducto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
-   
-        String str;
-        Integer aux;
-        Subasta subasta = new Subasta();
-        Producto producto = new Producto();
-        
-        str = request.getParameter("id");
-        Usuario user = usuarioFC.find(Integer.parseInt(str));
-        
-        str = request.getParameter("titulo");
-        producto.setTitulo(str);
-        str = request.getParameter("descripcion");
-        producto.setDescripcion(str);
-        str = request.getParameter("categoria");
-        producto.setCategoria(str);
-        str = request.getParameter("foto");
-        producto.setUrlFoto(str);
-        producto.setEstado("En venta");
-        productoFC.create(producto);
-        
-        
-        
-        
-        Date date = new Date(System.currentTimeMillis());
-        subasta.setApertura(date);
-        str = request.getParameter("puja_inicial");
-        subasta.setPrecioInicial(Double.parseDouble(str));
-        subasta.setPujaMaxima(Double.parseDouble(str));
-        
-        subasta.setVendedor(user);
-        subasta.setProducto(producto);
-        subastaFC.create(subasta);
-        
-        producto.setSubasta(subasta);
-        productoFC.edit(producto);
-        
-        response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet servletModificarSubasta</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet servletModificarSubasta at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

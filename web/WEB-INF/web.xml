@@ -28,6 +28,22 @@
         <servlet-name>servletPublicarProducto</servlet-name>
         <servlet-class>servlet.servletPublicarProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletListadoMisProductos</servlet-name>
+        <servlet-class>servlet.servletListadoMisProductos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletModificarSubasta</servlet-name>
+        <servlet-class>servlet.servletModificarSubasta</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletBorrarSubasta</servlet-name>
+        <servlet-class>servlet.servletBorrarSubasta</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletTerminarSubasta</servlet-name>
+        <servlet-class>servlet.servletTerminarSubasta</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -55,6 +71,22 @@
     <servlet-mapping>
         <servlet-name>servletPublicarProducto</servlet-name>
         <url-pattern>/servletPublicarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletListadoMisProductos</servlet-name>
+        <url-pattern>/servletListadoMisProductos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletModificarSubasta</servlet-name>
+        <url-pattern>/servletModificarSubasta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletBorrarSubasta</servlet-name>
+        <url-pattern>/servletBorrarSubasta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletTerminarSubasta</servlet-name>
+        <url-pattern>/servletTerminarSubasta</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -9,8 +9,7 @@
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-  @EJB Usuario usuario;
-  @EJB Producto producto;
+
 <%
   
     Usuario user = (Usuario)session.getAttribute("usuario");
@@ -27,8 +26,13 @@
     <tr width="80%">
         <td>Bienvenido, <%= user.getEmail() %></td>
         <td>Session ID: <%= session.getId() %></td>
-        <td><a href="servletAccesoPublicarProducto">Publicar producto</a></td>    
+        <%if(user.getTipoUsuario().equals("CV")){%>
+            
         
+        <td><a href="servletAccesoPublicarProducto?id=<%= user.getIdUSUARIO()%>">Publicar producto</a></td>    
+        <td><a href="servletListadoMisProductos">Mis productos</a></td>    
+        <%}
+        %>
 
     </tr>
 </table>

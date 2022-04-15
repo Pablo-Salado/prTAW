@@ -20,7 +20,7 @@
             <tr>
                 <th>APERTURA</th>
                 <th>PRECIO-INICIAL</th>    
-                <th>COMPRADOR</th>
+                <th>VENDEDOR</th>
                                                                                 
             </tr>
         <%
