@@ -52,10 +52,10 @@ public class Producto implements Serializable {
     @Size(max = 45)
     @Column(name = "TITULO")
     private String titulo;
-    @Size(max = 45)
+    @Size(max = 200)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @Size(max = 100)
+    @Size(max = 200)
     @Column(name = "URL_FOTO")
     private String urlFoto;
     @Size(max = 9)

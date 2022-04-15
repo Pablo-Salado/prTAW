@@ -6,18 +6,18 @@
 
 <%@page import="java.util.List"%>
 <%@page import="javax.ejb.EJB"%>
-<%@page import="entity.TipoUsuario"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-@EJB TipoUsuario tiposEJB;
+  @EJB Usuario usuario;
+  @EJB Producto producto;
 <%
-    
+  
     Usuario user = (Usuario)session.getAttribute("usuario");
-    TipoUsuario tipo = new TipoUsuario();
+
     
             
-    List<TipoUsuario> tipoList =%>tiposEJB    <%
+
     
     if (user == null) {
         response.sendRedirect(request.getContextPath());
@@ -27,11 +27,8 @@
     <tr width="80%">
         <td>Bienvenido, <%= user.getEmail() %></td>
         <td>Session ID: <%= session.getId() %></td>
-        <td>Session ID: <%= user.getSubastaList1().size() %></td>
-        <td><a href="servletListadoSubastas">Listado de subastas</a></td>    
-        <%
-            if(user.)
-            %>
+        <td><a href="servletAccesoPublicarProducto">Publicar producto</a></td>    
+        
 
     </tr>
 </table>

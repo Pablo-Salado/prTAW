@@ -20,6 +20,14 @@
         <servlet-name>servletGuardar</servlet-name>
         <servlet-class>servlet.servletGuardar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletAccesoPublicarProducto</servlet-name>
+        <servlet-class>servlet.servletAccesoPublicarProducto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletPublicarProducto</servlet-name>
+        <servlet-class>servlet.servletPublicarProducto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>servletGuardar</servlet-name>
         <url-pattern>/servletGuardar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAccesoPublicarProducto</servlet-name>
+        <url-pattern>/servletAccesoPublicarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletPublicarProducto</servlet-name>
+        <url-pattern>/servletPublicarProducto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

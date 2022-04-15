@@ -5,10 +5,8 @@
  */
 package dao;
 
-import entity.TipoUsuario;
 import entity.Usuario;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,8 +18,6 @@ import javax.persistence.Query;
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> {
-    @EJB TipoUsuarioFacade tiposEJB;
-
 
     @PersistenceContext(unitName = "ProyectoTAWPU")
     private EntityManager em;
@@ -49,7 +45,5 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             return lista.get(0);
         }        
     }
-    
- 
     
 }
