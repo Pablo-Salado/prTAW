@@ -5,16 +5,12 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
 import dao.SubastaFacade;
 import dao.UsuarioFacade;
-import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Usuario
  */
-public class servletTerminarSubasta extends HttpServlet {
+public class servletAccesoModificarProducto extends HttpServlet {
 @EJB SubastaFacade subastaFC;
-@EJB ProductoFacade productoFC;
-@EJB UsuarioFacade usuarioFC;
+@EJB UsuarioFacade user;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,23 +35,18 @@ public class servletTerminarSubasta extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String str = request.getParameter("subasta");
-        Subasta subasta = this.subastaFC.find(Integer.parseInt(str));
-        Producto producto = subasta.getProducto();
-        Date date = new Date(System.currentTimeMillis());
-        subasta.setCierre(date);
-        List<Usuario> pujadores = this.usuarioFC.findAll();
-        
-        if(subasta.getPujadoresList().isEmpty()){
-        producto.setEstado("No vendido");
-        }else{
-        producto.setEstado("Vendido");
-
-        }
-        
-        this.subastaFC.edit(subasta);
-        this.productoFC.edit(producto);
-        response.sendRedirect(request.getContextPath()+"/servletListadoMisProductos");
+            String str = request.getParameter("id");
+            if (str != null) {
+                Usuario usuario = this.user.find(Integer.parseInt(str));
+                request.setAttribute("usuario", usuario);
+            }
+            str = request.getParameter("subasta");
+            if(str != null){
+                Subasta sub = this.subastaFC.find(Integer.parseInt(str));
+                request.setAttribute("subasta", sub);
+            }
+            
+            request.getRequestDispatcher("/publicarProducto.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -33,16 +33,20 @@
         <servlet-class>servlet.servletListadoMisProductos</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>servletModificarSubasta</servlet-name>
-        <servlet-class>servlet.servletModificarSubasta</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>servletBorrarSubasta</servlet-name>
         <servlet-class>servlet.servletBorrarSubasta</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletTerminarSubasta</servlet-name>
         <servlet-class>servlet.servletTerminarSubasta</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletModificarProducto</servlet-name>
+        <servlet-class>servlet.servletModificarProducto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAccesoModificarProducto</servlet-name>
+        <servlet-class>servlet.servletAccesoModificarProducto</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
@@ -77,16 +81,20 @@
         <url-pattern>/servletListadoMisProductos</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>servletModificarSubasta</servlet-name>
-        <url-pattern>/servletModificarSubasta</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>servletBorrarSubasta</servlet-name>
         <url-pattern>/servletBorrarSubasta</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>servletTerminarSubasta</servlet-name>
         <url-pattern>/servletTerminarSubasta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletModificarProducto</servlet-name>
+        <url-pattern>/servletModificarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAccesoModificarProducto</servlet-name>
+        <url-pattern>/servletAccesoModificarProducto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

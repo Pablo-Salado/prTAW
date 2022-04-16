@@ -29,7 +29,7 @@
         <%if(user.getTipoUsuario().equals("CV")){%>
             
         
-        <td><a href="servletAccesoPublicarProducto?id=<%= user.getIdUSUARIO()%>">Publicar producto</a></td>    
+        <td><a href="servletAccesoPublicarProducto?id=<%= user.getIdUSUARIO()%>"">Publicar producto</a></td>    
         <td><a href="servletListadoMisProductos">Mis productos</a></td>    
         <%}
         %>

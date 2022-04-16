@@ -32,7 +32,7 @@ public class servletAccesoPublicarProducto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String str = request.getParameter("id");
+            String str = request.getParameter("id");
             if (str != null) {
                 Usuario usuario = this.user.find(Integer.parseInt(str));
                 request.setAttribute("usuario", usuario);

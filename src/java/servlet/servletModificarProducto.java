@@ -5,8 +5,15 @@
  */
 package servlet;
 
+import dao.ProductoFacade;
+import dao.SubastaFacade;
+import dao.UsuarioFacade;
+import entity.Producto;
+import entity.Subasta;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +23,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Usuario
  */
-public class servletModificarSubasta extends HttpServlet {
-
+public class servletModificarProducto extends HttpServlet {
+@EJB UsuarioFacade usuarioFC;
+@EJB ProductoFacade productoFC;
+@EJB SubastaFacade subastaFC;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,18 +39,26 @@ public class servletModificarSubasta extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet servletModificarSubasta</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet servletModificarSubasta at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+   
+        String str;
+        Integer aux;
+        
+        str = request.getParameter("id");
+        Subasta subasta = this.subastaFC.find(Integer.parseInt(str));
+        Producto producto = subasta.getProducto();
+        
+        str = request.getParameter("titulo");
+        producto.setTitulo(str);
+        str = request.getParameter("descripcion");
+        producto.setDescripcion(str);
+        str = request.getParameter("categoria");
+        producto.setCategoria(str);
+        str = request.getParameter("foto");
+        producto.setUrlFoto(str);
+
+        this.productoFC.edit(producto);
+        
+        response.sendRedirect(request.getContextPath()+"/servletListadoMisProductos"); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

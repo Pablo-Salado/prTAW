@@ -25,8 +25,11 @@
                 <th>FOTO</th>
                 <th>VENDEDOR</th>
                 <th>APERTURA</th>
+                <th>CIERRE</th>  
                 <th>PUJA-INICIAL</th>    
                 <th>PUJA-ACTUAL</th>
+                <th>ESTADO</th>
+                
                 
             </tr>
         <%
@@ -41,11 +44,15 @@
             <td><img src<%=sub.getProducto().getUrlFoto()%>    ></td>   
             <td><%= sub.getVendedor().getNombre() %></td> 
             <td><%= sub.getApertura() %></td>
+            <td><%= sub.getCierre() %></td>
+            <td><%= sub.getPujaMaxima() %></td> 
             <td><%= sub.getPrecioInicial() %></td>       
-            <td><%= sub.getPujaMaxima() %></td>   
+            
+            <td><%= sub.getPujaMaxima() %></td> 
+            <td><%= sub.getProducto().getEstado() %></td> 
             <td><a href="servletBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>">Borrar</a></td> 
-            <td>MODIFICAR</td>   
-            <td>FINALIZARSUBASTA</td>   
+            <td><a href="servletAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>">Modificar</a></td>   
+            <td><a href="servletTerminarSubasta?subasta=<%= sub.getIdSUBASTA() %>">Terminar subasta</a></td>   
             
         
                            
