@@ -20,6 +20,14 @@
         <servlet-name>servletGuardar</servlet-name>
         <servlet-class>servlet.servletGuardar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletPujar</servlet-name>
+        <servlet-class>servlet.servletPujar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletFavorito</servlet-name>
+        <servlet-class>servlet.servletFavorito</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>servletGuardar</servlet-name>
         <url-pattern>/servletGuardar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletPujar</servlet-name>
+        <url-pattern>/servletPujar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletFavorito</servlet-name>
+        <url-pattern>/servletFavorito</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

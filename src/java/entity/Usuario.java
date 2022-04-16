@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Usuario
+ * @author Gorpax
  */
 @Entity
 @Table(name = "usuario")
@@ -38,26 +38,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByEpellidos", query = "SELECT u FROM Usuario u WHERE u.epellidos = :epellidos")
     , @NamedQuery(name = "Usuario.findBySexo", query = "SELECT u FROM Usuario u WHERE u.sexo = :sexo")
     , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
-    , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")})
+    , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
+    , @NamedQuery(name = "Usuario.findByDomicilio", query = "SELECT u FROM Usuario u WHERE u.domicilio = :domicilio")
+    , @NamedQuery(name = "Usuario.findByCiudadResidencia", query = "SELECT u FROM Usuario u WHERE u.ciudadResidencia = :ciudadResidencia")
+    , @NamedQuery(name = "Usuario.findByEdad", query = "SELECT u FROM Usuario u WHERE u.edad = :edad")
+    , @NamedQuery(name = "Usuario.findByTipoUsuario", query = "SELECT u FROM Usuario u WHERE u.tipoUsuario = :tipoUsuario")})
 public class Usuario implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 13)
-    @Column(name = "TIPO_USUARIO")
-    private String tipoUsuario;
-
-    @Size(max = 45)
-    @Column(name = "DOMICILIO")
-    private String domicilio;
-    @Size(max = 45)
-    @Column(name = "CIUDAD_RESIDENCIA")
-    private String ciudadResidencia;
-    @Column(name = "EDAD")
-    private Integer edad;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario1")
-    private List<Pujadores> pujadoresList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -81,8 +67,23 @@ public class Usuario implements Serializable {
     @Size(max = 45)
     @Column(name = "EMAIL")
     private String email;
+    @Size(max = 45)
+    @Column(name = "DOMICILIO")
+    private String domicilio;
+    @Size(max = 45)
+    @Column(name = "CIUDAD_RESIDENCIA")
+    private String ciudadResidencia;
+    @Column(name = "EDAD")
+    private Integer edad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 13)
+    @Column(name = "TIPO_USUARIO")
+    private String tipoUsuario;
     @ManyToMany(mappedBy = "usuarioList")
     private List<Producto> productoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Pujadores> pujadoresList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendedor")
     private List<Subasta> subastaList;
     @OneToMany(mappedBy = "comprador")
@@ -93,6 +94,11 @@ public class Usuario implements Serializable {
 
     public Usuario(Integer idUSUARIO) {
         this.idUSUARIO = idUSUARIO;
+    }
+
+    public Usuario(Integer idUSUARIO, String tipoUsuario) {
+        this.idUSUARIO = idUSUARIO;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public Integer getIdUSUARIO() {
@@ -143,6 +149,38 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public String getCiudadResidencia() {
+        return ciudadResidencia;
+    }
+
+    public void setCiudadResidencia(String ciudadResidencia) {
+        this.ciudadResidencia = ciudadResidencia;
+    }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     @XmlTransient
     public List<Producto> getProductoList() {
         return productoList;
@@ -150,6 +188,15 @@ public class Usuario implements Serializable {
 
     public void setProductoList(List<Producto> productoList) {
         this.productoList = productoList;
+    }
+
+    @XmlTransient
+    public List<Pujadores> getPujadoresList() {
+        return pujadoresList;
+    }
+
+    public void setPujadoresList(List<Pujadores> pujadoresList) {
+        this.pujadoresList = pujadoresList;
     }
 
     @XmlTransient
@@ -193,47 +240,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entity.Usuario[ idUSUARIO=" + idUSUARIO + " ]";
-    }
-
-    @XmlTransient
-    public List<Pujadores> getPujadoresList() {
-        return pujadoresList;
-    }
-
-    public void setPujadoresList(List<Pujadores> pujadoresList) {
-        this.pujadoresList = pujadoresList;
-    }
-
-    public String getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public String getCiudadResidencia() {
-        return ciudadResidencia;
-    }
-
-    public void setCiudadResidencia(String ciudadResidencia) {
-        this.ciudadResidencia = ciudadResidencia;
-    }
-
-    public Integer getEdad() {
-        return edad;
-    }
-
-    public void setEdad(Integer edad) {
-        this.edad = edad;
-    }
-
-    public String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
     }
     
 }

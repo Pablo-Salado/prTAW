@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,13 +22,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Usuario
+ * @author Gorpax
  */
 @Entity
 @Table(name = "subasta")
@@ -43,9 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Subasta.findByPrecioInicial", query = "SELECT s FROM Subasta s WHERE s.precioInicial = :precioInicial")})
 public class Subasta implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subasta1")
-    private List<Pujadores> pujadoresList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,10 +53,9 @@ public class Subasta implements Serializable {
     @Column(name = "CIERRE")
     @Temporal(TemporalType.DATE)
     private Date cierre;
-    @Size(max = 45)
-    @Column(name = "PUJA_MAXIMA")
-    private String pujaMaxima;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "PUJA_MAXIMA")
+    private Double pujaMaxima;
     @Column(name = "PRECIO_INICIAL")
     private Double precioInicial;
     @JoinColumn(name = "PRODUCTO", referencedColumnName = "idPRODUCTO")
@@ -107,11 +101,11 @@ public class Subasta implements Serializable {
         this.cierre = cierre;
     }
 
-    public String getPujaMaxima() {
+    public Double getPujaMaxima() {
         return pujaMaxima;
     }
 
-    public void setPujaMaxima(String pujaMaxima) {
+    public void setPujaMaxima(Double pujaMaxima) {
         this.pujaMaxima = pujaMaxima;
     }
 
@@ -179,15 +173,6 @@ public class Subasta implements Serializable {
     @Override
     public String toString() {
         return "entity.Subasta[ idSUBASTA=" + idSUBASTA + " ]";
-    }
-
-    @XmlTransient
-    public List<Pujadores> getPujadoresList() {
-        return pujadoresList;
-    }
-
-    public void setPujadoresList(List<Pujadores> pujadoresList) {
-        this.pujadoresList = pujadoresList;
     }
     
 }

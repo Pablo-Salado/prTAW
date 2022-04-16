@@ -1,5 +1,6 @@
 
 
+<%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Subasta"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,42 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>JSP Page</title>
   </head>
+  <% Usuario user = (Usuario)session.getAttribute("usuario"); %>
   <body>
-    <!-- The Modal -->
-<div class="modal" id="pujarModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Pujar </h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <div class="row align-items-center">
-          
-          <div class="col-auto">
-            <label class="col-form-label">Cantidad:</label>
-          </div>
-          <div class="col ">
-            <input class="form-control" type="number" min="0" placeholder="Precio a pujar"> 
-            
-          </div>
-          
-        </div>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" >Pujar</button>
-      </div>
-
-    </div>
-  </div>
-</div>
       <header>
         <div class="px-3 py-0 bg-dark text-white shadow">
           <div class="container">
@@ -153,25 +121,41 @@
                         <li class="list-group-item">Vendedor: <%= sub.getVendedor().getNombre() %> </li>
                       </ul>
                       <div class="card-body">
-                        <div class="row align-items-center">
-                          <div class="col-7">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pujarModal">
+                          <form method="post" action="servletPujar?">
+                        <div class="row row-cols-auto align-items-center justify-content-center">
+                          <div class="col">
+                                  <button type="submit" class="btn btn-primary" value=<%=sub.getPujaMaxima() %>>
                               Pujar
-                            </button>
+                            </button>    
+                              <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subasta" >
+                              <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" >  
+                          </div>
+                              <div class="col">
+                              <input class="form-control" type="number" min=<%=sub.getPujaMaxima() %>  name="puja" style="max-width: 150px">    
+                          </div>
+                          </div> 
+                          </form>
+                          <div class="row row-cols-auto align-items-center py-1 justify-content-center">
+                              <div class="col-auto">
+                                  <form method="post" action="servletFavorito">
+                                      <div class="form-check">
+                                        <label class="form-check-label" >
+                                            Favorito
+                                        </label>
+                                    <input class="form-check-input" type="checkbox" name="favorito" >
+                              
+                                        </div>
+                                  </form>
                             
                           </div>
-                          
-                          <div class="col-auto">
-                            <div class="form-check">
-                              <label class="form-check-label" >
-                                Favorito
-                              </label>
-                              <input class="form-check-input" type="checkbox" >
                               
-                            </div>
                           </div>
-                        </div>  
+                          
+                         
+                     
                       </div>
+                
+
                     </div>
                      
                   </div>
