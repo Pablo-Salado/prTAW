@@ -50,7 +50,7 @@
         <div class="px-3 py-2 mb-3 shadow">
           
           <div class="container">
-            <form method="post" action="servletListadoSubastas">
+            <form method="post" action="servletFiltrarSubastas">
             <div class="row align-items-center">
               <div class="col">
                 <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
@@ -85,7 +85,9 @@
                 
               </div>
               <div class="col-auto">
+                  <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
                 <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
+                
               </div>
             </div>
             </form>

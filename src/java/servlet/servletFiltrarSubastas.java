@@ -5,10 +5,15 @@
  */
 package servlet;
 
+import dao.ProductoFacade;
 import dao.SubastaFacade;
+import dao.UsuarioFacade;
+import entity.Producto;
 import entity.Subasta;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -18,10 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Usuario
+ * @author Gorpax
  */
-public class servletListadoSubastas extends TAWServlet {
+public class servletFiltrarSubastas extends TAWServlet {
     @EJB SubastaFacade subastaFacade;
+    @EJB UsuarioFacade usuarioFacade;
+    @EJB ProductoFacade productoFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,15 +40,44 @@ public class servletListadoSubastas extends TAWServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(super.comprobarSession(request, response)){
+       if(super.comprobarSession(request, response)){
             
-
+         String min = request.getParameter("minPrice");
+        String max = request.getParameter("maxPrice");
+        String cat = request.getParameter("categoria");
         List<Subasta> subastas = null;
-        
+        if(cat == null || cat.contains("CATEGORIAS")){
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
                 subastas = this.subastaFacade.findAll();
-           
-        
-       
+            }else if ((min.length()>0 && max.length() > 0)){
+                subastas = this.subastaFacade.findByPrecio(min,max);
+            }else if(min.length()> 0 && max.length() == 0){
+                subastas = this.subastaFacade.findByMin(min);
+            }else if(min.length()== 0 && max.length() > 0){
+                subastas = this.subastaFacade.findByMax(max);
+            }
+        }else{
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
+                subastas = this.subastaFacade.findByCategoria(cat);
+            }else if ((min.length()>0 && max.length() > 0)){
+                subastas = this.subastaFacade.findByCategoriaPrecio(cat,min,max);
+            }else if(min.length()> 0 && max.length() == 0){
+                subastas = this.subastaFacade.findByCategoriaMin(cat,min);
+            }else if(min.length()== 0 && max.length() > 0){
+                subastas = this.subastaFacade.findByCategoriaMax(cat,max);
+            }
+        }
+        String str = request.getParameter("usuario");
+        Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
+        List<Producto> productos = new ArrayList<Producto>();
+        List<Integer> idPro = this.productoFacade.productosFavoritos( user);
+        for(Integer i: idPro){
+            Producto aux = this.productoFacade.find(i);
+            if(!productos.contains(aux)){
+                productos.add(aux);
+            }
+        }
+       request.setAttribute("productos", productos);
         request.setAttribute("subastas", subastas);
         request.getRequestDispatcher("subastas.jsp").forward(request, response);
 

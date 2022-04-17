@@ -28,6 +28,10 @@
         <servlet-name>servletFavorito</servlet-name>
         <servlet-class>servlet.servletFavorito</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletFiltrarSubastas</servlet-name>
+        <servlet-class>servlet.servletFiltrarSubastas</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>servletFavorito</servlet-name>
         <url-pattern>/servletFavorito</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletFiltrarSubastas</servlet-name>
+        <url-pattern>/servletFiltrarSubastas</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
