@@ -46,7 +46,7 @@ public class servletFavorito extends TAWServlet {
          
         String str = request.getParameter("usuario");
         Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
-        
+       
         str = request.getParameter("subasta");
         Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
         
@@ -64,7 +64,15 @@ public class servletFavorito extends TAWServlet {
             this.productoFacade.Fav(pro, user);
             productos.add(pro);
         }
-       // productos = this.productoFacade.productosFavoritos(pro, user);
+        List<Integer> idPro = this.productoFacade.productosFavoritos( user);
+        for(Integer i: idPro){
+            Producto aux = this.productoFacade.find(i);
+            if(!productos.contains(aux)){
+                productos.add(aux);
+            }
+            
+        }
+        
        
         request.setAttribute("subastas", subastas);
         request.setAttribute("productos", productos);
