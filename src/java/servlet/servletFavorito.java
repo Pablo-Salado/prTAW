@@ -5,8 +5,17 @@
  */
 package servlet;
 
+import dao.ProductoFacade;
+import dao.SubastaFacade;
+import dao.UsuarioFacade;
+import entity.Producto;
+import entity.Pujadores;
+import entity.Subasta;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +26,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Gorpax
  */
 public class servletFavorito extends HttpServlet {
-
+    @EJB SubastaFacade subastaFacade;
+    @EJB UsuarioFacade usuarioFacade;
+    @EJB ProductoFacade productoFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -29,7 +40,25 @@ public class servletFavorito extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         String str = request.getParameter("usuario");
+        Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
         
+        str = request.getParameter("subastaFav");
+        Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
+        
+        String chck = request.getParameter("favorito");
+        
+        Producto pro = sub.getProducto();
+        
+        if(chck == null){
+            this.productoFacade.noFav(pro, user);
+        }else{
+            this.productoFacade.Fav(pro, user);
+        }
+        
+       
+        
+        response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,5 +1,6 @@
 
 
+<%@page import="entity.Producto"%>
 <%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Subasta"%>
@@ -96,11 +97,14 @@
       <article>
           <section>
             <div class ="container-fluid ">
-
+                 
                 <div class="row row-cols-auto justify-content-center">
                     <%
+                    List<Producto> productos = user.getProductoList();
                     List<Subasta> subastas = (List)request.getAttribute("subastas");
+                    
                     for (Subasta sub :subastas) {
+                         
                     %> 
                   <div class="col py-4">
                     
@@ -131,19 +135,48 @@
                               <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" >  
                           </div>
                               <div class="col">
-                              <input class="form-control" type="number" min=<%=sub.getPujaMaxima() %>  name="puja" style="max-width: 150px">    
+                                  <%
+                                      if(sub.getPujaMaxima()!= null){
+                                      %>
+                              <input class="form-control" type="number" min=<%=sub.getPujaMaxima()%>  name="puja" style="max-width: 150px">    
+                              <%
+                                  }else{
+                                  %>
+                                  <input class="form-control" type="number" min=<%=sub.getPrecioInicial() %>  name="puja" style="max-width: 150px">  
+                                  <%
+                                  }
+                                  %>
                           </div>
                           </div> 
                           </form>
                           <div class="row row-cols-auto align-items-center py-1 justify-content-center">
                               <div class="col-auto">
-                                  <form method="post" action="servletFavorito">
+                                  <form method="post" action="servletFavorito" id="fav" autocomplete="off">
                                       <div class="form-check">
                                         <label class="form-check-label" >
                                             Favorito
                                         </label>
-                                    <input class="form-check-input" type="checkbox" name="favorito" >
-                              
+                                          <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subastaFav" onChange="this.form.submit()" >
+                                          <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                                          
+                                           <input class="form-check-input" type="checkbox" name="favorito" onChange="this.form.submit()">
+                                           
+                                          <%
+                                            
+                                            for (Producto pro: productos){
+                                            if(pro.getIdPRODUCTO() == sub.getProducto().getIdPRODUCTO() ){
+                                            %>
+                                            
+                                            <input class="form-check-input" type="checkbox" name="favorito" onChange="this.form.submit()" checked="true">
+                                            <%
+                                            }
+                                            %>
+                                           
+                                           <%
+                                            
+                                            }
+                                            
+                                            %>
                                         </div>
                                   </form>
                             

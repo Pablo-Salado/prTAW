@@ -5,7 +5,9 @@
  */
 package dao;
 
+import entity.Producto;
 import entity.Subasta;
+import entity.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -94,4 +96,6 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
         
         return q.getResultList();
     }
+    
+    
 }

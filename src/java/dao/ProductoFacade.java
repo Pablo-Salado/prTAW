@@ -6,9 +6,13 @@
 package dao;
 
 import entity.Producto;
+import entity.Subasta;
+import entity.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +31,21 @@ public class ProductoFacade extends AbstractFacade<Producto> {
 
     public ProductoFacade() {
         super(Producto.class);
+    }
+    
+    public void Fav(Producto pro, Usuario user){
+        Query q;
+       int idProducto = pro.getIdPRODUCTO();
+       int idUsuario = user.getIdUSUARIO();
+        q = this.getEntityManager().createNativeQuery("INSERT INTO favoritos VALUES(" + idProducto + "," + idUsuario +")");
+        q.executeUpdate();
+    }
+   public void noFav(Producto pro, Usuario user){
+        Query q;
+       int idProducto = pro.getIdPRODUCTO();
+       int idUsuario = user.getIdUSUARIO();
+        q = this.getEntityManager().createNativeQuery("DELETE FROM favoritos WHERE PRODUCTO = " + idProducto + " AND USUARIO = " + idUsuario);
+        q.executeUpdate();
     }
     
 }
