@@ -14,6 +14,7 @@ import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -54,8 +55,16 @@ public class servletFavorito extends TAWServlet {
         
         Producto pro = sub.getProducto();
         
-        List<Producto> productos = user.getProductoList();
         List<Subasta> subastas = this.subastaFacade.findAll();
+        
+        List<Producto> productos = new ArrayList<Producto>();
+        List<Integer> idPro = this.productoFacade.productosFavoritos( user);
+        for(Integer i: idPro){
+            Producto aux = this.productoFacade.find(i);
+            if(!productos.contains(aux)){
+                productos.add(aux);
+            }
+        }
         
         if(chck == null){
             this.productoFacade.noFav(pro, user);
@@ -63,14 +72,6 @@ public class servletFavorito extends TAWServlet {
         }else{
             this.productoFacade.Fav(pro, user);
             productos.add(pro);
-        }
-        List<Integer> idPro = this.productoFacade.productosFavoritos( user);
-        for(Integer i: idPro){
-            Producto aux = this.productoFacade.find(i);
-            if(!productos.contains(aux)){
-                productos.add(aux);
-            }
-            
         }
         
        
