@@ -15,6 +15,7 @@ import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gorpax
  */
-public class servletFavorito extends HttpServlet {
+public class servletFavorito extends TAWServlet {
     @EJB SubastaFacade subastaFacade;
     @EJB UsuarioFacade usuarioFacade;
     @EJB ProductoFacade productoFacade;
@@ -40,25 +41,36 @@ public class servletFavorito extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String str = request.getParameter("usuario");
+        if(super.comprobarSession(request, response)){
+            
+         
+        String str = request.getParameter("usuario");
         Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
         
-        str = request.getParameter("subastaFav");
+        str = request.getParameter("subasta");
         Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
         
         String chck = request.getParameter("favorito");
         
         Producto pro = sub.getProducto();
         
+        List<Producto> productos = user.getProductoList();
+        List<Subasta> subastas = this.subastaFacade.findAll();
+        
         if(chck == null){
             this.productoFacade.noFav(pro, user);
+            productos.remove(pro);
         }else{
             this.productoFacade.Fav(pro, user);
+            productos.add(pro);
         }
-        
+       // productos = this.productoFacade.productosFavoritos(pro, user);
        
-        
-        response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
+        request.setAttribute("subastas", subastas);
+        request.setAttribute("productos", productos);
+        request.getRequestDispatcher("subastas.jsp").forward(request, response);        
+        }
+         
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

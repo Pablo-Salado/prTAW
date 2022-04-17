@@ -100,7 +100,8 @@
                  
                 <div class="row row-cols-auto justify-content-center">
                     <%
-                    List<Producto> productos = user.getProductoList();
+                    
+                    
                     List<Subasta> subastas = (List)request.getAttribute("subastas");
                     
                     for (Subasta sub :subastas) {
@@ -152,22 +153,26 @@
                           <div class="row row-cols-auto align-items-center py-1 justify-content-center">
                               <div class="col-auto">
                                   <form method="post" action="servletFavorito" id="fav" autocomplete="off">
-                                      <div class="form-check">
+                                     <div class="form-check form-switch">
                                         <label class="form-check-label" >
                                             Favorito
                                         </label>
-                                          <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subastaFav" onChange="this.form.submit()" >
+
+                                          <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subasta" onChange="this.form.submit()" >
                                           <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
                                           
-                                           <input class="form-check-input" type="checkbox" name="favorito" onChange="this.form.submit()">
+                                           <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="favorito" onChange="this.form.submit()">
                                            
                                           <%
-                                            
+                                            List<Producto> productos = (List)request.getAttribute("productos");
+                                            if(productos == null){
+                                                productos = user.getProductoList();
+                                            }
                                             for (Producto pro: productos){
                                             if(pro.getIdPRODUCTO() == sub.getProducto().getIdPRODUCTO() ){
                                             %>
                                             
-                                            <input class="form-check-input" type="checkbox" name="favorito" onChange="this.form.submit()" checked="true">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="favorito" onChange="this.form.submit()" checked="true">
                                             <%
                                             }
                                             %>
