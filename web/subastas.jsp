@@ -39,7 +39,7 @@
                     <li><a class="dropdown-item" href="#">Mis ventas</a></li>
                     <li><a class="dropdown-item" href="#">Mis compras</a></li>
                     <li><a class="dropdown-item" href="#">Productos favoritos</a></li>
-                    <li><a class="dropdown-item" href="#">Cerrar sesion</a></li>
+                    <li><a class="dropdown-item" href="servletLogout">Cerrar sesion</a></li>
                   </ul>
                 </div>
               </div>
@@ -227,7 +227,7 @@
           <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Sobre nosotros</a></li>
         </ul>
-        <p class="text-center text-muted">Â© 2022 Company, Inc</p>
+        <p class="text-center text-muted">© 2022 Company, Inc</p>
       </footer>      
       
        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
