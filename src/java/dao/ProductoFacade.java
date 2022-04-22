@@ -51,10 +51,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         Query q;
        int idUsuario = user.getIdUSUARIO();
         q = this.getEntityManager().createNativeQuery("select PRODUCTO from favoritos s where s.USUARIO = " + idUsuario);
-        
-        
 
-        
         return q.getResultList();
     }
 }
