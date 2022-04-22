@@ -31,6 +31,8 @@
     <servlet>
         <servlet-name>servletFiltrarSubastas</servlet-name>
         <servlet-class>servlet.servletFiltrarSubastas</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>servletAccesoPublicarProducto</servlet-name>
         <servlet-class>servlet.servletAccesoPublicarProducto</servlet-class>
     </servlet>
@@ -89,6 +91,8 @@
     <servlet-mapping>
         <servlet-name>servletFiltrarSubastas</servlet-name>
         <url-pattern>/servletFiltrarSubastas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>servletAccesoPublicarProducto</servlet-name>
         <url-pattern>/servletAccesoPublicarProducto</url-pattern>
     </servlet-mapping>
