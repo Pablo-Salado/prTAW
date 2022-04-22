@@ -119,7 +119,7 @@
                              <hr>  
                       <div class="card-body">
                         <h5 class="card-title"><%= sub.getProducto().getTitulo() %></h5>
-                        <p class="card-text"><%= sub.getProducto().getDescripcion() %></p>
+                        <p class="card-text overflow-auto" style="min-height:  70px"><%= sub.getProducto().getDescripcion() %></p>
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">Precio inicial: EUR <%= sub.getPrecioInicial() %></li>

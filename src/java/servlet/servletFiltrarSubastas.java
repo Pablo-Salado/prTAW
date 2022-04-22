@@ -41,7 +41,15 @@ public class servletFiltrarSubastas extends TAWServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        if(super.comprobarSession(request, response)){
-            
+            /*
+           Como añadir a priori el que muestre los favoritos:
+           Primero hacemos un request parameteter que sea un bool del check
+           Hacemos la lista de productos y una lista de subastas auxiliar
+           Segundo hacemos un if antes que los filtros acuales de si check == true -> entonces el if es igual pero despues de subasta.findall por ejemplo
+           recorremos la lista de productos y la de subastas si el sub.getproducto == producto -> entonces aux.add(sub)
+           Al final hacemos subastas = aux;
+           
+           */
          String min = request.getParameter("minPrice");
         String max = request.getParameter("maxPrice");
         String cat = request.getParameter("categoria");
@@ -49,12 +57,14 @@ public class servletFiltrarSubastas extends TAWServlet {
         if(cat == null || cat.contains("CATEGORIAS")){
             if(min == null || max == null || (min.length()==0 && max.length()==0)){
                 subastas = this.subastaFacade.findAll();
+                
             }else if ((min.length()>0 && max.length() > 0)){
                 subastas = this.subastaFacade.findByPrecio(min,max);
             }else if(min.length()> 0 && max.length() == 0){
                 subastas = this.subastaFacade.findByMin(min);
             }else if(min.length()== 0 && max.length() > 0){
                 subastas = this.subastaFacade.findByMax(max);
+                
             }
         }else{
             if(min == null || max == null || (min.length()==0 && max.length()==0)){
