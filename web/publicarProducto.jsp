@@ -8,10 +8,14 @@
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>publicarProducto</title>
+        <div class="text-center border-bottom primary">
+            <h1 class="text-primary">Datos del producto </h1>
+        </div>
     </head>
      <%
         
@@ -25,7 +29,7 @@
        
     %>  
     <body>
-        <h1>Datos del producto</h1>
+        
         <%if(sub==null){%>
         <form method="POST" action="servletPublicarProducto">
         <%}else{%>
@@ -36,14 +40,27 @@
             <%}else{%>
             <input type="hidden" name="id" value="<%=sub.getIdSUBASTA()%>" />
             <%}%>
+            <div class="container mb-3">
+            <div class=" mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Titulo</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="titulo" value="<%= sub==null? "": sub.getProducto().getTitulo() %>">
+            </div>
+            <div class=" mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Descripcion</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="descripcion" value="<%= sub==null? "": sub.getProducto().getDescripcion() %>">
+            </div>
             
- 
-            Titulo: <input type="text" size="30" name="titulo" value="<%= sub==null? "": sub.getProducto().getTitulo() %>" /> <br/>
-            Descripcion: <input type="text" size="200" name="descripcion" value="<%= sub==null? "": sub.getProducto().getDescripcion() %>" /> <br/>
-            Precio inicial: <input type="text" size="30" name="puja_inicial" value="<%= sub==null? "": sub.getPrecioInicial() %>" /> <br/>
+            <div class=" mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Precio inicial</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="puja_inicial" value="<%= sub==null? "": sub.getPrecioInicial() %>">
+            </div>
+            <div class=" mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Enlace de la foto</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="foto" value="<%= sub==null? "": sub.getProducto().getUrlFoto() %>">
+            </div>
             
-            Foto:<input type="text" size="30" name="foto" value="<%= sub==null? "": sub.getProducto().getUrlFoto() %>" /> <br/>
-            Categoria:<select name ="categoria" value="<%= sub==null? "": sub.getProducto().getCategoria() %>">
+            Categoria:<br>
+            <select name ="categoria" class="mb-3" value="<%= sub==null? "": sub.getProducto().getCategoria() %>">
             <option value="MOTOR">Motor</option>
             <option value="DEPORTE">Deporte</option>
             <option value="HOGAR">Hogar</option>
@@ -55,6 +72,7 @@
             <option value="AFICIONES Y OCIO">Aficiones y ocio</option>
             <option value="OTROS">Otros</option>
             </select><br/>
-            <input type="submit" value="Enviar" />
+            <input type="submit" value="Enviar" class="mb-3" />
+            </div>
     </body>
 </html>

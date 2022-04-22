@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package servlet;
-import javax.ejb.EJB;
 import dao.UsuarioFacade;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

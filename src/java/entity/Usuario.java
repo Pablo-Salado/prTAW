@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Usuario
+ * @author migue
  */
 @Entity
 @Table(name = "usuario")
@@ -82,7 +82,7 @@ public class Usuario implements Serializable {
     private String tipoUsuario;
     @ManyToMany(mappedBy = "usuarioList")
     private List<Producto> productoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario1")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Pujadores> pujadoresList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendedor")
     private List<Subasta> subastaList;

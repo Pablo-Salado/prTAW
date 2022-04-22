@@ -13,7 +13,13 @@ import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -68,6 +74,9 @@ public class servletPublicarProducto extends HttpServlet {
         
         Date date = new Date(System.currentTimeMillis());
         subasta.setApertura(date);
+        
+        
+      
         str = request.getParameter("puja_inicial");
         subasta.setPrecioInicial(Double.parseDouble(str));
         subasta.setPujaMaxima(Double.parseDouble(str));

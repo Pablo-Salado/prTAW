@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Usuario
+ * @author migue
  */
 @Entity
 @Table(name = "subasta")
@@ -59,7 +59,7 @@ public class Subasta implements Serializable {
     private Double pujaMaxima;
     @Column(name = "PRECIO_INICIAL")
     private Double precioInicial;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subasta1")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subasta")
     private List<Pujadores> pujadoresList;
     @JoinColumn(name = "PRODUCTO", referencedColumnName = "idPRODUCTO")
     @ManyToOne(optional = false)

@@ -7,9 +7,12 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -17,64 +20,61 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Usuario
+ * @author migue
  */
 @Entity
 @Table(name = "pujadores")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Pujadores.findAll", query = "SELECT p FROM Pujadores p")
-    , @NamedQuery(name = "Pujadores.findBySubasta", query = "SELECT p FROM Pujadores p WHERE p.pujadoresPK.subasta = :subasta")
-    , @NamedQuery(name = "Pujadores.findByUsuario", query = "SELECT p FROM Pujadores p WHERE p.pujadoresPK.usuario = :usuario")
+    , @NamedQuery(name = "Pujadores.findByIDPuja", query = "SELECT p FROM Pujadores p WHERE p.iDPuja = :iDPuja")
     , @NamedQuery(name = "Pujadores.findByValorPuja", query = "SELECT p FROM Pujadores p WHERE p.valorPuja = :valorPuja")
     , @NamedQuery(name = "Pujadores.findByFecha", query = "SELECT p FROM Pujadores p WHERE p.fecha = :fecha")})
 public class Pujadores implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected PujadoresPK pujadoresPK;
-    @Size(max = 45)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDPuja")
+    private Integer iDPuja;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "VALOR_PUJA")
-    private String valorPuja;
+    private Double valorPuja;
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @JoinColumn(name = "SUBASTA", referencedColumnName = "idSUBASTA", insertable = false, updatable = false)
+    @JoinColumn(name = "SUBASTA", referencedColumnName = "idSUBASTA")
     @ManyToOne(optional = false)
-    private Subasta subasta1;
-    @JoinColumn(name = "USUARIO", referencedColumnName = "idUSUARIO", insertable = false, updatable = false)
+    private Subasta subasta;
+    @JoinColumn(name = "USUARIO", referencedColumnName = "idUSUARIO")
     @ManyToOne(optional = false)
-    private Usuario usuario1;
+    private Usuario usuario;
 
     public Pujadores() {
     }
 
-    public Pujadores(PujadoresPK pujadoresPK) {
-        this.pujadoresPK = pujadoresPK;
+    public Pujadores(Integer iDPuja) {
+        this.iDPuja = iDPuja;
     }
 
-    public Pujadores(int subasta, int usuario) {
-        this.pujadoresPK = new PujadoresPK(subasta, usuario);
+    public Integer getIDPuja() {
+        return iDPuja;
     }
 
-    public PujadoresPK getPujadoresPK() {
-        return pujadoresPK;
+    public void setIDPuja(Integer iDPuja) {
+        this.iDPuja = iDPuja;
     }
 
-    public void setPujadoresPK(PujadoresPK pujadoresPK) {
-        this.pujadoresPK = pujadoresPK;
-    }
-
-    public String getValorPuja() {
+    public Double getValorPuja() {
         return valorPuja;
     }
 
-    public void setValorPuja(String valorPuja) {
+    public void setValorPuja(Double valorPuja) {
         this.valorPuja = valorPuja;
     }
 
@@ -86,26 +86,26 @@ public class Pujadores implements Serializable {
         this.fecha = fecha;
     }
 
-    public Subasta getSubasta1() {
-        return subasta1;
+    public Subasta getSubasta() {
+        return subasta;
     }
 
-    public void setSubasta1(Subasta subasta1) {
-        this.subasta1 = subasta1;
+    public void setSubasta(Subasta subasta) {
+        this.subasta = subasta;
     }
 
-    public Usuario getUsuario1() {
-        return usuario1;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuario1(Usuario usuario1) {
-        this.usuario1 = usuario1;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (pujadoresPK != null ? pujadoresPK.hashCode() : 0);
+        hash += (iDPuja != null ? iDPuja.hashCode() : 0);
         return hash;
     }
 
@@ -116,7 +116,7 @@ public class Pujadores implements Serializable {
             return false;
         }
         Pujadores other = (Pujadores) object;
-        if ((this.pujadoresPK == null && other.pujadoresPK != null) || (this.pujadoresPK != null && !this.pujadoresPK.equals(other.pujadoresPK))) {
+        if ((this.iDPuja == null && other.iDPuja != null) || (this.iDPuja != null && !this.iDPuja.equals(other.iDPuja))) {
             return false;
         }
         return true;
@@ -124,7 +124,7 @@ public class Pujadores implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Pujadores[ pujadoresPK=" + pujadoresPK + " ]";
+        return "entity.Pujadores[ iDPuja=" + iDPuja + " ]";
     }
     
 }

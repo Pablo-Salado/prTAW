@@ -6,13 +6,16 @@
 package servlet;
 
 import dao.ProductoFacade;
+import dao.PujadoresFacade;
 import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Producto;
+import entity.Pujadores;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -29,6 +32,7 @@ public class servletTerminarSubasta extends HttpServlet {
 @EJB SubastaFacade subastaFC;
 @EJB ProductoFacade productoFC;
 @EJB UsuarioFacade usuarioFC;
+@EJB PujadoresFacade pujadorFC;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,16 +47,30 @@ public class servletTerminarSubasta extends HttpServlet {
         String str = request.getParameter("subasta");
         Subasta subasta = this.subastaFC.find(Integer.parseInt(str));
         Producto producto = subasta.getProducto();
+        str = request.getParameter("id");
+        Usuario user = this.usuarioFC.find(Integer.parseInt(str));
+        
         Date date = new Date(System.currentTimeMillis());
         subasta.setCierre(date);
-        List<Usuario> pujadores = this.usuarioFC.findAll();
+        List<Pujadores> pujadores = this.pujadorFC.findAll();
+        List<Pujadores> misPujadores = new ArrayList<Pujadores>();
+        for(Pujadores p: pujadores){
+            if(p.getSubasta().getVendedor().getIdUSUARIO()==user.getIdUSUARIO()){
+                misPujadores.add(p);
+            }
+        }
         
-        if(subasta.getPujadoresList().isEmpty()){
+        
+        if(misPujadores.isEmpty()){
         producto.setEstado("No vendido");
         }else{
         producto.setEstado("Vendido");
 
         }
+        
+        date = new Date(System.currentTimeMillis());
+        
+        subasta.setCierre(date);
         
         this.subastaFC.edit(subasta);
         this.productoFC.edit(producto);

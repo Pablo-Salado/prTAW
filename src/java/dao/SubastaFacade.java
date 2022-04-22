@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Usuario
+ * @author migue
  */
 @Stateless
 public class SubastaFacade extends AbstractFacade<Subasta> {
