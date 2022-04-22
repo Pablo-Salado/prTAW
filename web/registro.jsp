@@ -71,7 +71,7 @@
                     <label for="floatingInput">Email</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" size="30" id="floatingPassword" placeholder="Contraseña" name="password">
+                    <input type="password" class="form-control" size="30" id="floatingPassword" placeholder="Contraseña" name="password">
                     <label for="floatingPassword">Contraseña</label>
                 </div>
                 <div class="form-floating">
