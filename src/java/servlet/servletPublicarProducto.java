@@ -4,10 +4,22 @@
  * and open the template in the editor.
  */
 package servlet;
+
+import dao.ProductoFacade;
+import dao.SubastaFacade;
 import dao.UsuarioFacade;
+import entity.Producto;
+import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,12 +27,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 /**
  *
  * @author Usuario
  */
-public class servletLogin extends HttpServlet {
-    @EJB UsuarioFacade af;
+public class servletPublicarProducto extends HttpServlet {
+ @EJB ProductoFacade productoFC;
+ @EJB UsuarioFacade usuarioFC;
+ @EJB SubastaFacade subastaFC;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,20 +48,47 @@ public class servletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");        
+         response.setContentType("text/html;charset=UTF-8");
+   
+        String str;
+        Integer aux;
+        Subasta subasta = new Subasta();
+        Producto producto = new Producto();
         
-        Usuario user = this.af.comprobarUsuario(usuario, clave);
+        str = request.getParameter("id");
+        Usuario user = usuarioFC.find(Integer.parseInt(str));
         
-        if (user == null) {
-            String strError = "El usuario o la clave son incorrectos";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("login.jsp").forward(request, response);                
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletListadoSubastas");                
-        }
+        str = request.getParameter("titulo");
+        producto.setTitulo(str);
+        str = request.getParameter("descripcion");
+        producto.setDescripcion(str);
+        str = request.getParameter("categoria");
+        producto.setCategoria(str);
+        str = request.getParameter("foto");
+        producto.setUrlFoto(str);
+        producto.setEstado("En venta");
+        productoFC.create(producto);
+        
+        
+        
+        
+        Date date = new Date(System.currentTimeMillis());
+        subasta.setApertura(date);
+        
+        
+      
+        str = request.getParameter("puja_inicial");
+        subasta.setPrecioInicial(Double.parseDouble(str));
+        subasta.setPujaMaxima(Double.parseDouble(str));
+        
+        subasta.setVendedor(user);
+        subasta.setProducto(producto);
+        subastaFC.create(subasta);
+        
+        producto.setSubasta(subasta);
+        productoFC.edit(producto);
+        
+        response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

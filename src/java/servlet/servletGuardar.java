@@ -55,6 +55,8 @@ public class servletGuardar extends HttpServlet {
         str = request.getParameter("ciudad");
         usuario.setCiudadResidencia(str);
         
+        
+        
         userFC.create(usuario);
          response.sendRedirect(request.getContextPath()); 
     }

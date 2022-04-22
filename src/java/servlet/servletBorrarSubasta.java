@@ -4,7 +4,12 @@
  * and open the template in the editor.
  */
 package servlet;
+
+import dao.ProductoFacade;
+import dao.SubastaFacade;
 import dao.UsuarioFacade;
+import entity.Producto;
+import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +24,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author Usuario
  */
-public class servletLogin extends HttpServlet {
-    @EJB UsuarioFacade af;
+public class servletBorrarSubasta extends TAWServlet {
+        @EJB UsuarioFacade usuarioFC;
+        @EJB SubastaFacade subastaFC;
+        @EJB ProductoFacade productoFC;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,19 +40,21 @@ public class servletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");        
-        
-        Usuario user = this.af.comprobarUsuario(usuario, clave);
-        
-        if (user == null) {
-            String strError = "El usuario o la clave son incorrectos";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("login.jsp").forward(request, response);                
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletListadoSubastas");                
+         if (super.comprobarSession(request, response)) {        
+                        
+            String str = request.getParameter("subasta");
+            Subasta sub = this.subastaFC.find(Integer.parseInt(str));
+            Producto prod = this.productoFC.find(sub.getProducto().getIdPRODUCTO());
+            
+            this.subastaFC.remove(sub);
+            this.productoFC.remove(prod);
+            
+            
+            
+            
+          
+
+            response.sendRedirect(request.getContextPath() + "/servletListadoMisProductos");
         }
     }
 

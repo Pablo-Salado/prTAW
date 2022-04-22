@@ -16,7 +16,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Usuario
+ * @author migue
  */
 @Stateless
 public class SubastaFacade extends AbstractFacade<Subasta> {

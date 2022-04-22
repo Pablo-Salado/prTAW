@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package servlet;
+
 import dao.UsuarioFacade;
 import entity.Usuario;
 import java.io.IOException;
@@ -13,14 +14,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Usuario
  */
-public class servletLogin extends HttpServlet {
-    @EJB UsuarioFacade af;
+public class servletAccesoPublicarProducto extends HttpServlet {
+@EJB UsuarioFacade user;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,20 +32,13 @@ public class servletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");        
-        
-        Usuario user = this.af.comprobarUsuario(usuario, clave);
-        
-        if (user == null) {
-            String strError = "El usuario o la clave son incorrectos";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("login.jsp").forward(request, response);                
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletListadoSubastas");                
-        }
+            String str = request.getParameter("id");
+            if (str != null) {
+                Usuario usuario = this.user.find(Integer.parseInt(str));
+                request.setAttribute("usuario", usuario);
+            }
+
+            request.getRequestDispatcher("/publicarProducto.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

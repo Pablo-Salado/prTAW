@@ -36,9 +36,9 @@
                     <i class="bi bi-person-circle"></i> Mi perfil
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Mis ventas</a></li>
                     <li><a class="dropdown-item" href="#">Mis compras</a></li>
-                    <li><a class="dropdown-item" href="#">Productos favoritos</a></li>
+                    <li><a class="dropdown-item" href="servletListadoMisProductos">Mis ventas</a></li>
+                    <li><a class="dropdown-item" href="servletAccesoModificarProducto">Publicar producto</a></li>
                     <li><a class="dropdown-item" href="servletLogout">Cerrar sesion</a></li>
                   </ul>
                 </div>
