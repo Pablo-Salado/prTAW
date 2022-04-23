@@ -44,7 +44,10 @@ public class servletPujar extends HttpServlet {
         Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
         
         str = request.getParameter("subasta");
-        Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
+        if(str.equals("1")){
+             response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
+        }else{
+             Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
         
         Date fecha = new Date(System.currentTimeMillis());
         
@@ -63,6 +66,8 @@ public class servletPujar extends HttpServlet {
         this.subastaFacade.edit(sub);
         
         response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
+        }
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
