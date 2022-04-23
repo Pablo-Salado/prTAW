@@ -153,11 +153,11 @@
                                   <%
                                       if(sub.getPujaMaxima()!= null){
                                       %>
-                              <input class="form-control" type="number" min=<%=sub.getPujaMaxima()%>  name="puja" style="max-width: 150px">    
+                              <input class="form-control" type="number" min=<%=sub.getPujaMaxima() +1 %>  name="puja" style="max-width: 150px">    
                               <%
                                   }else{
                                   %>
-                                  <input class="form-control" type="number" min=<%=sub.getPrecioInicial() %>  name="puja" style="max-width: 150px">  
+                                  <input class="form-control" type="number" min=<%=sub.getPrecioInicial()+ 1%>  name="puja" style="max-width: 150px">  
                                   <%
                                   }
                                   %>
