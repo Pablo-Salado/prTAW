@@ -101,16 +101,15 @@
       
       <article>
           <section>
+              
             <div class ="container-fluid ">
                  
                 <div class="row row-cols-auto justify-content-center">
                     <%
-                    
-                    
+
                     List<Subasta> subastas = (List)request.getAttribute("subastas");
                     if(subastas.isEmpty()){
-                            
-                        
+
                         %>
                         <div class="container py-2 align-items-center justify-content-center" >
                             <h2 class="text-center">No existen subastas</h2>
@@ -121,7 +120,46 @@
                     for (Subasta sub :subastas) {
                          
                     %> 
-                  <div class="col py-4">
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ventana de Puja</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                            <form method="post" action="servletPujar?">
+                                <div class="modal-body">
+                                    <div class="row row-cols-auto align-items-center justify-content-center">
+                                        <div class="col-auto"> Cantidad:</div>
+                                        <div class="col-auto">
+                                            <%
+                                        if(sub.getPujaMaxima()!= null){
+                                            %>
+                                            <input class="form-control" type="number" min=<%=sub.getPujaMaxima() +1 %>  name="puja" style="max-width: 250px" placeholder="Puja actual: <%=Double.toString(sub.getPujaMaxima())%>">    
+                                            <%
+                                        }else{
+                                            %>
+                                        <input class="form-control" type="number" min=<%=sub.getPrecioInicial()+ 1%>  name="puja" style="max-width: 250px" placeholder="Puja inicial: <%=Double.toString(sub.getPujaMaxima())%>">  
+                                            <%
+                                        }
+                                            %>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary" value=<%=sub.getPujaMaxima() %>>Pujar</button>    
+                                <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subasta" >
+                                <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" >  
+                          </div>
+                            </form> 
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col py-4">
                     
                     <div class="card shadow" style="width: 18rem;">
                       <div class="card-header">
@@ -134,38 +172,19 @@
                         <p class="card-text overflow-auto" style="min-height:  70px"><%= sub.getProducto().getDescripcion() %></p>
                       </div>
                       <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Precio inicial: EUR <%= sub.getPrecioInicial() %></li>
-                        <li class="list-group-item">Puja actual: EUR <%= sub.getPujaMaxima() %></li>
+                        <li class="list-group-item">Precio inicial: <%= sub.getPrecioInicial() %> EUR </li>
+                        <li class="list-group-item">Puja actual: <%= sub.getPujaMaxima() %> EUR</li>
                         <li class="list-group-item">Fecha limite: <%= sub.getCierre() %> </li>
                         <li class="list-group-item">Vendedor: <%= sub.getVendedor().getNombre() %> </li>
                       </ul>
                       <div class="card-body">
-                          <form method="post" action="servletPujar?">
                         <div class="row row-cols-auto align-items-center justify-content-center">
                           <div class="col">
-                                  <button type="submit" class="btn btn-primary" value=<%=sub.getPujaMaxima() %>>
+                                  <button type="button" class="btn btn-primary" value=<%=sub.getPujaMaxima() %> data-bs-toggle="modal" data-bs-target="#exampleModal">
                               Pujar
-                            </button>    
-                              <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subasta" >
-                              <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" >  
+                            </button>     
                           </div>
-                              <div class="col">
-                                  <%
-                                      if(sub.getPujaMaxima()!= null){
-                                      %>
-                              <input class="form-control" type="number" min=<%=sub.getPujaMaxima() +1 %>  name="puja" style="max-width: 150px">    
-                              <%
-                                  }else{
-                                  %>
-                                  <input class="form-control" type="number" min=<%=sub.getPrecioInicial()+ 1%>  name="puja" style="max-width: 150px">  
-                                  <%
-                                  }
-                                  %>
-                          </div>
-                          </div> 
-                          </form>
-                          <div class="row row-cols-auto align-items-center py-1 justify-content-center">
-                              <div class="col-auto">
+                          <div class="col-auto">
                                   <form method="post" action="servletFavorito" id="fav" autocomplete="off">
                                      <div class="form-check form-switch">
                                         <label class="form-check-label" >
@@ -200,8 +219,10 @@
                                   </form>
                             
                           </div>
+                          </div> 
+                          </form>
                               
-                          </div>
+                              
                           
                          
                      
@@ -216,6 +237,7 @@
                         }
                     %> 
                 </div>
+            </div>
           </section>
       </article>
       <nav aria-label="Page navigation example">

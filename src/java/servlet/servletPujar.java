@@ -44,14 +44,15 @@ public class servletPujar extends HttpServlet {
         Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
         
         str = request.getParameter("subasta");
+        
+        Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
+        Date fecha = new Date(System.currentTimeMillis());
+        str = request.getParameter("puja");
+        
         if(str.equals("1")){
              response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
         }else{
-             Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
-        
-        Date fecha = new Date(System.currentTimeMillis());
-        
-        str = request.getParameter("puja");
+             
         Double puja = Double.valueOf(str);
         
         Pujadores pj = new Pujadores();

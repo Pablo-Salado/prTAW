@@ -140,7 +140,7 @@
                                 Fecha de la compra: <%=sub.getCierre() %>
                               </div>
                               <div class="row">
-                              Coste:  <%=sub.getPujaMaxima() %> Euros
+                              Coste:  <%=sub.getPujaMaxima() %> EUR
                               </div>
                               <div class="row">
                                Vendedor: <%=sub.getVendedor().getNombre()%>
