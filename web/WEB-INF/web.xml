@@ -60,6 +60,14 @@
         <servlet-name>servletAccesoModificarProducto</servlet-name>
         <servlet-class>servlet.servletAccesoModificarProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletMisCompras</servlet-name>
+        <servlet-class>servlet.servletMisCompras</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletFiltrarMisCompras</servlet-name>
+        <servlet-class>servlet.servletFiltrarMisCompras</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -119,6 +127,14 @@
     <servlet-mapping>
         <servlet-name>servletAccesoModificarProducto</servlet-name>
         <url-pattern>/servletAccesoModificarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletMisCompras</servlet-name>
+        <url-pattern>/servletMisCompras</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletFiltrarMisCompras</servlet-name>
+        <url-pattern>/servletFiltrarMisCompras</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

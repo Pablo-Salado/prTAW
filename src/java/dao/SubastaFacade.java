@@ -37,7 +37,7 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
         Query q;
         int minimo = Integer.valueOf(min);
         int maximo = Integer.valueOf(max);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.precioInicial >=  :minimo AND s.precioInicial <= :maximo");
+        q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima >=  :minimo AND s.pujaMaxima <= :maximo");
         q.setParameter("minimo", minimo);
         q.setParameter("maximo", maximo);
         
@@ -46,7 +46,7 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
     public List<Subasta> findByMin (String min) {
         Query q;
         int minimo = Integer.valueOf(min);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.precioInicial >= :minimo");
+        q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima >= :minimo");
         q.setParameter("minimo", minimo);
         
         return q.getResultList();
@@ -54,7 +54,7 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
     public List<Subasta> findByMax (String max) {
         Query q;
         int maximo = Integer.valueOf(max);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.precioInicial <= :maximo");
+        q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima <= :maximo");
         q.setParameter("maximo", maximo);
         
         return q.getResultList();
@@ -69,7 +69,7 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
     public List<Subasta> findByCategoriaMin (String cat, String min) {
         Query q;
         int minimo = Integer.valueOf(min);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.precioInicial >= :minimo");
+        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima >= :minimo");
         q.setParameter("cat", cat);
         q.setParameter("minimo", minimo);
         
@@ -79,7 +79,7 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
     public List<Subasta> findByCategoriaMax (String cat, String max) {
         Query q;
         int maximo = Integer.valueOf(max);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.precioInicial <= :maximo");
+        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima <= :maximo");
         q.setParameter("cat", cat);
         q.setParameter("maximo", maximo);
         
@@ -89,7 +89,7 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
         Query q;
         int maximo = Integer.valueOf(max);
         int minimo = Integer.valueOf(min);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.precioInicial <= :maximo AND s.precioInicial >= :minimo");
+        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima <= :maximo AND s.pujaMaxima >= :minimo");
         q.setParameter("cat", cat);
         q.setParameter("maximo", maximo);
         q.setParameter("minimo", minimo);

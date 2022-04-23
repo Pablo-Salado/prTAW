@@ -1,3 +1,9 @@
+<%-- 
+    Document   : misCompras
+    Created on : 23-abr-2022, 11:15:26
+    Author     : Gorpax
+--%>
+
 
 
 <%@page import="entity.Producto"%>
@@ -24,7 +30,7 @@
         <div class="px-3 py-0 bg-dark text-white shadow">
           <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-              <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+              <a href="servletListadoSubastas" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                 <svg class="bi d-block mx-auto mb-1" xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="white" class="bi bi-bootstrap" viewBox="0 0 16 16">
                   <path d="M5.062 12h3.475c1.804 0 2.888-.908 2.888-2.396 0-1.102-.761-1.916-1.904-2.034v-.1c.832-.14 1.482-.93 1.482-1.816 0-1.3-.955-2.11-2.542-2.11H5.062V12zm1.313-4.875V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23H6.375zm0 3.762V8.162h1.822c1.236 0 1.887.463 1.887 1.348 0 .896-.627 1.377-1.811 1.377H6.375z"/>
                   <path d="M0 4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V4zm4-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3H4z"/>
@@ -36,7 +42,7 @@
                     <i class="bi bi-person-circle"></i> Mi perfil
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="servletMisCompras">Mis compras</a></li>
+                    <li><a class="dropdown-item" href="#">Mis compras</a></li>
                     <li><a class="dropdown-item" href="servletListadoMisProductos">Mis ventas</a></li>
                     <li><a class="dropdown-item" href="servletAccesoModificarProducto">Publicar producto</a></li>
                     <li><a class="dropdown-item" href="servletLogout">Cerrar sesion</a></li>
@@ -50,7 +56,7 @@
         <div class="px-3 py-2 mb-3 shadow">
           
           <div class="container">
-            <form method="post" action="servletFiltrarSubastas">
+            <form method="post" action="servletFiltrarMisCompras">
             <div class="row align-items-center">
               <div class="col">
                 <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
@@ -82,10 +88,7 @@
   
               </div>
               <div class="col">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="filtroFavorito">
-                     <label class="form-check-label" for="flexCheckDefault">Solo favoritos </label>
-                </div>
+                
               </div>
               <div class="col-auto">
                   <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
@@ -101,121 +104,73 @@
       
       <article>
           <section>
-            <div class ="container-fluid ">
-                 
-                <div class="row row-cols-auto justify-content-center">
+            
+                <div class="px-3 py-2 mb-3">
                     <%
-                    
-                    
-                    List<Subasta> subastas = (List)request.getAttribute("subastas");
-                    if(subastas.isEmpty()){
+                        List<Subasta> subastas = (List)request.getAttribute("misCompras");
+                        if(subastas.isEmpty()){
                             
                         
                         %>
                         <div class="container py-2 align-items-center justify-content-center" >
-                            <h2 class="text-center">No existen subastas</h2>
+                            <h2 class="text-center">No existen compras</h2>
                         </div>
                         <%
                             }else{
                         
-                    for (Subasta sub :subastas) {
-                         
-                    %> 
-                  <div class="col py-4">
-                    
-                    <div class="card shadow" style="width: 18rem;">
-                      <div class="card-header">
-                          Categoría: <%=sub.getProducto().getCategoria() %>
-                      </div>
-                        <img src=<%= sub.getProducto().getUrlFoto() %> class="card-img-top" alt=<%= sub.getProducto().getTitulo() %> style="max-height: 150px; object-fit: contain;">
-                             <hr>  
-                      <div class="card-body">
-                        <h5 class="card-title"><%= sub.getProducto().getTitulo() %></h5>
-                        <p class="card-text overflow-auto" style="min-height:  70px"><%= sub.getProducto().getDescripcion() %></p>
-                      </div>
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Precio inicial: EUR <%= sub.getPrecioInicial() %></li>
-                        <li class="list-group-item">Puja actual: EUR <%= sub.getPujaMaxima() %></li>
-                        <li class="list-group-item">Fecha limite: <%= sub.getCierre() %> </li>
-                        <li class="list-group-item">Vendedor: <%= sub.getVendedor().getNombre() %> </li>
-                      </ul>
-                      <div class="card-body">
-                          <form method="post" action="servletPujar?">
-                        <div class="row row-cols-auto align-items-center justify-content-center">
-                          <div class="col">
-                                  <button type="submit" class="btn btn-primary" value=<%=sub.getPujaMaxima() %>>
-                              Pujar
-                            </button>    
-                              <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subasta" >
-                              <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" >  
-                          </div>
-                              <div class="col">
-                                  <%
-                                      if(sub.getPujaMaxima()!= null){
-                                      %>
-                              <input class="form-control" type="number" min=<%=sub.getPujaMaxima()%>  name="puja" style="max-width: 150px">    
-                              <%
-                                  }else{
-                                  %>
-                                  <input class="form-control" type="number" min=<%=sub.getPrecioInicial() %>  name="puja" style="max-width: 150px">  
-                                  <%
-                                  }
-                                  %>
-                          </div>
-                          </div> 
-                          </form>
-                          <div class="row row-cols-auto align-items-center py-1 justify-content-center">
-                              <div class="col-auto">
-                                  <form method="post" action="servletFavorito" id="fav" autocomplete="off">
-                                     <div class="form-check form-switch">
-                                        <label class="form-check-label" >
-                                            Favorito
-                                        </label>
-
-                                          <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subasta" onChange="this.form.submit()" >
-                                          <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
-                                          
-                                           <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="favorito" onChange="this.form.submit()">
-                                           
-                                          <%
-                                            List<Producto> productos = (List)request.getAttribute("productos");
-                                            if(productos == null){
-                                                productos = user.getProductoList();
-                                            }
-                                            for (Producto pro: productos){
-                                            if(pro.getIdPRODUCTO() == sub.getProducto().getIdPRODUCTO() ){
-                                            %>
-                                            
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="favorito" onChange="this.form.submit()" checked="true">
-                                            <%
-                                            }
-                                            %>
-                                           
-                                           <%
-                                            
-                                            }
-                                            
-                                            %>
-                                        </div>
-                                  </form>
+                        for(Subasta sub : subastas){
+                            if(sub.getComprador()!= null && sub.getComprador().getIdUSUARIO() == user.getIdUSUARIO()){
+                                
+                            
+                        %>
+                    <div class="container py-2">
+                      <div class="card shadow" style"max-height: 200px; min-height:200px">
+                        <h5 class="card-header">Categoria: <%= sub.getProducto().getCategoria() %></h5>
+                        <div class="card-body">
+                          <div class="row row-cols-auto align-items-center" >
+                            <div class="col ps-4">
+                              <img src=<%=sub.getProducto().getUrlFoto() %> class="card-img-top" alt=<%=sub.getProducto().getTitulo() %> style="width: 10rem; object-fit: contain; max-height: 100px; min-height:100px">
+                            </div>
+                            
+                            <div class="col ps-5">
+                              <div class="row">
+                                  Nombre del producto: <%=sub.getProducto().getTitulo() %>
+                              </div>
+                              <div class="row">
+                                Fecha de la compra: <%=sub.getCierre() %>
+                              </div>
+                              <div class="row">
+                              Coste:  <%=sub.getPujaMaxima() %> Euros
+                              </div>
+                              <div class="row">
+                               Vendedor: <%=sub.getVendedor().getNombre()%>
+                               </div>
+                               
+                            </div>
+                            <div class="col ps-5">
+                              <div class="d-flex" style="height: 120px;">
+                                <div class="vr"></div>
+                              </div>
+                            </div>
+                            <div class="col-5 ps-4">
+                              <%=sub.getProducto().getDescripcion() %>
+                            </div>
+                            
                             
                           </div>
-                              
-                          </div>
-                          
-                         
-                     
+                        </div>
                       </div>
-                
-
                     </div>
-                     
-                  </div>
-                       <%
-                          }
-                        }
-                    %> 
+                        <%
+                            
+                              }
+                            }
+                        }   
+                            %>
                 </div>
+          
+                    
+                
           </section>
       </article>
       <nav aria-label="Page navigation example">
