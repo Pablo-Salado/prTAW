@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author migue
+ * @author Usuario
  */
 @Entity
 @Table(name = "producto")
@@ -58,7 +58,7 @@ public class Producto implements Serializable {
     @Size(max = 200)
     @Column(name = "URL_FOTO")
     private String urlFoto;
-    @Size(max = 9)
+    @Size(max = 10)
     @Column(name = "ESTADO")
     private String estado;
     @Size(max = 16)
