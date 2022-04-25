@@ -121,7 +121,7 @@
                          
                     %> 
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="modal<%=sub.getIdSUBASTA()%>" tabindex = "-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -136,11 +136,11 @@
                                             <%
                                         if(sub.getPujaMaxima()!= null){
                                             %>
-                                            <input class="form-control" type="number" min=<%=sub.getPujaMaxima() +1 %>  name="puja" style="max-width: 250px" >    
+                                            <input class="form-control" type="number" min=<%=sub.getPujaMaxima() +1 %>  name="puja" style="max-width: 250px" placeholder="Puja actual: <%=sub.getPujaMaxima() %>" >    
                                             <%
                                         }else{
                                             %>
-                                        <input class="form-control" type="number" min=<%=sub.getPrecioInicial()+ 1%>  name="puja" style="max-width: 250px">  
+                                        <input class="form-control" type="number" min=<%=sub.getPrecioInicial()+ 1%>  name="puja" style="max-width: 250px" placeholder="Puja inicial <%=sub.getPrecioInicial() %>">  
                                             <%
                                         }
                                             %>
@@ -179,7 +179,7 @@
                       <div class="card-body">
                         <div class="row row-cols-auto align-items-center justify-content-center">
                           <div class="col">
-                                  <button type="button" class="btn btn-primary" value=<%=sub.getPujaMaxima() %> data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                  <button type="button" class="btn btn-primary" value=<%=sub.getPujaMaxima() %> data-bs-toggle="modal" data-bs-target=#modal<%=sub.getIdSUBASTA()%>>
                               Pujar
                             </button>     
                           </div>
