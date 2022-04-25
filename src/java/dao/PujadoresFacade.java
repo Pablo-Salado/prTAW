@@ -6,9 +6,12 @@
 package dao;
 
 import entity.Pujadores;
+import entity.Subasta;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,15 @@ public class PujadoresFacade extends AbstractFacade<Pujadores> {
 
     public PujadoresFacade() {
         super(Pujadores.class);
+    }
+    
+    
+    public List<Integer> getPujadores (Subasta sub) {
+        Query q;
+       int idSubasta = sub.getIdSUBASTA();
+        q = this.getEntityManager().createNativeQuery("select USUARIO from pujadores s where s.subasta = " + idSubasta);
+
+        return q.getResultList();
     }
     
 }

@@ -52,16 +52,10 @@ public class servletTerminarSubasta extends HttpServlet {
         
         Date date = new Date(System.currentTimeMillis());
         subasta.setCierre(date);
-        List<Pujadores> pujadores = this.pujadorFC.findAll();
-        List<Pujadores> misPujadores = new ArrayList<Pujadores>();
-        for(Pujadores p: pujadores){
-            if(p.getSubasta().getVendedor().getIdUSUARIO()==user.getIdUSUARIO()){
-                misPujadores.add(p);
-            }
-        }
         
+        List<Integer> aux = this.pujadorFC.getPujadores(subasta);
         
-        if(misPujadores.isEmpty()){
+        if(aux.isEmpty()){
         producto.setEstado("No vendido");
         }else{
         producto.setEstado("Vendido");
