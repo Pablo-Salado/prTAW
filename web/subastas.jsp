@@ -136,11 +136,11 @@
                                             <%
                                         if(sub.getPujaMaxima()!= null){
                                             %>
-                                            <input class="form-control" type="number" min=<%=sub.getPujaMaxima() +1 %>  name="puja" style="max-width: 250px" placeholder="Puja actual: <%=Double.toString(sub.getPujaMaxima())%>">    
+                                            <input class="form-control" type="number" min=<%=sub.getPujaMaxima() +1 %>  name="puja" style="max-width: 250px" >    
                                             <%
                                         }else{
                                             %>
-                                        <input class="form-control" type="number" min=<%=sub.getPrecioInicial()+ 1%>  name="puja" style="max-width: 250px" placeholder="Puja inicial: <%=Double.toString(sub.getPujaMaxima())%>">  
+                                        <input class="form-control" type="number" min=<%=sub.getPrecioInicial()+ 1%>  name="puja" style="max-width: 250px">  
                                             <%
                                         }
                                             %>
@@ -174,7 +174,6 @@
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">Precio inicial: <%= sub.getPrecioInicial() %> EUR </li>
                         <li class="list-group-item">Puja actual: <%= sub.getPujaMaxima() %> EUR</li>
-                        <li class="list-group-item">Fecha limite: <%= sub.getCierre() %> </li>
                         <li class="list-group-item">Vendedor: <%= sub.getVendedor().getNombre() %> </li>
                       </ul>
                       <div class="card-body">
