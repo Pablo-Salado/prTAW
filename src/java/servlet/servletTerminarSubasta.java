@@ -67,13 +67,14 @@ public class servletTerminarSubasta extends HttpServlet {
         producto.setEstado("Vendido");
 
         }
+        this.productoFC.edit(producto);
         
         date = new Date(System.currentTimeMillis());
         
         subasta.setCierre(date);
         
         this.subastaFC.edit(subasta);
-        this.productoFC.edit(producto);
+        
         response.sendRedirect(request.getContextPath()+"/servletListadoMisProductos");
     }
 
