@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,6 +41,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Subasta.findByPujaMaxima", query = "SELECT s FROM Subasta s WHERE s.pujaMaxima = :pujaMaxima")
     , @NamedQuery(name = "Subasta.findByPrecioInicial", query = "SELECT s FROM Subasta s WHERE s.precioInicial = :precioInicial")})
 public class Subasta implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSubasta")
+    private List<Notificaciones> notificacionesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subasta")
+    private List<Pujadores> pujadoresList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -173,6 +179,24 @@ public class Subasta implements Serializable {
     @Override
     public String toString() {
         return "entity.Subasta[ idSUBASTA=" + idSUBASTA + " ]";
+    }
+
+    @XmlTransient
+    public List<Notificaciones> getNotificacionesList() {
+        return notificacionesList;
+    }
+
+    public void setNotificacionesList(List<Notificaciones> notificacionesList) {
+        this.notificacionesList = notificacionesList;
+    }
+
+    @XmlTransient
+    public List<Pujadores> getPujadoresList() {
+        return pujadoresList;
+    }
+
+    public void setPujadoresList(List<Pujadores> pujadoresList) {
+        this.pujadoresList = pujadoresList;
     }
     
 }
