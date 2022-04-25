@@ -72,6 +72,14 @@
         <servlet-name>servletFiltrarMisProductos</servlet-name>
         <servlet-class>servlet.servletFiltrarMisProductos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletListarNotificaciones</servlet-name>
+        <servlet-class>servlet.servletListarNotificaciones</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletEliminarNotificacion</servlet-name>
+        <servlet-class>servlet.servletEliminarNotificacion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -143,6 +151,14 @@
     <servlet-mapping>
         <servlet-name>servletFiltrarMisProductos</servlet-name>
         <url-pattern>/servletFiltrarMisProductos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletListarNotificaciones</servlet-name>
+        <url-pattern>/servletListarNotificaciones</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletEliminarNotificacion</servlet-name>
+        <url-pattern>/servletEliminarNotificacion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

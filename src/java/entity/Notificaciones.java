@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -41,8 +42,9 @@ public class Notificaciones implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "ganador")
-    private short ganador;
+    private String ganador;
     @JoinColumn(name = "idSubasta", referencedColumnName = "idSUBASTA")
     @ManyToOne(optional = false)
     private Subasta idSubasta;
@@ -57,7 +59,7 @@ public class Notificaciones implements Serializable {
         this.id = id;
     }
 
-    public Notificaciones(Integer id, short ganador) {
+    public Notificaciones(Integer id, String ganador) {
         this.id = id;
         this.ganador = ganador;
     }
@@ -70,11 +72,11 @@ public class Notificaciones implements Serializable {
         this.id = id;
     }
 
-    public short getGanador() {
+    public String getGanador() {
         return ganador;
     }
 
-    public void setGanador(short ganador) {
+    public void setGanador(String ganador) {
         this.ganador = ganador;
     }
 

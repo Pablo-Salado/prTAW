@@ -39,7 +39,9 @@
                     <li><a class="dropdown-item" href="servletMisCompras">Mis compras</a></li>
                     <li><a class="dropdown-item" href="servletListadoMisProductos">Mis ventas</a></li>
                     <li><a class="dropdown-item" href="servletAccesoModificarProducto">Publicar producto</a></li>
+                    <li><a class="dropdown-item" href="servletListarNotificaciones">Notificaciones</a></li>
                     <li><a class="dropdown-item" href="servletLogout">Cerrar sesion</a></li>
+
                   </ul>
                 </div>
               </div>
@@ -118,7 +120,7 @@
                             }else{
                         
                     for (Subasta sub :subastas) {
-                         
+                         if(sub.getComprador() == null){
                     %> 
                     <!-- Modal -->
                     <div class="modal fade" id="modal<%=sub.getIdSUBASTA()%>" tabindex = "-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -233,6 +235,7 @@
                   </div>
                        <%
                           }
+                        }
                         }
                     %> 
                 </div>

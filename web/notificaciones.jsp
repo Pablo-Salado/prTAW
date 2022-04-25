@@ -1,11 +1,11 @@
 <%-- 
-    Document   : misCompras
-    Created on : 23-abr-2022, 11:15:26
+    Document   : notificaciones
+    Created on : 25-abr-2022, 15:09:21
     Author     : Gorpax
 --%>
 
-
-
+<%@page import="java.util.ArrayList"%>
+<%@page import="entity.Notificaciones"%>
 <%@page import="entity.Producto"%>
 <%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>
@@ -55,53 +55,7 @@
           </div>
         </div>
         
-        <div class="px-3 py-2 mb-3 shadow">
-          
-          <div class="container">
-            <form method="post" action="servletFiltrarMisCompras">
-            <div class="row align-items-center">
-              <div class="col">
-                <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
-                  <option selected>CATEGORIAS</option>
-                  <option value="MOTOR">MOTOR</option>
-                  <option value="DEPORTE">DEPORTE</option>
-                  <option value="HOGAR">HOGAR</option>
-                  <option value="INFORMATICA">INFORMATICA</option>
-                  <option value="IMAGEN Y SONIDO">IMAGEN Y SONIDO</option>
-                  <option value="TELEFONIA">TELEFONIA</option>
-                  <option value="MODA">MODA</option>
-                  <option value="JUEGOS">JUEGOS</option>
-                  <option value="AFICIONES Y OCIO">AFICIONES Y OCIO</option>
-                  <option value="OTROS">OTROS</option>
-                </select>
-              </div>
-              <div class="col-auto">
-                <label class="col-form-label">Rango de precio:</label>
-              </div>
-              <div class="col ">
-                <input class="form-control" type="number" min="0" placeholder="Precio minimo"  name="minPrice"> 
-                
-              </div>
-              <div class="col-auto">
-                <label class="col-form-label">-</label>
-              </div>
-              <div class="col">
-                <input class="form-control" type="number" min="0" placeholder="Precio maximo" name="maxPrice">
-  
-              </div>
-              <div class="col">
-                
-              </div>
-              <div class="col-auto">
-                  <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
-                <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
-                
-              </div>
-            </div>
-            </form>
- 
-          
-        </div>
+
       </header>
       
       <article>
@@ -109,75 +63,73 @@
             
                 <div class="px-3 py-2 mb-3">
                     <%
-                        List<Subasta> subastas = (List)request.getAttribute("misCompras");
-                        if(subastas.isEmpty()){
+                        List<Notificaciones> notificaciones = (List)request.getAttribute("notificaciones");
+                        List<Notificaciones> not = new ArrayList<Notificaciones>();
+                        for(Notificaciones noti : notificaciones){
+                            if(noti.getIdUsuario().getIdUSUARIO() == user.getIdUSUARIO()  && !not.contains(noti)){
+                                not.add(noti);
+                            }
+                        }
+                        if(not.isEmpty()){
                             
                         
                         %>
                         <div class="container py-2 align-items-center justify-content-center" >
-                            <h2 class="text-center">No existen compras</h2>
+                            <h2 class="text-center">No tiene ninguna notificacion</h2>
                         </div>
                         <%
                             }else{
-                        
-                        for(Subasta sub : subastas){
-                            if(sub.getComprador()!= null && sub.getComprador().getIdUSUARIO() == user.getIdUSUARIO()){
+                        int cont = 1;
+                        for(Notificaciones n : not){
                                 
-                            
+                            if(n.getIdUsuario().getIdUSUARIO() == user.getIdUSUARIO()){
                         %>
-                    <div class="container py-2">
-                      <div class="card shadow" style"max-height: 200px; min-height:200px">
-                        <h5 class="card-header">Categoria: <%= sub.getProducto().getCategoria() %></h5>
-                        <div class="card-body">
-                          <div class="row row-cols-auto align-items-center" >
-                            <div class="col ps-4">
-                              <img src=<%=sub.getProducto().getUrlFoto() %> class="card-img-top" alt=<%=sub.getProducto().getTitulo() %> style="width: 10rem; object-fit: contain; max-height: 100px; min-height:100px">
-                            </div>
-                            
-                            <div class="col ps-5">
-                              <div class="row">
-                                  Nombre del producto: <%=sub.getProducto().getTitulo() %>
-                              </div>
-                              <div class="row">
-                                Fecha de la compra: <%=sub.getCierre() %>
-                              </div>
-                              <div class="row">
-                              Coste:  <%=sub.getPujaMaxima() %> EUR
-                              </div>
-                              <div class="row">
-                               Vendedor: <%=sub.getVendedor().getNombre()%>
-                               </div>
-                               
-                            </div>
-                            <div class="col ps-5">
-                              <div class="d-flex" style="height: 120px;">
+                     <div class="row justify-content-center">
+            <div class="container py-2 col-6">
+                <div class="card shadow">
+                    <h5 class="card-header">Notificacion <%=cont%> </h5>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+
+                            <div class="col">
+                            <div class="d-flex" style="height: 120px;">
                                 <div class="vr"></div>
-                              </div>
                             </div>
-                            <div class="col-5 ps-4">
-                              <%=sub.getProducto().getDescripcion() %>
                             </div>
-                            
-                            
-                          </div>
-                            <div class="row  mt-3 ">
-                        <div class="col">
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-primary" href="servletAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA()%>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar</a>
-                                <a class="btn btn-primary" href="servletBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar</a>
-                                <% if(sub.getProducto().getEstado().equals("En venta")){%>
-                                <a class="btn btn-primary" href="servletTerminarSubasta?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>" role="button">TerminarSubasta</a>
-                                <%}%>
+
+                            <div class="col-6">
+                            Le notificamos que la subasta con titulo: <%=n.getIdSubasta().getProducto().getTitulo() %>, con id: <%= n.getIdSubasta().getIdSUBASTA() %> ha terminado, le informamos
+                            que usted <%=n.getGanador() %> de la puja.
+                            </div>
+
+                            <div class="col">
+                                <div class="d-flex" style="height: 120px;">
+                                    <div class="vr"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-5 align-self-end">
+                                <div class="row justify-content-end px-2">
+                                    <form method="post" action="servletEliminarNotificacion">
+                                        <button type="submit" class="btn btn-danger" style="width: 110px;">
+                                        <i class="bi bi-backspace-reverse-fill"> Eliminar</i>
+                                    </button>
+                                        <input class="form-control" type="hidden" value=<%=n.getId() %>  name="notificacion" >
+                                    </form>
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
-                        </div>
-                      </div>
-                    </div>
+                </div>
+            </div>
+        </div>
                         <%
                             
                               }
+                              cont++;
                             }
+
                         }   
                             %>
                 </div>
