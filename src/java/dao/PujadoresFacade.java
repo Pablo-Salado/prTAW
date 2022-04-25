@@ -41,4 +41,14 @@ public class PujadoresFacade extends AbstractFacade<Pujadores> {
         return q.getResultList();
     }
     
+     public Integer getPujadorMaximo (Subasta sub) {
+        Query q;
+       int idSubasta = sub.getIdSUBASTA();
+        q = this.getEntityManager().createNativeQuery("select usuario from pujadores where pujadores.SUBASTA ="+idSubasta+
+                    " order by VALOR_PUJA desc limit 1;");
+        List<Integer> lista = q.getResultList();
+        
+        return lista.get(0);
+    }
+    
 }

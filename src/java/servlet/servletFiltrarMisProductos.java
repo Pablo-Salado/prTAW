@@ -5,18 +5,10 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
-import dao.PujadoresFacade;
 import dao.SubastaFacade;
-import dao.UsuarioFacade;
-import entity.Producto;
-import entity.Pujadores;
 import entity.Subasta;
-import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -28,11 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Usuario
  */
-public class servletTerminarSubasta extends HttpServlet {
-@EJB SubastaFacade subastaFC;
-@EJB ProductoFacade productoFC;
-@EJB UsuarioFacade usuarioFC;
-@EJB PujadoresFacade pujadorFC;
+public class servletFiltrarMisProductos extends TAWServlet {
+    @EJB SubastaFacade subastaFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,35 +33,41 @@ public class servletTerminarSubasta extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String str = request.getParameter("subasta");
-        Subasta subasta = this.subastaFC.find(Integer.parseInt(str));
-        Producto producto = subasta.getProducto();
-        str = request.getParameter("id");
-        Usuario user = this.usuarioFC.find(Integer.parseInt(str));
         
-        Date date = new Date(System.currentTimeMillis());
-        subasta.setCierre(date);
-        
-        List<Integer> aux = this.pujadorFC.getPujadores(subasta);
-        
-        if(aux.isEmpty()){
-        producto.setEstado("No vendido");
+        if(super.comprobarSession(request, response)){
+           
+         String min = request.getParameter("minPrice");
+        String max = request.getParameter("maxPrice");
+        String cat = request.getParameter("categoria");
+        List<Subasta> misCompras = null;
+        if(cat == null || cat.contains("CATEGORIAS")){
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
+                misCompras = this.subastaFacade.findAll();
+                
+            }else if ((min.length()>0 && max.length() > 0)){
+                misCompras = this.subastaFacade.findByPrecio(min,max);
+            }else if(min.length()> 0 && max.length() == 0){
+                misCompras = this.subastaFacade.findByMin(min);
+            }else if(min.length()== 0 && max.length() > 0){
+                misCompras = this.subastaFacade.findByMax(max);
+                
+            }
         }else{
-        
-        Usuario ganador =this.usuarioFC.find(this.pujadorFC.getPujadorMaximo(subasta));
-        producto.setEstado("Vendido");
-        subasta.setComprador(user);
-
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
+                misCompras = this.subastaFacade.findByCategoria(cat);
+            }else if ((min.length()>0 && max.length() > 0)){
+                misCompras = this.subastaFacade.findByCategoriaPrecio(cat,min,max);
+            }else if(min.length()> 0 && max.length() == 0){
+                misCompras = this.subastaFacade.findByCategoriaMin(cat,min);
+            }else if(min.length()== 0 && max.length() > 0){
+                misCompras = this.subastaFacade.findByCategoriaMax(cat,max);
+            }
         }
-        this.productoFC.edit(producto);
-        
-        date = new Date(System.currentTimeMillis());
-        
-        subasta.setCierre(date);
-        
-        this.subastaFC.edit(subasta);
-        
-        response.sendRedirect(request.getContextPath()+"/servletListadoMisProductos");
+
+        request.setAttribute("subastas", misCompras);
+        request.getRequestDispatcher("misProductos.jsp").forward(request, response);
+
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

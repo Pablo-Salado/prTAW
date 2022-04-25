@@ -41,6 +41,7 @@ public class servletFiltrarMisCompras extends TAWServlet {
             throws ServletException, IOException {
        if(super.comprobarSession(request, response)){
            
+           
          String min = request.getParameter("minPrice");
         String max = request.getParameter("maxPrice");
         String cat = request.getParameter("categoria");
@@ -68,8 +69,10 @@ public class servletFiltrarMisCompras extends TAWServlet {
                 misCompras = this.subastaFacade.findByCategoriaMax(cat,max);
             }
         }
+        
 
         request.setAttribute("misCompras", misCompras);
+        
         request.getRequestDispatcher("misCompras.jsp").forward(request, response);
 
     }

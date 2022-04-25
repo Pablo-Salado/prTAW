@@ -24,6 +24,7 @@
     <title>Página principal</title>
   </head>
   <% Usuario user = (Usuario)session.getAttribute("usuario"); %>
+  
   <body>
 
       <header>
@@ -158,6 +159,17 @@
                             
                             
                           </div>
+                            <div class="row  mt-3 ">
+                        <div class="col">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a class="btn btn-primary" href="servletAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA()%>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar</a>
+                                <a class="btn btn-primary" href="servletBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar</a>
+                                <% if(sub.getProducto().getEstado().equals("En venta")){%>
+                                <a class="btn btn-primary" href="servletTerminarSubasta?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>" role="button">TerminarSubasta</a>
+                                <%}%>
+                            </div>
+                        </div>
+                    </div>
                         </div>
                       </div>
                     </div>

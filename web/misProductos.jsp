@@ -18,6 +18,8 @@
     </head>
     <%Usuario user = (Usuario)session.getAttribute("usuario");%>
     <body>
+      <body>
+
       <header>
         <div class="px-3 py-0 bg-dark text-white shadow">
           <div class="container">
@@ -33,14 +35,12 @@
                   <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle"></i> Mi perfil
                   </button>
-                    
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="#">Mis compras</a></li>
                     <li><a class="dropdown-item" href="servletListadoMisProductos">Mis ventas</a></li>
                     <li><a class="dropdown-item" href="servletAccesoModificarProducto">Publicar producto</a></li>
                     <li><a class="dropdown-item" href="servletLogout">Cerrar sesion</a></li>
                   </ul>
-                    
                 </div>
               </div>
             </div>
@@ -48,112 +48,163 @@
         </div>
         
         <div class="px-3 py-2 mb-3 shadow">
-         
+          
+          <div class="container">
+            <form method="post" action="servletFiltrarMisProductos">
+            <div class="row align-items-center">
+              <div class="col">
+                <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
+                  <option selected>CATEGORIAS</option>
+                  <option value="MOTOR">MOTOR</option>
+                  <option value="DEPORTE">DEPORTE</option>
+                  <option value="HOGAR">HOGAR</option>
+                  <option value="INFORMATICA">INFORMATICA</option>
+                  <option value="IMAGEN Y SONIDO">IMAGEN Y SONIDO</option>
+                  <option value="TELEFONIA">TELEFONIA</option>
+                  <option value="MODA">MODA</option>
+                  <option value="JUEGOS">JUEGOS</option>
+                  <option value="AFICIONES Y OCIO">AFICIONES Y OCIO</option>
+                  <option value="OTROS">OTROS</option>
+                </select>
+              </div>
+              <div class="col-auto">
+                <label class="col-form-label">Rango de precio:</label>
+              </div>
+              <div class="col ">
+                <input class="form-control" type="number" min="0" placeholder="Precio minimo"  name="minPrice"> 
+                
+              </div>
+              <div class="col-auto">
+                <label class="col-form-label">-</label>
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" min="0" placeholder="Precio maximo" name="maxPrice">
+  
+              </div>
+              <div class="col">
+                
+              </div>
+              <div class="col-auto">
+                  <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
+                
+              </div>
+            </div>
+            </form>
+ 
+          
+        </div>
       </header>
-       
-
-       
-        <article>
-            <section>
- <%
-                List<Subasta> subastas = (List)request.getAttribute("subastas");
-                if(subastas.isEmpty()){
-                    %>
-                    <h1>El usuario no tiene productos en subasta</h1>
-                <%}
-            for (Subasta sub :subastas) {
-                if(sub.getVendedor().getIdUSUARIO()==user.getIdUSUARIO()){
-               
-        %>   
-        
-        <div class="px-3 py-2 mb-3">
-            <div class="container">
-                <div class="row px-3 py-4 mb-3 shadow border rounded" id="productoComprado">
-                    <div class="col-md-2  ">
-                        <img src=<%= sub.getProducto().getUrlFoto()%> class="card-img shadow border rounded" alt=<%= sub.getProducto().getTitulo()%> >
-                    </div>
-                    
-                    <div class="col col-lg-auto " >
-
-                        <div class="col px-3">
-                            <div class="col">
-                                <p class="text-primary">
-                                    Nombre del producto: <small class="text-dark"><%= sub.getProducto().getTitulo()%></small>
-                                </p> 
-                            </div>
-                            <div class="col">
-                                    <p class="text-primary">
-                                    Fecha de apertura: <small class="text-dark"> <%= sub.getApertura()%></small>
-                                    </p> 
-                            </div>
-
+      
+      <article>
+          <section>
+            
+                <div class="px-3 py-2 mb-3">
+                    <%
+                        List<Subasta> subastas = (List)request.getAttribute("subastas");
+                        if(subastas.isEmpty()){
                             
-                            <div class="row">
-                                <p class="text-primary">
-                                 Precio inicial: <small class="text-dark">  <%= sub.getPrecioInicial()%></small>
-                                 </p> 
-
-                            </div>
-                            <div class="row">
-                                <p class="text-primary">
-                                Precio actual: <small class="text-dark">  <%= sub.getPujaMaxima()%></small>
-                                </p> 
-                            </div>
-                            
-
-
-                            <div class="row">
-                                <p class="text-primary">
-                                Vendedor:<small class="text-dark"> <%= sub.getVendedor().getNombre()%></small>
-                                </p>
-                            </div>
-                                <div class="row">
-                                <p class="text-primary">
-                                Estado:<small class="text-dark"> <%= sub.getProducto().getEstado()%></small>
-                                </p>
-                            </div>
-                        </div >
-
-                    </div>
-                            
-                    <div class="col align-items-center shadow border rounded">
                         
-                        <div class="row" title="" id="texto">
-                            <p class="text-primary">Descripcion</p>
-                            -<%= sub.getProducto().getDescripcion()%>  
+                        %>
+                        <div class="container py-2 align-items-center justify-content-center" >
+                            <h2 class="text-center">No tienes ninguna subasta</h2>
                         </div>
-
-
-                    </div>
-                    <div class="row  mt-3 ">
+                        <%
+                            }else{
+                        
+                        for(Subasta sub : subastas){
+                            if(sub.getVendedor().getIdUSUARIO()==user.getIdUSUARIO()){
+                                
+                            
+                        %>
+                    <div class="container py-2">
+                      <div class="card shadow" style"max-height: 200px; min-height:200px">
+                        <h5 class="card-header">Categoria: <%= sub.getProducto().getCategoria() %></h5>
+                        <div class="card-body">
+                          <div class="row row-cols-auto align-items-center" >
+                            <div class="col ps-4">
+                              <img src=<%=sub.getProducto().getUrlFoto() %> class="card-img-top" alt=<%=sub.getProducto().getTitulo() %> style="width: 10rem; object-fit: contain; max-height: 100px; min-height:100px">
+                            </div>
+                            
+                            <div class="col ps-5">
+                              <div class="row">
+                                  Nombre del producto: <%=sub.getProducto().getTitulo() %>
+                              </div>
+                              <div class="row">
+                                Fecha de la compra: <%=sub.getCierre() %>
+                              </div>
+                              <div class="row">
+                              Coste:  <%=sub.getPujaMaxima() %> EUR
+                              </div>
+                              <div class="row">
+                               Vendedor: <%=sub.getVendedor().getNombre()%>
+                               </div>
+                               
+                            </div>
+                            <div class="col ps-5">
+                              <div class="d-flex" style="height: 120px;">
+                                <div class="vr"></div>
+                              </div>
+                            </div>
+                            <div class="col-5 ps-4">
+                              <%=sub.getProducto().getDescripcion() %>
+                            </div>
+                            
+                            
+                          </div>
+                            <div class="row  mt-3 ">
                         <div class="col">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a class="btn btn-primary" href="servletAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA()%>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar</a>
                                 <a class="btn btn-primary" href="servletBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar</a>
+                                <% if(sub.getProducto().getEstado().equals("En venta")){%>
                                 <a class="btn btn-primary" href="servletTerminarSubasta?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>" role="button">TerminarSubasta</a>
+                                <%}%>
                             </div>
                         </div>
                     </div>
-
+                        </div>
+                      </div>
+                    </div>
+                        <%
+                            
+                              }
+                            }
+                        }   
+                            %>
                 </div>
-
-
-            </div>
-        </div>
-
-
-
-            </section>
-        </article>
-        
-                           
+          
                     
-        </tr>
-        <%
-            }
-            }
-        %>
-           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+                
+          </section>
+      </article>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
+      
+      <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Contacto</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Ayuda</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Sobre nosotros</a></li>
+        </ul>
+        <p class="text-center text-muted">© 2022 Company, Inc</p>
+      </footer>      
+      
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+  </body>
     </body>
 </html>
