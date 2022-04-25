@@ -50,11 +50,114 @@ public class servletFiltrarSubastas extends TAWServlet {
            Al final hacemos subastas = aux;
            
            */
+         String str = request.getParameter("usuario");
+         Usuario user = this.usuarioFacade.find(Integer.parseInt(str));   
+            
+         String fav = request.getParameter("filtroFavorito");
          String min = request.getParameter("minPrice");
         String max = request.getParameter("maxPrice");
         String cat = request.getParameter("categoria");
-        List<Subasta> subastas = null;
-        if(cat == null || cat.contains("CATEGORIAS")){
+        
+        List<Subasta> subastas = new ArrayList<Subasta>();
+        List<Subasta> aux = new ArrayList<Subasta>();
+        List<Producto> productos = new ArrayList<Producto>();
+        List<Integer> idPro = this.productoFacade.productosFavoritos( user);
+        for(Integer i: idPro){
+            Producto pro = this.productoFacade.find(i);
+            if(!productos.contains(pro)){
+                productos.add(pro);
+            }
+        }
+        
+        if(fav != null){
+            if(cat == null || cat.contains("CATEGORIAS")){
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
+                subastas = this.subastaFacade.findAll();
+                for(Subasta s: subastas){
+                    for(Producto p:productos){
+                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO()){
+                            aux.add(s);
+                        }
+                    }
+                }
+                subastas = aux;
+            }else if ((min.length()>0 && max.length() > 0)){
+                subastas = this.subastaFacade.findByPrecio(min,max);
+                for(Subasta s: subastas){
+                    for(Producto p:productos){
+                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO()){
+                            aux.add(s);
+                        }
+                    }
+                }
+                subastas = aux;
+            }else if(min.length()> 0 && max.length() == 0){
+                subastas = this.subastaFacade.findByMin(min);
+                for(Subasta s: subastas){
+                    for(Producto p:productos){
+                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO()){
+                            aux.add(s);
+                        }
+                    }
+                }
+                subastas = aux;
+            }else if(min.length()== 0 && max.length() > 0){
+                subastas = this.subastaFacade.findByMax(max);
+                for(Subasta s: subastas){
+                    for(Producto p:productos){
+                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO()){
+                            aux.add(s);
+                        }
+                    }
+                }
+                subastas = aux;
+                
+            }
+        }else{
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
+                subastas = this.subastaFacade.findByCategoria(cat);
+                for(Subasta s: subastas){
+                    for(Producto p:productos){
+                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO()){
+                            aux.add(s);
+                        }
+                    }
+                }
+                subastas = aux;
+            }else if ((min.length()>0 && max.length() > 0)){
+                subastas = this.subastaFacade.findByCategoriaPrecio(cat,min,max);
+                for(Subasta s: subastas){
+                    for(Producto p:productos){
+                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO()){
+                            aux.add(s);
+                        }
+                    }
+                }
+                subastas = aux;
+            }else if(min.length()> 0 && max.length() == 0){
+                subastas = this.subastaFacade.findByCategoriaMin(cat,min);
+                for(Subasta s: subastas){
+                    for(Producto p:productos){
+                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO()){
+                            aux.add(s);
+                        }
+                    }
+                }
+                subastas = aux;
+            }else if(min.length()== 0 && max.length() > 0){
+                subastas = this.subastaFacade.findByCategoriaMax(cat,max);
+                for(Subasta s: subastas){
+                    for(Producto p:productos){
+                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO()){
+                            aux.add(s);
+                        }
+                    }
+                }
+                subastas = aux;
+            }
+        }
+        }else{
+            if(cat == null || cat.contains("CATEGORIAS")){
             if(min == null || max == null || (min.length()==0 && max.length()==0)){
                 subastas = this.subastaFacade.findAll();
                 
@@ -77,16 +180,11 @@ public class servletFiltrarSubastas extends TAWServlet {
                 subastas = this.subastaFacade.findByCategoriaMax(cat,max);
             }
         }
-        String str = request.getParameter("usuario");
-        Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
-        List<Producto> productos = new ArrayList<Producto>();
-        List<Integer> idPro = this.productoFacade.productosFavoritos( user);
-        for(Integer i: idPro){
-            Producto aux = this.productoFacade.find(i);
-            if(!productos.contains(aux)){
-                productos.add(aux);
-            }
         }
+        
+        
+        
+        
        request.setAttribute("productos", productos);
         request.setAttribute("subastas", subastas);
         request.getRequestDispatcher("subastas.jsp").forward(request, response);

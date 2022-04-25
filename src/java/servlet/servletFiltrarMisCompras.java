@@ -5,15 +5,16 @@
  */
 package servlet;
 
-import dao.PujadoresFacade;
+import dao.ProductoFacade;
 import dao.SubastaFacade;
 import dao.UsuarioFacade;
-import entity.Pujadores;
+import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,10 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gorpax
  */
-public class servletPujar extends HttpServlet {
-    @EJB SubastaFacade subastaFacade;
-    @EJB UsuarioFacade usuarioFacade;
-    @EJB PujadoresFacade pujadoresFacade;
+public class servletFiltrarMisCompras extends TAWServlet {
+@EJB SubastaFacade subastaFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,36 +39,40 @@ public class servletPujar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String str = request.getParameter("usuario");
-        Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
-        
-        str = request.getParameter("subasta");
-        
-        Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
-        Date fecha = new Date(System.currentTimeMillis());
-        str = request.getParameter("puja");
-        
-        if(str.equals("1")){
-             response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
+       if(super.comprobarSession(request, response)){
+           
+         String min = request.getParameter("minPrice");
+        String max = request.getParameter("maxPrice");
+        String cat = request.getParameter("categoria");
+        List<Subasta> misCompras = null;
+        if(cat == null || cat.contains("CATEGORIAS")){
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
+                misCompras = this.subastaFacade.findAll();
+                
+            }else if ((min.length()>0 && max.length() > 0)){
+                misCompras = this.subastaFacade.findByPrecio(min,max);
+            }else if(min.length()> 0 && max.length() == 0){
+                misCompras = this.subastaFacade.findByMin(min);
+            }else if(min.length()== 0 && max.length() > 0){
+                misCompras = this.subastaFacade.findByMax(max);
+                
+            }
         }else{
-             
-        Double puja = Double.valueOf(str);
-        
-        Pujadores pj = new Pujadores();
-        pj.setFecha(fecha);
-        pj.setSubasta(sub);
-        pj.setUsuario(user);
-        pj.setValorPuja(puja);
-        
-        this.pujadoresFacade.create(pj);
-       
-        sub.setPujaMaxima(puja);
-        this.subastaFacade.edit(sub);
-        
-        response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
+            if(min == null || max == null || (min.length()==0 && max.length()==0)){
+                misCompras = this.subastaFacade.findByCategoria(cat);
+            }else if ((min.length()>0 && max.length() > 0)){
+                misCompras = this.subastaFacade.findByCategoriaPrecio(cat,min,max);
+            }else if(min.length()> 0 && max.length() == 0){
+                misCompras = this.subastaFacade.findByCategoriaMin(cat,min);
+            }else if(min.length()== 0 && max.length() > 0){
+                misCompras = this.subastaFacade.findByCategoriaMax(cat,max);
+            }
         }
-       
+
+        request.setAttribute("misCompras", misCompras);
+        request.getRequestDispatcher("misCompras.jsp").forward(request, response);
+
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

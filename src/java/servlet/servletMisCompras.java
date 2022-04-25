@@ -5,15 +5,11 @@
  */
 package servlet;
 
-import dao.PujadoresFacade;
 import dao.SubastaFacade;
-import dao.UsuarioFacade;
-import entity.Pujadores;
 import entity.Subasta;
-import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,10 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gorpax
  */
-public class servletPujar extends HttpServlet {
-    @EJB SubastaFacade subastaFacade;
-    @EJB UsuarioFacade usuarioFacade;
-    @EJB PujadoresFacade pujadoresFacade;
+public class servletMisCompras extends TAWServlet {
+@EJB SubastaFacade subastaFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,36 +33,19 @@ public class servletPujar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if(super.comprobarSession(request, response)){
+            
+
+        List<Subasta> misCompras = null;
         
-        String str = request.getParameter("usuario");
-        Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
+                misCompras = this.subastaFacade.findAll();
+           
         
-        str = request.getParameter("subasta");
-        
-        Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
-        Date fecha = new Date(System.currentTimeMillis());
-        str = request.getParameter("puja");
-        
-        if(str.equals("1")){
-             response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
-        }else{
-             
-        Double puja = Double.valueOf(str);
-        
-        Pujadores pj = new Pujadores();
-        pj.setFecha(fecha);
-        pj.setSubasta(sub);
-        pj.setUsuario(user);
-        pj.setValorPuja(puja);
-        
-        this.pujadoresFacade.create(pj);
        
-        sub.setPujaMaxima(puja);
-        this.subastaFacade.edit(sub);
-        
-        response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
-        }
-       
+        request.setAttribute("misCompras", misCompras);
+        request.getRequestDispatcher("misCompras.jsp").forward(request, response);
+
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
