@@ -42,11 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByDomicilio", query = "SELECT u FROM Usuario u WHERE u.domicilio = :domicilio")
     , @NamedQuery(name = "Usuario.findByCiudadResidencia", query = "SELECT u FROM Usuario u WHERE u.ciudadResidencia = :ciudadResidencia")
     , @NamedQuery(name = "Usuario.findByEdad", query = "SELECT u FROM Usuario u WHERE u.edad = :edad")
-    , @NamedQuery(name = "Usuario.findByTipoUsuario", query = "SELECT u FROM Usuario u WHERE u.tipoUsuario = :tipoUsuario")})
+    , @NamedQuery(name = "Usuario.findByTipoUsuario", query = "SELECT u FROM Usuario u WHERE u.tipoUsuario = :tipoUsuario")
+    , @NamedQuery(name = "Usuario.findBySaldo", query = "SELECT u FROM Usuario u WHERE u.saldo = :saldo")})
 public class Usuario implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private List<Notificaciones> notificacionesList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -83,8 +81,13 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 13)
     @Column(name = "TIPO_USUARIO")
     private String tipoUsuario;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "SALDO")
+    private Double saldo;
     @ManyToMany(mappedBy = "usuarioList")
     private List<Producto> productoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<Notificaciones> notificacionesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Pujadores> pujadoresList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendedor")
@@ -184,6 +187,14 @@ public class Usuario implements Serializable {
         this.tipoUsuario = tipoUsuario;
     }
 
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
+
     @XmlTransient
     public List<Producto> getProductoList() {
         return productoList;
@@ -191,6 +202,15 @@ public class Usuario implements Serializable {
 
     public void setProductoList(List<Producto> productoList) {
         this.productoList = productoList;
+    }
+
+    @XmlTransient
+    public List<Notificaciones> getNotificacionesList() {
+        return notificacionesList;
+    }
+
+    public void setNotificacionesList(List<Notificaciones> notificacionesList) {
+        this.notificacionesList = notificacionesList;
     }
 
     @XmlTransient
@@ -243,15 +263,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entity.Usuario[ idUSUARIO=" + idUSUARIO + " ]";
-    }
-
-    @XmlTransient
-    public List<Notificaciones> getNotificacionesList() {
-        return notificacionesList;
-    }
-
-    public void setNotificacionesList(List<Notificaciones> notificacionesList) {
-        this.notificacionesList = notificacionesList;
     }
     
 }

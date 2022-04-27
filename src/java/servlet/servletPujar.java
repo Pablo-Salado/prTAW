@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -49,7 +50,7 @@ public class servletPujar extends HttpServlet {
         Date fecha = new Date(System.currentTimeMillis());
         str = request.getParameter("puja");
         
-        if(str.equals("1")){
+        if(str.equals("")){
              response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
         }else{
              
@@ -66,7 +67,14 @@ public class servletPujar extends HttpServlet {
         sub.setPujaMaxima(puja);
         this.subastaFacade.edit(sub);
         
+        user.setSaldo(user.getSaldo() - puja);
+        this.usuarioFacade.edit(user);
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("saldo", user.getSaldo());
+        
         response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
+        
         }
        
     }

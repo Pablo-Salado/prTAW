@@ -21,32 +21,47 @@
       <body>
 
       <header>
-        <div class="px-3 py-0 bg-dark text-white shadow">
+        <div class="px-3 py-3 bg-dark text-white shadow">
           <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-              <a href="servletListadoSubastas" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <svg class="bi d-block mx-auto mb-1" xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="white" class="bi bi-bootstrap" viewBox="0 0 16 16">
-                  <path d="M5.062 12h3.475c1.804 0 2.888-.908 2.888-2.396 0-1.102-.761-1.916-1.904-2.034v-.1c.832-.14 1.482-.93 1.482-1.816 0-1.3-.955-2.11-2.542-2.11H5.062V12zm1.313-4.875V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23H6.375zm0 3.762V8.162h1.822c1.236 0 1.887.463 1.887 1.348 0 .896-.627 1.377-1.811 1.377H6.375z"/>
-                  <path d="M0 4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V4zm4-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3H4z"/>
-                </svg>
-              </a>
-              <div class="col-md-3 text-end">
-                <div class="dropdown">
+              <div class="row justify-content-between">
+                  <div class ="col-auto">
+                      <a href="servletListadoSubastas" class="text-light ">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
+                                <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z"/>
+                          </svg> 
+                      </a> 
+                  </div>
+                  <div class="col-auto">
+                      <div class ="row justify-content-between">
+                          <div class ="col-auto">
+                              <div class="dropdown">
                   <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle"></i> Mi perfil
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="servletMisCompras">Mis compras</a></li>
-                    <li><a class="dropdown-item" href="servletListadoMisProductos">Mis ventas</a></li>
-                    <li><a class="dropdown-item" href="servletAccesoModificarProducto">Publicar producto</a></li>
-                    <li><a class="dropdown-item" href="servletListarNotificaciones">Notificaciones</a></li>
-                    <li><a class="dropdown-item" href="servletLogout">Cerrar sesion</a></li>
+                  </button>           
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
+
+                      <label class="px-3 pt-2">
+                          <i class="bi bi-coin"></i>
+                          Saldo disponible: <%=user.getSaldo() %> EUR
+                      </label> 
+                    
+                      <hr>
+                    <li><a class="dropdown-item" href="servletMisCompras"><i class="bi bi-basket2"></i> Mis compras</a></li>
+                    <li><a class="dropdown-item" href="servletListadoMisProductos"><i class="bi bi-bag-check"></i> Mis ventas</a></li>
+                    <li><a class="dropdown-item" href="servletAccesoModificarProducto"><i class="bi bi-plus-circle"></i> Publicar producto</a></li>   
+                    <li><a class="dropdown-item" href="servletListarNotificaciones"><i class="bi bi-bell"></i> Notificaciones</a></li>
+                    <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesion</a></li>
+
                   </ul>
                 </div>
+                          </div>
+                          </div>
+                              
+                      </div>
+                  </div>
               </div>
-            </div>
+
           </div>
-        </div>
         
         <div class="px-3 py-2 mb-3 shadow">
           
