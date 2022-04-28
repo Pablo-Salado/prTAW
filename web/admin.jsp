@@ -128,7 +128,8 @@
                       </ul>
                       <div class="card-body">
                         <div class="row row-cols-auto align-items-center justify-content-center">
-                            <div class="col">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a class="btn btn-primary" href="servletAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar subasta</a>
                                 <a class="btn btn-primary" href="servletBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar subasta</a>
                             </div>
                         </div> 
