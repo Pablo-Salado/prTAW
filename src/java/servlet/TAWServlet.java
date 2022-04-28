@@ -42,5 +42,17 @@ public abstract class TAWServlet extends HttpServlet {
         }        
         
     }
+    
+    protected boolean comprobarAdmin (HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException{
+        HttpSession session = request.getSession();
+        Usuario user = (Usuario)session.getAttribute("usuario");
+        if (user.getTipoUsuario().equals("ADMINISTRADOR")) {
+            return true;
+        } else {
+            response.sendRedirect(request.getContextPath());
+            return false;
+        }       
+    }
 
 }

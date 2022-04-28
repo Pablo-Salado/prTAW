@@ -4,23 +4,29 @@
  * and open the template in the editor.
  */
 package servlet;
+
+import dao.SubastaFacade;
 import dao.UsuarioFacade;
+import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Usuario
+ * @author X430F
  */
-public class servletLogin extends HttpServlet {
-    @EJB UsuarioFacade af;
+@WebServlet(name = "servletAdmin", urlPatterns = {"/servletAdmin"})
+public class servletAdmin extends TAWServlet {
+    @EJB SubastaFacade subastaFacade;
+    @EJB UsuarioFacade usuarioFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,23 +38,17 @@ public class servletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");        
-        
-        Usuario user = this.af.comprobarUsuario(usuario, clave);
-        
-        if (user == null) {
-            String strError = "El usuario o la clave son incorrectos";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("login.jsp").forward(request, response);                
-        } else if (user.getTipoUsuario().equals("ADMINISTRADOR")){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletAdmin");
-        }else {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletListadoSubastas");                
+        if(super.comprobarAdmin(request, response)){
+            List<Subasta> subastas = null;
+            List<Usuario> usuarios = null;
+
+            subastas = this.subastaFacade.findAll();
+            usuarios = this.usuarioFacade.findAll();
+
+
+            request.setAttribute("subastas", subastas);
+            request.setAttribute("usuarios", usuarios);
+            request.getRequestDispatcher("admin.jsp").forward(request, response);
         }
     }
 
