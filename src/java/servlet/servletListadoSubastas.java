@@ -43,7 +43,12 @@ public class servletListadoSubastas extends TAWServlet {
         
        
         request.setAttribute("subastas", subastas);
-        request.getRequestDispatcher("subastas.jsp").forward(request, response);
+        
+        if(super.comprobarAdmin(request, response)){
+            request.getRequestDispatcher("admin.jsp").forward(request, response);
+        }else {
+            request.getRequestDispatcher("subastas.jsp").forward(request, response);
+        }
 
     }
     }
