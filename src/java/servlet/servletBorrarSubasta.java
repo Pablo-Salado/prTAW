@@ -49,12 +49,11 @@ public class servletBorrarSubasta extends TAWServlet {
             this.subastaFC.remove(sub);
             this.productoFC.remove(prod);
             
-            
-            
-            
-          
-
-            response.sendRedirect(request.getContextPath() + "/servletListadoMisProductos");
+            if(super.comprobarAdmin(request, response)){
+                response.sendRedirect(request.getContextPath() + "/servletAdmin");
+            }else {
+                response.sendRedirect(request.getContextPath() + "/servletListadoMisProductos");
+            }
         }
     }
 
