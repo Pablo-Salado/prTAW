@@ -35,7 +35,7 @@
                   <div class="col-md-3 text-end">
                     <div class="dropdown">
                       <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i> Mi perfil
+                        <i class="bi bi-person-circle"></i> Admin
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="#">Listar productos</a></li>
@@ -51,7 +51,7 @@
             <div class="px-3 py-2 mb-3 shadow">
           
                 <div class="container">
-                  <form method="post" action="servletFiltrarSubastas">
+                  <form method="post" action="servletAdminFiltrarSubastas">
                   <div class="row align-items-center">
                     <div class="col">
                       <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
@@ -130,8 +130,8 @@
                       <div class="card-body">
                         <div class="row row-cols-auto align-items-center justify-content-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-primary" href="servletAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar subasta</a>
-                                <a class="btn btn-primary" href="servletBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar subasta</a>
+                                <a class="btn btn-primary" href="servletAdminAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar subasta</a>
+                                <a class="btn btn-primary" href="servletAdminBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar subasta</a>
                             </div>
                         </div> 
                       </div>

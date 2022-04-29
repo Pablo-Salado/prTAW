@@ -80,6 +80,26 @@
         <servlet-name>servletEliminarNotificacion</servlet-name>
         <servlet-class>servlet.servletEliminarNotificacion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletAdminFiltrarSubastas</servlet-name>
+        <servlet-class>servlet.servletAdminFiltrarSubastas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminAccesoModificarProducto</servlet-name>
+        <servlet-class>servlet.servletAdminAccesoModificarProducto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminBorrarSubasta</servlet-name>
+        <servlet-class>servlet.servletAdminBorrarSubasta</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminModificarProducto</servlet-name>
+        <servlet-class>servlet.servletAdminModificarProducto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminPublicarProducto</servlet-name>
+        <servlet-class>servlet.servletAdminPublicarProducto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -159,6 +179,26 @@
     <servlet-mapping>
         <servlet-name>servletEliminarNotificacion</servlet-name>
         <url-pattern>/servletEliminarNotificacion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminFiltrarSubastas</servlet-name>
+        <url-pattern>/servletAdminFiltrarSubastas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminAccesoModificarProducto</servlet-name>
+        <url-pattern>/servletAdminAccesoModificarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminBorrarSubasta</servlet-name>
+        <url-pattern>/servletAdminBorrarSubasta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminModificarProducto</servlet-name>
+        <url-pattern>/servletAdminModificarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminPublicarProducto</servlet-name>
+        <url-pattern>/servletAdminPublicarProducto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
