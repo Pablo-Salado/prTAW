@@ -89,11 +89,9 @@ public class servletFiltrarSubastas extends TAWServlet {
         }
         request.setAttribute("productos", productos);
         request.setAttribute("subastas", subastas);
-        if(super.comprobarAdmin(request, response)){
-            request.getRequestDispatcher("admin.jsp").forward(request, response);
-        }else {
-            request.getRequestDispatcher("subastas.jsp").forward(request, response);
-        }
+        
+        request.getRequestDispatcher("subastas.jsp").forward(request, response);
+        
     }
     }
 
