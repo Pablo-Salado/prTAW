@@ -22,9 +22,9 @@
     <% Usuario user = (Usuario)session.getAttribute("usuario"); %>
     <body>
         <header>
-            <div class="px-3 py-0 bg-dark text-white shadow">
-              <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+            <div class="px-3 py-3 bg-dark text-white shadow">
+          <div class="container">
+              <div class="row justify-content-between">
                   <div class ="col-auto">
                       <a href="#" class="text-light ">
                           <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
@@ -32,22 +32,31 @@
                           </svg> 
                       </a> 
                   </div>
-                  <div class="col-md-3 text-end">
-                    <div class="dropdown">
-                      <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i> Admin
-                      </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Listar productos</a></li>
-                        <li><a class="dropdown-item" href="">Listar usuarios</a></li>
-                        <li><a class="dropdown-item" href="">Dar de alta a usuarios de marketing</a></li>
-                        <li><a class="dropdown-item" href="servletLogout">Cerrar sesión</a></li>
-                      </ul>
-                    </div>
+                  <div class="col-auto">
+                      <div class ="row justify-content-between">
+                          <div class ="col-auto">
+                              <div class="dropdown">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="bi bi-person-circle"></i> Admin
+                                </button>           
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
+                                      <li><a class="dropdown-item" href="#">Listar productos</a></li>
+                                      <li><a class="dropdown-item" href="">Listar usuarios</a></li>
+                                      <li><a class="dropdown-item" href="">Dar de alta a usuarios de marketing</a></li>
+                                      <li><a class="dropdown-item" href="servletLogout">Cerrar sesión</a></li>
+
+                                </ul>
+                            </div>
+                          </div>
+                          <div class ="col-auto">
+                              <a href ="servletAdminAccesoModificarProducto" class="btn btn-primary">Crear producto</a>
+                          </div>
+                        </div>
+                      </div>
                   </div>
-                </div>
               </div>
-            </div>
+
+          </div>
             <div class="px-3 py-2 mb-3 shadow">
           
                 <div class="container">
@@ -126,6 +135,9 @@
                         <li class="list-group-item">Puja actual: EUR <%= sub.getPujaMaxima() %></li>
                         <li class="list-group-item">Fecha limite: <%= sub.getCierre() %> </li>
                         <li class="list-group-item">Vendedor: <%= sub.getVendedor().getNombre() %> </li>
+                        <% if(sub.getComprador() != null){ %>
+                            <li class="list-group-item">Comprador: <%= sub.getComprador().getNombre() %> </li>
+                        <% } %>
                       </ul>
                       <div class="card-body">
                         <div class="row row-cols-auto align-items-center justify-content-center">
