@@ -75,6 +75,9 @@
           <div class="container">
             <form method="post" action="servletFiltrarMisCompras">
             <div class="row align-items-center">
+                <div class="col">
+                    <input class="form-control" type="text" placeholder="Nombre del producto"  name="nombreSubasta"> 
+                </div>
               <div class="col">
                 <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
                   <option selected>CATEGORIAS</option>
