@@ -32,70 +32,106 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
     public SubastaFacade() {
         super(Subasta.class);
     }
-    
-     public List<Subasta> findByPrecio (String min,String max) {
-        Query q;
-        int minimo = Integer.valueOf(min);
-        int maximo = Integer.valueOf(max);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima >=  :minimo AND s.pujaMaxima <= :maximo");
-        q.setParameter("minimo", minimo);
-        q.setParameter("maximo", maximo);
-        
-        return q.getResultList();
+    public List<Subasta> filtrarSubasta(String cat, String min, String max, String nombre){
+       Query q; 
+       
+       if(cat.contains("CATEGORIAS") && (min == null || max == null || (min.length()==0 && max.length()==0)) && nombre.length() == 0){
+           q = this.getEntityManager().createQuery("select s from Subasta s");
+           
+       }else if(nombre.length() == 0){
+           if(cat.contains("CATEGORIAS")){
+                if(min.length()== 0 && max.length() > 0){
+                    int maximo = Integer.valueOf(max);
+                    q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima <= :maximo");
+                    q.setParameter("maximo", maximo);
+                }else if(min.length()> 0 && max.length() == 0){
+                    int minimo = Integer.valueOf(min);
+                    q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima >= :minimo");
+                    q.setParameter("minimo", minimo);
+                }else{
+                    int minimo = Integer.valueOf(min);
+                    int maximo = Integer.valueOf(max);
+                     q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima >=  :minimo AND s.pujaMaxima <= :maximo");
+                     q.setParameter("minimo", minimo);
+                     q.setParameter("maximo", maximo);
+                }
+             }else{
+                if(min.length()== 0 && max.length() > 0){
+                    int maximo = Integer.valueOf(max);
+                     q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima <= :maximo");
+                     q.setParameter("cat", cat);
+                     q.setParameter("maximo", maximo);
+                }else if(min.length()> 0 && max.length() == 0){
+                    int minimo = Integer.valueOf(min);
+                     q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima >= :minimo");
+                     q.setParameter("cat", cat);
+                     q.setParameter("minimo", minimo);
+                }else if(min.length()> 0 && max.length() > 0){
+                    int maximo = Integer.valueOf(max);
+                     int minimo = Integer.valueOf(min);
+                     q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima <= :maximo AND s.pujaMaxima >= :minimo");
+                     q.setParameter("cat", cat);
+                     q.setParameter("maximo", maximo);
+                     q.setParameter("minimo", minimo);
+                }else{
+                    q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat");
+                     q.setParameter("cat", cat);
+                }
+       }
+       }else{
+           if(cat.contains("CATEGORIAS")){
+                if(min.length()== 0 && max.length() > 0){
+                    int maximo = Integer.valueOf(max);
+                    q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima <= :maximo AND s.producto.titulo = :nombre");
+                    q.setParameter("maximo", maximo);
+                    q.setParameter("nombre", nombre);
+                }else if(min.length()> 0 && max.length() == 0){
+                    int minimo = Integer.valueOf(min);
+                    q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima >= :minimo AND s.producto.titulo = :nombre");
+                    q.setParameter("minimo", minimo);
+                    q.setParameter("nombre", nombre);
+                }else if(min.length()> 0 && max.length() > 0){
+                    int minimo = Integer.valueOf(min);
+                    int maximo = Integer.valueOf(max);
+                     q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima >=  :minimo AND s.pujaMaxima <= :maximo AND s.producto.titulo = :nombre");
+                     q.setParameter("minimo", minimo);
+                     q.setParameter("maximo", maximo);
+                     q.setParameter("nombre", nombre);
+                }else{
+                    q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.titulo = :nombre");
+                     q.setParameter("nombre", nombre);
+                }
+            }else{
+                if(min.length()== 0 && max.length() > 0){
+                    int maximo = Integer.valueOf(max);
+                     q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima <= :maximo AND s.producto.titulo = :nombre");
+                     q.setParameter("cat", cat);
+                     q.setParameter("maximo", maximo);
+                     q.setParameter("nombre", nombre);
+                }else if(min.length()> 0 && max.length() == 0){
+                    int minimo = Integer.valueOf(min);
+                     q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima >= :minimo AND s.producto.titulo = :nombre");
+                     q.setParameter("cat", cat);
+                     q.setParameter("minimo", minimo);
+                     q.setParameter("nombre", nombre);
+                }else if(min.length()> 0 && max.length() > 0){
+                    int maximo = Integer.valueOf(max);
+                     int minimo = Integer.valueOf(min);
+                     q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima <= :maximo AND s.pujaMaxima >= :minimo AND s.producto.titulo = :nombre");
+                     q.setParameter("cat", cat);
+                     q.setParameter("maximo", maximo);
+                     q.setParameter("minimo", minimo);
+                     q.setParameter("nombre", nombre);
+                }else{
+                    q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.producto.titulo = :nombre");
+                     q.setParameter("cat", cat);
+                     q.setParameter("nombre", nombre);
+                }
+       } 
+       }
+       
+       
+       return q.getResultList();
     }
-    public List<Subasta> findByMin (String min) {
-        Query q;
-        int minimo = Integer.valueOf(min);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima >= :minimo");
-        q.setParameter("minimo", minimo);
-        
-        return q.getResultList();
-    }
-    public List<Subasta> findByMax (String max) {
-        Query q;
-        int maximo = Integer.valueOf(max);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.pujaMaxima <= :maximo");
-        q.setParameter("maximo", maximo);
-        
-        return q.getResultList();
-    }
-    public List<Subasta> findByCategoria (String cat) {
-        Query q;
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat");
-        q.setParameter("cat", cat);
-        
-        return q.getResultList();
-    }
-    public List<Subasta> findByCategoriaMin (String cat, String min) {
-        Query q;
-        int minimo = Integer.valueOf(min);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima >= :minimo");
-        q.setParameter("cat", cat);
-        q.setParameter("minimo", minimo);
-        
-        return q.getResultList();
-    }
-    
-    public List<Subasta> findByCategoriaMax (String cat, String max) {
-        Query q;
-        int maximo = Integer.valueOf(max);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima <= :maximo");
-        q.setParameter("cat", cat);
-        q.setParameter("maximo", maximo);
-        
-        return q.getResultList();
-    }
-    public List<Subasta> findByCategoriaPrecio (String cat, String min, String max) {
-        Query q;
-        int maximo = Integer.valueOf(max);
-        int minimo = Integer.valueOf(min);
-        q = this.getEntityManager().createQuery("select s from Subasta s where s.producto.categoria = :cat AND s.pujaMaxima <= :maximo AND s.pujaMaxima >= :minimo");
-        q.setParameter("cat", cat);
-        q.setParameter("maximo", maximo);
-        q.setParameter("minimo", minimo);
-        
-        return q.getResultList();
-    }
-    
     
 }

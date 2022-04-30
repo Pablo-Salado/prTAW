@@ -39,32 +39,13 @@ public class servletFiltrarMisProductos extends TAWServlet {
          String min = request.getParameter("minPrice");
         String max = request.getParameter("maxPrice");
         String cat = request.getParameter("categoria");
-        List<Subasta> misCompras = null;
-        if(cat == null || cat.contains("CATEGORIAS")){
-            if(min == null || max == null || (min.length()==0 && max.length()==0)){
-                misCompras = this.subastaFacade.findAll();
-                
-            }else if ((min.length()>0 && max.length() > 0)){
-                misCompras = this.subastaFacade.findByPrecio(min,max);
-            }else if(min.length()> 0 && max.length() == 0){
-                misCompras = this.subastaFacade.findByMin(min);
-            }else if(min.length()== 0 && max.length() > 0){
-                misCompras = this.subastaFacade.findByMax(max);
-                
-            }
-        }else{
-            if(min == null || max == null || (min.length()==0 && max.length()==0)){
-                misCompras = this.subastaFacade.findByCategoria(cat);
-            }else if ((min.length()>0 && max.length() > 0)){
-                misCompras = this.subastaFacade.findByCategoriaPrecio(cat,min,max);
-            }else if(min.length()> 0 && max.length() == 0){
-                misCompras = this.subastaFacade.findByCategoriaMin(cat,min);
-            }else if(min.length()== 0 && max.length() > 0){
-                misCompras = this.subastaFacade.findByCategoriaMax(cat,max);
-            }
-        }
+        String nombre = request.getParameter("nombreSubasta");
+        
+        List<Subasta> misVentas = null;
+        
+        misVentas = this.subastaFacade.filtrarSubasta(cat, min, max, nombre);
 
-        request.setAttribute("subastas", misCompras);
+        request.setAttribute("subastas", misVentas);
         request.getRequestDispatcher("misProductos.jsp").forward(request, response);
 
     }

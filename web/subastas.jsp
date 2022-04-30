@@ -36,10 +36,11 @@
                           </svg> 
                       </a> 
                   </div>
+                  
+                  
                   <div class="col-auto">
-                      <div class ="row justify-content-between">
-                          <div class ="col-auto">
-                              <div class="dropdown">
+
+                  <div class="dropdown">
                   <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle"></i> Mi perfil
                   </button>           
@@ -58,10 +59,7 @@
                     <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesion</a></li>
 
                   </ul>
-                </div>
-                          </div>
-                          </div>
-                              
+                </div>         
                       </div>
                   </div>
               </div>
@@ -73,6 +71,9 @@
           <div class="container">
             <form method="post" action="servletFiltrarSubastas">
             <div class="row align-items-center">
+                <div class="col">
+                    <input class="form-control" type="text" placeholder="Nombre de la subasta"  name="nombreSubasta"> 
+                </div>
               <div class="col">
                 <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
                   <option selected>CATEGORIAS</option>
@@ -92,7 +93,7 @@
                 <label class="col-form-label">Rango de precio:</label>
               </div>
               <div class="col ">
-                <input class="form-control" type="number" min="0" placeholder="Precio minimo"  name="minPrice"> 
+                  <input class="form-control" type="number" min="0" placeholder="Precio minimo"  name="minPrice" > 
                 
               </div>
               <div class="col-auto">
@@ -139,6 +140,7 @@
                             }else{
                         
                     for (Subasta sub :subastas) {
+                     
                          if(sub.getComprador() == null){
                     %> 
                     <!-- Modal -->

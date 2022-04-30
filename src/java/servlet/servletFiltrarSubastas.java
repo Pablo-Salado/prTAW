@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlet;
 
 import dao.ProductoFacade;
@@ -50,48 +45,53 @@ public class servletFiltrarSubastas extends TAWServlet {
            Al final hacemos subastas = aux;
            
            */
+         String str = request.getParameter("usuario");
+         Usuario user = this.usuarioFacade.find(Integer.parseInt(str));   
+            
+         String fav = request.getParameter("filtroFavorito");
          String min = request.getParameter("minPrice");
         String max = request.getParameter("maxPrice");
         String cat = request.getParameter("categoria");
-        List<Subasta> subastas = null;
-        if(cat == null || cat.contains("CATEGORIAS")){
-            if(min == null || max == null || (min.length()==0 && max.length()==0)){
-                subastas = this.subastaFacade.findAll();
-                
-            }else if ((min.length()>0 && max.length() > 0)){
-                subastas = this.subastaFacade.findByPrecio(min,max);
-            }else if(min.length()> 0 && max.length() == 0){
-                subastas = this.subastaFacade.findByMin(min);
-            }else if(min.length()== 0 && max.length() > 0){
-                subastas = this.subastaFacade.findByMax(max);
-                
-            }
-        }else{
-            if(min == null || max == null || (min.length()==0 && max.length()==0)){
-                subastas = this.subastaFacade.findByCategoria(cat);
-            }else if ((min.length()>0 && max.length() > 0)){
-                subastas = this.subastaFacade.findByCategoriaPrecio(cat,min,max);
-            }else if(min.length()> 0 && max.length() == 0){
-                subastas = this.subastaFacade.findByCategoriaMin(cat,min);
-            }else if(min.length()== 0 && max.length() > 0){
-                subastas = this.subastaFacade.findByCategoriaMax(cat,max);
-            }
-        }
-        String str = request.getParameter("usuario");
-        Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
+        String nombre = request.getParameter("nombreSubasta");
+        List<Subasta> subastas = new ArrayList<Subasta>();
+        List<Subasta> aux = new ArrayList<Subasta>();
         List<Producto> productos = new ArrayList<Producto>();
         List<Integer> idPro = this.productoFacade.productosFavoritos( user);
         for(Integer i: idPro){
-            Producto aux = this.productoFacade.find(i);
-            if(!productos.contains(aux)){
-                productos.add(aux);
+            Producto pro = this.productoFacade.find(i);
+            if(!productos.contains(pro)){
+                productos.add(pro);
             }
         }
-        request.setAttribute("productos", productos);
+        
+        if(fav != null){
+                subastas = this.subastaFacade.filtrarSubasta(cat, min, max, nombre);
+                for(Subasta s: subastas){
+                    for(Producto p:productos){
+                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO() && s.getComprador()==null){
+                            aux.add(s);
+                        }
+                    }
+                }
+                subastas = aux;
+   
+        }else{
+            subastas = this.subastaFacade.filtrarSubasta(cat, min, max,nombre);
+            for(Subasta s: subastas){
+                if(s.getComprador()==null){
+                    aux.add(s);
+                }
+            }
+            subastas = aux;
+        }
+        
+        
+        
+        
+       request.setAttribute("productos", productos);
         request.setAttribute("subastas", subastas);
-        
         request.getRequestDispatcher("subastas.jsp").forward(request, response);
-        
+
     }
     }
 
