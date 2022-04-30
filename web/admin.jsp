@@ -43,7 +43,7 @@
                                       <li><a class="dropdown-item" href="#">Listar productos</a></li>
                                       <li><a class="dropdown-item" href="">Listar usuarios</a></li>
                                       <li><a class="dropdown-item" href="">Dar de alta a usuarios de marketing</a></li>
-                                      <li><a class="dropdown-item" href="servletLogout">Cerrar sesión</a></li>
+                                      <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
 
                                 </ul>
                             </div>
