@@ -110,5 +110,11 @@ public class SubastaService {
         
         this.subFC.edit(subasta);
     }
+    public void modificarComprador(Integer id,Usuario comprador){
+        Subasta subasta = this.subFC.find(id);
+        
+        subasta.setComprador(comprador);
+        this.subFC.edit(subasta);
+    }
     
 }

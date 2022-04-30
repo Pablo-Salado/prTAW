@@ -5,22 +5,21 @@
  */
 package servlet;
 
-import dao.NotificacionesFacade;
 import entity.Notificaciones;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.NotificacionesService;
 
 /**
  *
  * @author Gorpax
  */
 public class servletEliminarNotificacion extends HttpServlet {
-@EJB NotificacionesFacade notiFC;
+@EJB NotificacionesService notiService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,9 +34,9 @@ public class servletEliminarNotificacion extends HttpServlet {
 
         String notificacion = request.getParameter("notificacion");
         
-        Notificaciones not = this.notiFC.find(Integer.parseInt(notificacion));
         
-        this.notiFC.remove(not);
+        
+       this.notiService.borrarNotiPorId(Integer.parseInt(notificacion));
         
         request.getRequestDispatcher("servletListarNotificaciones").forward(request, response);        
     }

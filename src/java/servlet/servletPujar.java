@@ -5,7 +5,7 @@
  */
 package servlet;
 
-import dao.PujadoresFacade;
+
 import dao.UsuarioFacade;
 import entity.Pujadores;
 import entity.Subasta;
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import service.PujadoresService;
 import service.SubastaService;
 
 /**
@@ -27,7 +28,7 @@ import service.SubastaService;
 public class servletPujar extends HttpServlet {
     @EJB SubastaService subastaService;
     @EJB UsuarioFacade usuarioFacade;
-    @EJB PujadoresFacade pujadoresFacade; 
+    @EJB PujadoresService pujadoresService; 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,32 +41,26 @@ public class servletPujar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String str = request.getParameter("usuario");
-        Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
+        String usuario = request.getParameter("usuario");
+        Usuario user = this.usuarioFacade.find(Integer.parseInt(usuario));
         
-        str = request.getParameter("subasta");
+        String subasta = request.getParameter("subasta");
         
-        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
+        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(subasta));
         Date fecha = new Date(System.currentTimeMillis());
-        str = request.getParameter("puja");
+        String puja = request.getParameter("puja");
         
-        if(str.equals("")){
+        if(puja.equals("")){
              response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
         }else{
              
-        Double puja = Double.valueOf(str);
-        
-        Pujadores pj = new Pujadores();
-        pj.setFecha(fecha);
-        pj.setSubasta(sub);
-        pj.setUsuario(user);
-        pj.setValorPuja(puja);
-        
-        this.pujadoresFacade.create(pj);
+        Double puja_max = Double.valueOf(puja);
+          
+        this.pujadoresService.crearPujador(user, sub, puja_max, fecha);
        
-        this.subastaService.modificarPujaMaxima(Integer.parseInt(str), puja);
+        this.subastaService.modificarPujaMaxima(Integer.parseInt(subasta), puja_max);
         
-        user.setSaldo(user.getSaldo() - puja);
+        user.setSaldo(user.getSaldo() - puja_max);
         this.usuarioFacade.edit(user);
         
         HttpSession session = request.getSession();
