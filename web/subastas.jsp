@@ -22,6 +22,10 @@
      if(saldo != null){
          user.setSaldo(saldo);
      }
+     List<Producto> productos = (List)session.getAttribute("productos");
+     if(productos != null){
+         user.setProductoList(productos);
+     }
   %>
   <body>
 
@@ -236,7 +240,7 @@
                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="favorito" onChange="this.form.submit()">
                                            
                                           <%
-                                            List<Producto> productos = (List)request.getAttribute("productos");
+                                            
                                             if(productos == null){
                                                 productos = user.getProductoList();
                                             }

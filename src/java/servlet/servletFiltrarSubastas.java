@@ -1,27 +1,25 @@
 package servlet;
 
 import dao.ProductoFacade;
-import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 
 /**
  *
  * @author Gorpax
  */
 public class servletFiltrarSubastas extends TAWServlet {
-    @EJB SubastaFacade subastaFacade;
+    @EJB SubastaService subastaService;
     @EJB UsuarioFacade usuarioFacade;
     @EJB ProductoFacade productoFacade;
     /**
@@ -54,7 +52,6 @@ public class servletFiltrarSubastas extends TAWServlet {
         String cat = request.getParameter("categoria");
         String nombre = request.getParameter("nombreSubasta");
         List<Subasta> subastas = new ArrayList<Subasta>();
-        List<Subasta> aux = new ArrayList<Subasta>();
         List<Producto> productos = new ArrayList<Producto>();
         List<Integer> idPro = this.productoFacade.productosFavoritos( user);
         for(Integer i: idPro){
@@ -64,26 +61,7 @@ public class servletFiltrarSubastas extends TAWServlet {
             }
         }
         
-        if(fav != null){
-                subastas = this.subastaFacade.filtrarSubasta(cat, min, max, nombre);
-                for(Subasta s: subastas){
-                    for(Producto p:productos){
-                        if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO() && s.getComprador()==null){
-                            aux.add(s);
-                        }
-                    }
-                }
-                subastas = aux;
-   
-        }else{
-            subastas = this.subastaFacade.filtrarSubasta(cat, min, max,nombre);
-            for(Subasta s: subastas){
-                if(s.getComprador()==null){
-                    aux.add(s);
-                }
-            }
-            subastas = aux;
-        }
+        subastas = this.subastaService.filtrarSubastasFavoritas(cat, min, max, nombre, fav, productos);
         
         
         

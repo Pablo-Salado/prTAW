@@ -6,13 +6,11 @@
 package servlet;
 
 import dao.PujadoresFacade;
-import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Pujadores;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -20,15 +18,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import service.SubastaService;
 
 /**
  *
  * @author Gorpax
  */
 public class servletPujar extends HttpServlet {
-    @EJB SubastaFacade subastaFacade;
+    @EJB SubastaService subastaService;
     @EJB UsuarioFacade usuarioFacade;
-    @EJB PujadoresFacade pujadoresFacade;
+    @EJB PujadoresFacade pujadoresFacade; 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,7 +45,7 @@ public class servletPujar extends HttpServlet {
         
         str = request.getParameter("subasta");
         
-        Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
+        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
         Date fecha = new Date(System.currentTimeMillis());
         str = request.getParameter("puja");
         
@@ -64,8 +63,7 @@ public class servletPujar extends HttpServlet {
         
         this.pujadoresFacade.create(pj);
        
-        sub.setPujaMaxima(puja);
-        this.subastaFacade.edit(sub);
+        this.subastaService.modificarPujaMaxima(Integer.parseInt(str), puja);
         
         user.setSaldo(user.getSaldo() - puja);
         this.usuarioFacade.edit(user);

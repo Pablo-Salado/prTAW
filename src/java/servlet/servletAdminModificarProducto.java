@@ -6,17 +6,16 @@
 package servlet;
 
 import dao.ProductoFacade;
-import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Producto;
 import entity.Subasta;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 
 /**
  *
@@ -25,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class servletAdminModificarProducto extends HttpServlet {
     @EJB UsuarioFacade usuarioFC;
     @EJB ProductoFacade productoFC;
-    @EJB SubastaFacade subastaFC;
+    @EJB SubastaService subastaService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +41,7 @@ public class servletAdminModificarProducto extends HttpServlet {
         Integer aux;
         
         str = request.getParameter("id");
-        Subasta subasta = this.subastaFC.find(Integer.parseInt(str));
+        Subasta subasta = this.subastaService.buscarSubasta(Integer.parseInt(str));
         Producto producto = subasta.getProducto();
         
         

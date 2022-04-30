@@ -6,7 +6,6 @@
 package servlet;
 
 import dao.ProductoFacade;
-import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Producto;
 import entity.Pujadores;
@@ -22,13 +21,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import service.SubastaService;
 
 /**
  *
  * @author Gorpax
  */
 public class servletFavorito extends TAWServlet {
-    @EJB SubastaFacade subastaFacade;
+    @EJB SubastaService subastaService;
     @EJB UsuarioFacade usuarioFacade;
     @EJB ProductoFacade productoFacade;
     /**
@@ -49,13 +50,13 @@ public class servletFavorito extends TAWServlet {
         Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
        
         str = request.getParameter("subasta");
-        Subasta sub = this.subastaFacade.find(Integer.parseInt(str));
+        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
         
         String chck = request.getParameter("favorito");
         
         Producto pro = sub.getProducto();
         
-        List<Subasta> subastas = this.subastaFacade.findAll();
+        List<Subasta> subastas = this.subastaService.listarSubastas();
         
         List<Producto> productos = new ArrayList<Producto>();
         List<Integer> idPro = this.productoFacade.productosFavoritos( user);
@@ -75,8 +76,9 @@ public class servletFavorito extends TAWServlet {
         }
         
        
-        request.setAttribute("subastas", subastas);
-        request.setAttribute("productos", productos);
+        request.setAttribute("subastas", subastas);  
+        HttpSession session = request.getSession();
+        session.setAttribute("productos", productos);
         request.getRequestDispatcher("subastas.jsp").forward(request, response);        
         }
          

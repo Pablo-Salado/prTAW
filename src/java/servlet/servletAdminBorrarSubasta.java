@@ -6,17 +6,16 @@
 package servlet;
 
 import dao.ProductoFacade;
-import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Producto;
 import entity.Subasta;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 
 /**
  *
@@ -24,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class servletAdminBorrarSubasta extends HttpServlet {
     @EJB UsuarioFacade usuarioFC;
-    @EJB SubastaFacade subastaFC;
+    @EJB SubastaService subastaService;
     @EJB ProductoFacade productoFC;
 
     /**
@@ -39,10 +38,10 @@ public class servletAdminBorrarSubasta extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String str = request.getParameter("subasta");
-        Subasta sub = this.subastaFC.find(Integer.parseInt(str));
+        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
         Producto prod = this.productoFC.find(sub.getProducto().getIdPRODUCTO());
 
-        this.subastaFC.remove(sub);
+        this.subastaService.borrarSubasta(Integer.parseInt(str));
         this.productoFC.remove(prod);
 
 

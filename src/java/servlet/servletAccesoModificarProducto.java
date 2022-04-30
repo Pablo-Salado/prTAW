@@ -5,7 +5,6 @@
  */
 package servlet;
 
-import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Subasta;
 import entity.Usuario;
@@ -16,13 +15,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 
 /**
  *
  * @author Usuario
  */
 public class servletAccesoModificarProducto extends HttpServlet {
-@EJB SubastaFacade subastaFC;
+@EJB SubastaService subastaService;
 @EJB UsuarioFacade user;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +42,7 @@ public class servletAccesoModificarProducto extends HttpServlet {
             }
             str = request.getParameter("subasta");
             if(str != null){
-                Subasta sub = this.subastaFC.find(Integer.parseInt(str));
+                Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
                 request.setAttribute("subasta", sub);
             }
             

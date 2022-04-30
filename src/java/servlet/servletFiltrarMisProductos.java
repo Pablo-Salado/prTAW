@@ -5,23 +5,21 @@
  */
 package servlet;
 
-import dao.SubastaFacade;
 import entity.Subasta;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 
 /**
  *
  * @author Usuario
  */
 public class servletFiltrarMisProductos extends TAWServlet {
-    @EJB SubastaFacade subastaFacade;
+    @EJB SubastaService subastaService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,7 +41,7 @@ public class servletFiltrarMisProductos extends TAWServlet {
         
         List<Subasta> misVentas = null;
         
-        misVentas = this.subastaFacade.filtrarSubasta(cat, min, max, nombre);
+        misVentas = this.subastaService.filtrarSubastas(cat, min, max, nombre);
 
         request.setAttribute("subastas", misVentas);
         request.getRequestDispatcher("misProductos.jsp").forward(request, response);

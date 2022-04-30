@@ -8,15 +8,12 @@ package servlet;
 import dao.NotificacionesFacade;
 import dao.ProductoFacade;
 import dao.PujadoresFacade;
-import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Notificaciones;
 import entity.Producto;
-import entity.Pujadores;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,13 +22,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 
 /**
  *
  * @author Usuario
  */
 public class servletTerminarSubasta extends HttpServlet {
-@EJB SubastaFacade subastaFC;
+@EJB SubastaService subastaService;
 @EJB ProductoFacade productoFC;
 @EJB UsuarioFacade usuarioFC;
 @EJB PujadoresFacade pujadorFC;
@@ -48,7 +46,7 @@ public class servletTerminarSubasta extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String str = request.getParameter("subasta");
-        Subasta subasta = this.subastaFC.find(Integer.parseInt(str));
+        Subasta subasta = this.subastaService.buscarSubasta(Integer.parseInt(str));
         Producto producto = subasta.getProducto();
         str = request.getParameter("id");
         Usuario user = this.usuarioFC.find(Integer.parseInt(str));
@@ -61,7 +59,7 @@ public class servletTerminarSubasta extends HttpServlet {
         producto.setEstado("No vendido");
         }else{
         
-        Usuario ganador =this.usuarioFC.find(this.pujadorFC.getPujadorMaximo(subasta));
+        Usuario ganador = this.usuarioFC.find(this.pujadorFC.getPujadorMaximo(subasta));
         producto.setEstado("Vendido");
         subasta.setComprador(user);
         
@@ -89,9 +87,7 @@ public class servletTerminarSubasta extends HttpServlet {
         
         date = new Date(System.currentTimeMillis());
         
-        subasta.setCierre(date);
-        
-        this.subastaFC.edit(subasta);
+        this.subastaService.modificarFechaCierre(subasta.getIdSUBASTA(), date);
         
         response.sendRedirect(request.getContextPath()+"/servletListadoMisProductos");
     }

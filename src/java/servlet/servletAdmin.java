@@ -5,7 +5,6 @@
  */
 package servlet;
 
-import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Subasta;
 import entity.Usuario;
@@ -18,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 
 /**
  *
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "servletAdmin", urlPatterns = {"/servletAdmin"})
 public class servletAdmin extends TAWServlet {
-    @EJB SubastaFacade subastaFacade;
+    @EJB SubastaService subastaService;
     @EJB UsuarioFacade usuarioFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +42,7 @@ public class servletAdmin extends TAWServlet {
             List<Subasta> subastas = null;
             List<Usuario> usuarios = null;
 
-            subastas = this.subastaFacade.findAll();
+            subastas = this.subastaService.listarSubastas();
             usuarios = this.usuarioFacade.findAll();
 
 

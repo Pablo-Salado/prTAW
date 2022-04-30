@@ -5,7 +5,6 @@
  */
 package servlet;
 
-import dao.SubastaFacade;
 import entity.Subasta;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,13 +14,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 
 /**
  *
  * @author Usuario
  */
 public class servletListadoSubastas extends TAWServlet {
-    @EJB SubastaFacade subastaFacade;
+    @EJB SubastaService subastaService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,7 +38,7 @@ public class servletListadoSubastas extends TAWServlet {
 
         List<Subasta> subastas = null;
         
-                subastas = this.subastaFacade.findAll();
+                subastas = this.subastaService.listarSubastas();
            
         
        

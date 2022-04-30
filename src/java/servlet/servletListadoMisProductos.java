@@ -5,19 +5,16 @@
  */
 package servlet;
 
-import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import entity.Subasta;
-import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import service.SubastaService;
 
 
 /**
@@ -25,7 +22,7 @@ import javax.servlet.http.HttpSession;
  * @author Usuario
  */
 public class servletListadoMisProductos extends TAWServlet {
-    @EJB SubastaFacade subastaFacade;
+    @EJB SubastaService subastaService;
     @EJB UsuarioFacade af;
 
     /**
@@ -42,7 +39,7 @@ public class servletListadoMisProductos extends TAWServlet {
         List<Subasta> subastas=null;
         if(super.comprobarSession(request, response)){
         HttpSession session = request.getSession();
-        subastas = this.subastaFacade.findAll();
+        subastas = this.subastaService.listarSubastas();
        
         request.setAttribute("subastas", subastas);
         request.getRequestDispatcher("misProductos.jsp").forward(request, response);

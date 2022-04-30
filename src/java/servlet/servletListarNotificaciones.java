@@ -6,17 +6,15 @@
 package servlet;
 
 import dao.NotificacionesFacade;
-import dao.SubastaFacade;
 import entity.Notificaciones;
 import entity.Subasta;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 
 /**
  *
@@ -24,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class servletListarNotificaciones extends TAWServlet {
     @EJB NotificacionesFacade notFC;
-    @EJB SubastaFacade subFC;
+    @EJB SubastaService subastaService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,7 +44,7 @@ public class servletListarNotificaciones extends TAWServlet {
         
         List<Subasta> subastas = null;
         
-                subastas = this.subFC.findAll();
+                subastas = this.subastaService.listarSubastas();
            
         
        
