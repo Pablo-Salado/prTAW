@@ -6,8 +6,7 @@
 package servlet;
 
 
-import dao.UsuarioFacade;
-import entity.Pujadores;
+
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import service.PujadoresService;
 import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
@@ -27,7 +27,7 @@ import service.SubastaService;
  */
 public class servletPujar extends HttpServlet {
     @EJB SubastaService subastaService;
-    @EJB UsuarioFacade usuarioFacade;
+    @EJB UsuarioService usuarioService;
     @EJB PujadoresService pujadoresService; 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +42,7 @@ public class servletPujar extends HttpServlet {
             throws ServletException, IOException {
         
         String usuario = request.getParameter("usuario");
-        Usuario user = this.usuarioFacade.find(Integer.parseInt(usuario));
+        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(usuario));
         
         String subasta = request.getParameter("subasta");
         
@@ -60,8 +60,7 @@ public class servletPujar extends HttpServlet {
        
         this.subastaService.modificarPujaMaxima(Integer.parseInt(subasta), puja_max);
         
-        user.setSaldo(user.getSaldo() - puja_max);
-        this.usuarioFacade.edit(user);
+        this.usuarioService.restaSaldo(user, user.getSaldo() - puja_max);
         
         HttpSession session = request.getSession();
         session.setAttribute("saldo", user.getSaldo());

@@ -5,7 +5,6 @@
  */
 package servlet;
 
-import dao.UsuarioFacade;
 import entity.Subasta;
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import service.SubastaService;
+import service.UsuarioService;
 
 
 /**
@@ -23,7 +23,7 @@ import service.SubastaService;
  */
 public class servletListadoMisProductos extends TAWServlet {
     @EJB SubastaService subastaService;
-    @EJB UsuarioFacade af;
+    @EJB UsuarioService userService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

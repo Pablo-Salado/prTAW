@@ -5,8 +5,7 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
-import dao.UsuarioFacade;
+
 import entity.Producto;
 import entity.Subasta;
 import java.io.IOException;
@@ -15,16 +14,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.ProductoService;
 import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
  * @author X430F
  */
 public class servletAdminBorrarSubasta extends HttpServlet {
-    @EJB UsuarioFacade usuarioFC;
+    @EJB UsuarioService usuarioService;
     @EJB SubastaService subastaService;
-    @EJB ProductoFacade productoFC;
+    @EJB ProductoService productoService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +40,10 @@ public class servletAdminBorrarSubasta extends HttpServlet {
             throws ServletException, IOException {
         String str = request.getParameter("subasta");
         Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
-        Producto prod = this.productoFC.find(sub.getProducto().getIdPRODUCTO());
+        Producto prod = this.productoService.buscarProducto(sub.getProducto().getIdPRODUCTO());
 
         this.subastaService.borrarSubasta(Integer.parseInt(str));
-        this.productoFC.remove(prod);
+        this.productoService.eliminarProducto(prod);
 
 
         response.sendRedirect(request.getContextPath() + "/servletAdmin");

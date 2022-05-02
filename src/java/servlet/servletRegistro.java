@@ -5,22 +5,21 @@
  */
 package servlet;
 
-import dao.UsuarioFacade;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.UsuarioService;
 
 /**
  *
  * @author Usuario
  */
 public class servletRegistro extends HttpServlet {
-    @EJB UsuarioFacade user;
+    @EJB UsuarioService userService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,7 +35,7 @@ public class servletRegistro extends HttpServlet {
 
             String str = request.getParameter("id");
             if (str != null) {
-                Usuario usuario = this.user.find(Integer.parseInt(str));
+                Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
                 request.setAttribute("usuario", usuario);
             }
 

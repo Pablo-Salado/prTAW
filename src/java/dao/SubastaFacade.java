@@ -135,4 +135,5 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
        return q.getResultList();
     }
     
+    
 }

@@ -4,23 +4,22 @@
  * and open the template in the editor.
  */
 package servlet;
-import dao.UsuarioFacade;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import service.UsuarioService;
 
 /**
  *
  * @author Usuario
  */
 public class servletLogin extends HttpServlet {
-    @EJB UsuarioFacade af;
+    @EJB UsuarioService userService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,7 +34,7 @@ public class servletLogin extends HttpServlet {
         String usuario = request.getParameter("usuario");
         String clave = request.getParameter("clave");        
         
-        Usuario user = this.af.comprobarUsuario(usuario, clave);
+        Usuario user = this.userService.comprobarUser(usuario, clave);
         
         if (user == null) {
             String strError = "El usuario o la clave son incorrectos";

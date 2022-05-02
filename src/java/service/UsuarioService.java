@@ -83,4 +83,10 @@ public class UsuarioService {
        
        this.userFC.edit(user);
     }
+    
+    public void restaSaldo(Usuario user,Double saldo){
+        user.setSaldo(saldo);
+        
+        this.userFC.edit(user);
+    }
 }

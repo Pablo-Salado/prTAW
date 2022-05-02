@@ -5,29 +5,29 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
-import dao.SubastaFacade;
-import dao.UsuarioFacade;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.ProductoService;
+import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
  * @author X430F
  */
 public class servletAdminPublicarProducto extends HttpServlet {
-    @EJB ProductoFacade productoFC;
-    @EJB UsuarioFacade usuarioFC;
-    @EJB SubastaFacade subastaFC;
+    @EJB ProductoService productoService;
+    @EJB UsuarioService usuarioService;
+    @EJB SubastaService subastaService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,43 +40,24 @@ public class servletAdminPublicarProducto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String str;
-        Integer aux;
-        Subasta subasta = new Subasta();
-        Producto producto = new Producto();
         
-        str = request.getParameter("id");
-        Usuario user = usuarioFC.find(Integer.parseInt(str));
+        String id = request.getParameter("id");
+        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(id));
         
-        str = request.getParameter("titulo");
-        producto.setTitulo(str);
-        str = request.getParameter("descripcion");
-        producto.setDescripcion(str);
-        str = request.getParameter("categoria");
-        producto.setCategoria(str);
-        str = request.getParameter("foto");
-        producto.setUrlFoto(str);
-        producto.setEstado("En venta");
-        productoFC.create(producto);
-        
-        
+        String titulo = request.getParameter("titulo");
+        String descripcion = request.getParameter("descripcion");
+        String categoria = request.getParameter("categoria");
+        String url = request.getParameter("foto");
+        this.productoService.crearProducto(titulo, descripcion, url, "En venta", categoria, null);
         
         
         Date date = new Date(System.currentTimeMillis());
-        subasta.setApertura(date);
-        
-        
-      
-        str = request.getParameter("puja_inicial");
-        subasta.setPrecioInicial(Double.parseDouble(str));
-        subasta.setPujaMaxima(Double.parseDouble(str));
-        
-        subasta.setVendedor(user);
-        subasta.setProducto(producto);
-        subastaFC.create(subasta);
-        
-        producto.setSubasta(subasta);
-        productoFC.edit(producto);
+        String puja = request.getParameter("puja_inicial");
+        List<Producto> pro = this.productoService.listarProductos();
+        this.subastaService.crearSubasta(date, null,Double.parseDouble(puja), Double.parseDouble(puja), user, null, pro.get(pro.size()-1));
+
+        List<Subasta> sub = this.subastaService.listarSubastas();
+        this.productoService.modificarSubasta(pro.get(pro.size()-1), sub.get(sub.size()-1));
         
         response.sendRedirect(request.getContextPath()+"/servletAdmin");
     }

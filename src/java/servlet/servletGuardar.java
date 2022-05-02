@@ -5,22 +5,22 @@
  */
 package servlet;
 
-import dao.UsuarioFacade;
+
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.UsuarioService;
 
 /**
  *
  * @author Usuario
  */
 public class servletGuardar extends HttpServlet {
-    @EJB UsuarioFacade userFC;
+    @EJB UsuarioService userService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,31 +33,18 @@ public class servletGuardar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String str;
-        Integer aux;
-        Usuario usuario;
-        usuario = new Usuario();
+
+        String nombre = request.getParameter("nombre");
+        String apellidos = request.getParameter("apellidos");
+        String sexo = request.getParameter("sexo");
+        Integer edad = Integer.valueOf(request.getParameter("edad"));
+        String domicilio = request.getParameter("domicilio");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String ciudad = request.getParameter("ciudad");
         
-        str = request.getParameter("nombre");
-        usuario.setNombre(str);
-        str = request.getParameter("apellidos");
-        usuario.setEpellidos(str);
-        str = request.getParameter("sexo");
-        usuario.setSexo(str);
-        aux = Integer.valueOf(request.getParameter("edad"));
-        usuario.setEdad(aux);
-        str = request.getParameter("domicilio");
-        usuario.setDomicilio(str);
-        str = request.getParameter("password");
-        usuario.setPassword(str);
-        str = request.getParameter("email");
-        usuario.setEmail(str);
-        str = request.getParameter("ciudad");
-        usuario.setCiudadResidencia(str);
+        this.userService.crearUsuario(nombre, apellidos, sexo, password, email, domicilio, ciudad, edad, sexo, 0.0);
         
-        
-        
-        userFC.create(usuario);
          response.sendRedirect(request.getContextPath()); 
     }
 

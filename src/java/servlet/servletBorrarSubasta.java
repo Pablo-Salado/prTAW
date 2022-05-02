@@ -5,29 +5,26 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
-import dao.UsuarioFacade;
+
 import entity.Producto;
 import entity.Subasta;
-import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import service.ProductoService;
 import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
  * @author Usuario
  */
 public class servletBorrarSubasta extends TAWServlet {
-        @EJB UsuarioFacade usuarioFC;
+        @EJB UsuarioService usuarioService;
         @EJB SubastaService subastaService;
-        @EJB ProductoFacade productoFC;
+        @EJB ProductoService productoService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +41,9 @@ public class servletBorrarSubasta extends TAWServlet {
                         
             String str = request.getParameter("subasta");
             Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
-            Producto prod = this.productoFC.find(sub.getProducto().getIdPRODUCTO());
             
             this.subastaService.borrarSubasta(Integer.parseInt(str));
-            this.productoFC.remove(prod);
+            this.productoService.eliminarProducto(sub.getProducto());
             
             
             response.sendRedirect(request.getContextPath() + "/servletListadoMisProductos");

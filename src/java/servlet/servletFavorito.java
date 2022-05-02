@@ -5,24 +5,20 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
-import dao.UsuarioFacade;
 import entity.Producto;
-import entity.Pujadores;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import service.ProductoService;
 import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
@@ -30,8 +26,8 @@ import service.SubastaService;
  */
 public class servletFavorito extends TAWServlet {
     @EJB SubastaService subastaService;
-    @EJB UsuarioFacade usuarioFacade;
-    @EJB ProductoFacade productoFacade;
+    @EJB UsuarioService usuarioService;
+    @EJB ProductoService productoService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,7 +43,7 @@ public class servletFavorito extends TAWServlet {
             
          
         String str = request.getParameter("usuario");
-        Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
+        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(str));
        
         str = request.getParameter("subasta");
         Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
@@ -59,19 +55,19 @@ public class servletFavorito extends TAWServlet {
         List<Subasta> subastas = this.subastaService.listarSubastas();
         
         List<Producto> productos = new ArrayList<Producto>();
-        List<Integer> idPro = this.productoFacade.productosFavoritos( user);
+        List<Integer> idPro = this.productoService.listaFavoritos(user);
         for(Integer i: idPro){
-            Producto aux = this.productoFacade.find(i);
+            Producto aux = this.productoService.buscarProducto(i);
             if(!productos.contains(aux)){
                 productos.add(aux);
             }
         }
         
         if(chck == null){
-            this.productoFacade.noFav(pro, user);
+            this.productoService.eliminarProductoFavorito(pro, user);
             productos.remove(pro);
         }else{
-            this.productoFacade.Fav(pro, user);
+            this.productoService.addProductoFavorito(pro, user);
             productos.add(pro);
         }
         

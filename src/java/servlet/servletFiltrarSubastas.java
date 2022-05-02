@@ -1,7 +1,6 @@
 package servlet;
 
-import dao.ProductoFacade;
-import dao.UsuarioFacade;
+
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
@@ -12,7 +11,9 @@ import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.ProductoService;
 import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
@@ -20,8 +21,8 @@ import service.SubastaService;
  */
 public class servletFiltrarSubastas extends TAWServlet {
     @EJB SubastaService subastaService;
-    @EJB UsuarioFacade usuarioFacade;
-    @EJB ProductoFacade productoFacade;
+    @EJB UsuarioService usuarioService;
+    @EJB ProductoService productoService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,7 +45,7 @@ public class servletFiltrarSubastas extends TAWServlet {
            
            */
          String str = request.getParameter("usuario");
-         Usuario user = this.usuarioFacade.find(Integer.parseInt(str));   
+         Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(str));   
             
          String fav = request.getParameter("filtroFavorito");
          String min = request.getParameter("minPrice");
@@ -53,9 +54,9 @@ public class servletFiltrarSubastas extends TAWServlet {
         String nombre = request.getParameter("nombreSubasta");
         List<Subasta> subastas = new ArrayList<Subasta>();
         List<Producto> productos = new ArrayList<Producto>();
-        List<Integer> idPro = this.productoFacade.productosFavoritos( user);
+        List<Integer> idPro = this.productoService.listaFavoritos(user);
         for(Integer i: idPro){
-            Producto pro = this.productoFacade.find(i);
+            Producto pro = this.productoService.buscarProducto(i);
             if(!productos.contains(pro)){
                 productos.add(pro);
             }

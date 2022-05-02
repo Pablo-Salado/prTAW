@@ -5,8 +5,6 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
-import dao.UsuarioFacade;
 import entity.Producto;
 import entity.Subasta;
 import java.io.IOException;
@@ -15,15 +13,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.ProductoService;
 import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
  * @author X430F
  */
 public class servletAdminModificarProducto extends HttpServlet {
-    @EJB UsuarioFacade usuarioFC;
-    @EJB ProductoFacade productoFC;
+    @EJB UsuarioService usuarioService;
+    @EJB ProductoService productoService;
     @EJB SubastaService subastaService;
 
     /**
@@ -37,11 +37,9 @@ public class servletAdminModificarProducto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String str;
-        Integer aux;
         
-        str = request.getParameter("id");
-        Subasta subasta = this.subastaService.buscarSubasta(Integer.parseInt(str));
+        String id = request.getParameter("id");
+        Subasta subasta = this.subastaService.buscarSubasta(Integer.parseInt(id));
         Producto producto = subasta.getProducto();
         
         
@@ -56,16 +54,14 @@ public class servletAdminModificarProducto extends HttpServlet {
      }
         subasta.setCierre(date);
         */
-        str = request.getParameter("titulo");
-        producto.setTitulo(str);
-        str = request.getParameter("descripcion");
-        producto.setDescripcion(str);
-        str = request.getParameter("categoria");
-        producto.setCategoria(str);
-        str = request.getParameter("foto");
-        producto.setUrlFoto(str);
+        String titulo = request.getParameter("titulo");
+        String descripcion = request.getParameter("descripcion");
+        String categoria = request.getParameter("categoria");
+        String url = request.getParameter("foto");
 
-        this.productoFC.edit(producto);
+
+        this.productoService.modificarProducto(producto, titulo, descripcion, url, producto.getEstado(), categoria, subasta);
+
         
         response.sendRedirect(request.getContextPath()+"/servletAdmin");
     }

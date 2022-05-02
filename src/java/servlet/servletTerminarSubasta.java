@@ -5,8 +5,6 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
-import dao.UsuarioFacade;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
@@ -20,8 +18,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import service.NotificacionesService;
+import service.ProductoService;
 import service.PujadoresService;
 import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
@@ -29,8 +29,8 @@ import service.SubastaService;
  */
 public class servletTerminarSubasta extends HttpServlet {
 @EJB SubastaService subastaService;
-@EJB ProductoFacade productoFC;
-@EJB UsuarioFacade usuarioFC;
+@EJB ProductoService productoService;
+@EJB UsuarioService usuarioService;
 @EJB PujadoresService pujadorService;
 @EJB NotificacionesService notificacionesService;
     /**
@@ -48,22 +48,22 @@ public class servletTerminarSubasta extends HttpServlet {
         Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(subasta));
         Producto producto = sub.getProducto();
         String str = request.getParameter("id");
-        Usuario user = this.usuarioFC.find(Integer.parseInt(str));
+        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(str));
 
         List<Integer> aux = this.pujadorService.buscarPujadoresSubasta(sub);
         if(aux.isEmpty()){
-        producto.setEstado("No vendido");
+        this.productoService.modificarEstado(producto, "No vendido");
         }else{
         
-        Usuario ganador = this.usuarioFC.find(this.pujadorService.buscarPujadorMaximo(sub));
-        producto.setEstado("Vendido");
+        Usuario ganador = this.usuarioService.buscarUsuario(this.pujadorService.buscarPujadorMaximo(sub));
+        this.productoService.modificarEstado(producto, "Vendido");
         this.subastaService.modificarComprador(Integer.parseInt(subasta), ganador);
         
         List<Usuario> notificados = new ArrayList<Usuario>();
         for(Integer i: aux){
-           Usuario usuarioAnyadir = this.usuarioFC.find(i);
+           Usuario usuarioAnyadir = this.usuarioService.buscarUsuario(i);
            if(!notificados.contains(usuarioAnyadir)){
-               notificados.add(this.usuarioFC.find(i));
+               notificados.add(this.usuarioService.buscarUsuario(i));
            }  
         }
         for(Usuario u : notificados){
@@ -76,7 +76,6 @@ public class servletTerminarSubasta extends HttpServlet {
         }
          
         }
-        this.productoFC.edit(producto);
         
         Date date = new Date(System.currentTimeMillis());
         

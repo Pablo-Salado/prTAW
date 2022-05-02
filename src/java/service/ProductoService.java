@@ -27,7 +27,7 @@ public class ProductoService {
         return this.proFC.find(id);
     }
 
-    public List<Producto> listarSubastas() {
+    public List<Producto> listarProductos() {
         return this.proFC.findAll();
     }
     
@@ -85,5 +85,17 @@ public class ProductoService {
     
     public List<Integer> listaFavoritos(Usuario user){
         return this.proFC.productosFavoritos(user);
+    }
+
+    
+    public void modificarSubasta(Producto pro, Subasta sub){
+        pro.setSubasta(sub);
+        
+        this.proFC.edit(pro);
+    }
+    public void modificarEstado(Producto pro, String estado){
+        pro.setEstado(estado);
+        
+        this.proFC.edit(pro);
     }
 }

@@ -5,7 +5,6 @@
  */
 package servlet;
 
-import dao.UsuarioFacade;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
@@ -22,7 +22,7 @@ import service.SubastaService;
  */
 public class servletAdminAccesoModificarProducto extends HttpServlet {
     @EJB SubastaService subastaService;
-    @EJB UsuarioFacade user;
+    @EJB UsuarioService userService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,7 +36,7 @@ public class servletAdminAccesoModificarProducto extends HttpServlet {
             throws ServletException, IOException {
         String str = request.getParameter("id");
             if (str != null) {
-                Usuario usuario = this.user.find(Integer.parseInt(str));
+                Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
                 request.setAttribute("usuario", usuario);
             }
             str = request.getParameter("subasta");
