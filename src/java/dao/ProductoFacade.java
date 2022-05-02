@@ -47,7 +47,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         q = this.getEntityManager().createNativeQuery("DELETE FROM favoritos WHERE PRODUCTO = " + idProducto + " AND USUARIO = " + idUsuario);
         q.executeUpdate();
     }
-     public List<Integer> productosFavoritos (Usuario user) {
+    public List<Integer> productosFavoritos (Usuario user) {
         Query q;
        int idUsuario = user.getIdUSUARIO();
         q = this.getEntityManager().createNativeQuery("select PRODUCTO from favoritos s where s.USUARIO = " + idUsuario);
