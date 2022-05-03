@@ -63,6 +63,9 @@
                   <form method="post" action="servletAdminFiltrarSubastas">
                   <div class="row align-items-center">
                     <div class="col">
+                        <input class="form-control" type="text" placeholder="Nombre de la subasta"  name="nombreSubasta"> 
+                    </div>
+                    <div class="col">
                       <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
                         <option selected>CATEGORIAS</option>
                         <option value="MOTOR">MOTOR</option>

@@ -5,30 +5,28 @@
  */
 package servlet;
 
-import dao.ProductoFacade;
-import dao.SubastaFacade;
-import dao.UsuarioFacade;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.ProductoService;
+import service.SubastaService;
+import service.UsuarioService;
 
 /**
  *
  * @author X430F
  */
-public class servletAdminFiltrarSubastas extends HttpServlet {
-    @EJB SubastaFacade subastaFacade;
-    @EJB UsuarioFacade usuarioFacade;
-    @EJB ProductoFacade productoFacade;
+public class servletAdminFiltrarSubastas extends TAWServlet {
+    @EJB UsuarioService usuarioService;
+    @EJB SubastaService subastaService;
+    @EJB ProductoService productoService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,47 +39,32 @@ public class servletAdminFiltrarSubastas extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            /*
+           Como añadir a priori el que muestre los favoritos:
+           Primero hacemos un request parameteter que sea un bool del check
+           Hacemos la lista de productos y una lista de subastas auxiliar
+           Segundo hacemos un if antes que los filtros acuales de si check == true -> entonces el if es igual pero despues de subasta.findall por ejemplo
+           recorremos la lista de productos y la de subastas si el sub.getproducto == producto -> entonces aux.add(sub)
+           Al final hacemos subastas = aux;
+           
+           */
+        String str = request.getParameter("usuario");
+        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(str));   
+            
         String min = request.getParameter("minPrice");
         String max = request.getParameter("maxPrice");
         String cat = request.getParameter("categoria");
-        List<Subasta> subastas = null;
-        if(cat == null || cat.contains("CATEGORIAS")){
-            if(min == null || max == null || (min.length()==0 && max.length()==0)){
-                subastas = this.subastaFacade.findAll();
-                
-            }else if ((min.length()>0 && max.length() > 0)){
-                subastas = this.subastaFacade.findByPrecio(min,max);
-            }else if(min.length()> 0 && max.length() == 0){
-                subastas = this.subastaFacade.findByMin(min);
-            }else if(min.length()== 0 && max.length() > 0){
-                subastas = this.subastaFacade.findByMax(max);
-                
-            }
-        }else{
-            if(min == null || max == null || (min.length()==0 && max.length()==0)){
-                subastas = this.subastaFacade.findByCategoria(cat);
-            }else if ((min.length()>0 && max.length() > 0)){
-                subastas = this.subastaFacade.findByCategoriaPrecio(cat,min,max);
-            }else if(min.length()> 0 && max.length() == 0){
-                subastas = this.subastaFacade.findByCategoriaMin(cat,min);
-            }else if(min.length()== 0 && max.length() > 0){
-                subastas = this.subastaFacade.findByCategoriaMax(cat,max);
-            }
-        }
-        String str = request.getParameter("usuario");
-        Usuario user = this.usuarioFacade.find(Integer.parseInt(str));
-        List<Producto> productos = new ArrayList<Producto>();
-        List<Integer> idPro = this.productoFacade.productosFavoritos( user);
-        for(Integer i: idPro){
-            Producto aux = this.productoFacade.find(i);
-            if(!productos.contains(aux)){
-                productos.add(aux);
-            }
-        }
-        request.setAttribute("productos", productos);
-        request.setAttribute("subastas", subastas);
+        String nombre = request.getParameter("nombreSubasta");
+        List<Subasta> subastas = this.subastaService.filtrarSubastas(cat, min, max, nombre);
         
+        
+        
+        
+       //request.setAttribute("productos", productos);
+        request.setAttribute("subastas", subastas);
         request.getRequestDispatcher("admin.jsp").forward(request, response);
+
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
