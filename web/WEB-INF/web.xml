@@ -100,6 +100,10 @@
         <servlet-name>servletAdminPublicarProducto</servlet-name>
         <servlet-class>servlet.servletAdminPublicarProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletAdminListarUsuarios</servlet-name>
+        <servlet-class>servlet.servletAdminListarUsuarios</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -199,6 +203,10 @@
     <servlet-mapping>
         <servlet-name>servletAdminPublicarProducto</servlet-name>
         <url-pattern>/servletAdminPublicarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminListarUsuarios</servlet-name>
+        <url-pattern>/servletAdminListarUsuarios</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

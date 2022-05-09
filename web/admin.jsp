@@ -19,7 +19,9 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <title>Admin</title>
     </head>
-    <% Usuario user = (Usuario)session.getAttribute("usuario"); %>
+    <% 
+        Usuario user = (Usuario)session.getAttribute("usuario");
+    %>
     <body>
         <header>
             <div class="px-3 py-3 bg-dark text-white shadow">
@@ -41,7 +43,7 @@
                                 </button>           
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
                                       <li><a class="dropdown-item" href="#">Listar productos</a></li>
-                                      <li><a class="dropdown-item" href="">Listar usuarios</a></li>
+                                      <li><a class="dropdown-item" href="servletAdminListarUsuarios">Listar usuarios</a></li>
                                       <li><a class="dropdown-item" href="">Dar de alta a usuarios de marketing</a></li>
                                       <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
 
@@ -156,6 +158,7 @@
                           }
                     %> 
                 </div>
+            </div>
           </section>
     </article>
                 

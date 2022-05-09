@@ -5,26 +5,24 @@
  */
 package servlet;
 
-import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.SubastaService;
 import service.UsuarioService;
 
 /**
  *
  * @author X430F
  */
-@WebServlet(name = "servletAdmin", urlPatterns = {"/servletAdmin"})
-public class servletAdmin extends TAWServlet {
-    @EJB SubastaService subastaService;
+public class servletAdminListarUsuarios extends TAWServlet {
     @EJB UsuarioService usuarioService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,13 +34,13 @@ public class servletAdmin extends TAWServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(super.comprobarAdmin(request, response)){
-            List<Subasta> subastas;
-
-            subastas = this.subastaService.listarSubastas();
+        if(super.comprobarSession(request, response)){
+            List<Usuario> usuarios;
             
-            request.setAttribute("subastas", subastas);
-            request.getRequestDispatcher("admin.jsp").forward(request, response);
+            usuarios = this.usuarioService.listarUsuario();
+            
+            request.setAttribute("usuarios", usuarios);
+            request.getRequestDispatcher("adminListarUsuarios.jsp").forward(request, response);
         }
     }
 
