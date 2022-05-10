@@ -53,7 +53,7 @@
                                   </div>
                                 </div>
                                 <div class ="col-auto">
-                                    <a href ="#" class="btn btn-primary">Crear usuario</a>
+                                    <a href ="servletAdminAccesoModificarUsuarios" class="btn btn-primary">Crear usuario</a>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,6 @@
                 </div>
             </div>
             <div class="px-3 py-2 mb-3 shadow">
-          
                 <div class="container">
                   <form method="post" action="servletAdminFiltrarUsuarios">
                     <div class="row align-items-center">
@@ -72,7 +71,7 @@
                             <input class="form-control" type="text" placeholder="Apellidos del usuario"  name="apellidosUsuario">
                         </div>
                       <div class="col-auto">
-                          <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                        <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
                         <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
                       </div>
                     </div>
@@ -119,8 +118,8 @@
                       <div class="card-body">
                         <div class="row row-cols-auto align-items-center justify-content-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-primary" href="#" role="button">Modificar usuario</a>
-                                <a class="btn btn-primary" href="#" role="button">Borrar usuario</a>
+                                <a class="btn btn-primary" href="servletAdminAccesoModificarUsuarios?usuario=<%=u.getIdUSUARIO()%>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar usuario</a>
+                                <a class="btn btn-primary" href="servletAdminBorrarUsuario?usuario=<%= u.getIdUSUARIO() %>" role="button">Borrar usuario</a>
                             </div>
                         </div> 
                       </div>
