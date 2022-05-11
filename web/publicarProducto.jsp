@@ -93,24 +93,24 @@
             <div class="container mb-3 col-4">
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Titulo</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="titulo" value="<%= sub==null? "": sub.getProducto().getTitulo() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="titulo" value="<%= sub==null? "": sub.getProducto().getTitulo() %>" required>
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Descripcion</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="descripcion" value="<%= sub==null? "": sub.getProducto().getDescripcion() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="descripcion" value="<%= sub==null? "": sub.getProducto().getDescripcion() %>"required>
             </div>
             
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Precio inicial</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="puja_inicial" value="<%= sub==null? "": sub.getPrecioInicial() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="puja_inicial" value="<%= sub==null? "": sub.getPrecioInicial() %>"required>
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Enlace de la foto</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="foto" value="<%= sub==null? "": sub.getProducto().getUrlFoto() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="foto" value="<%= sub==null? "": sub.getProducto().getUrlFoto() %>"required>
             </div>
             
             Categoria:<br>
-            <select name ="categoria" class="mb-3 form-select" value="<%= sub==null? "": sub.getProducto().getCategoria() %>" style="width: 200px">
+            <select name ="categoria" class="mb-3 form-select" value="<%= sub==null? "": sub.getProducto().getCategoria() %>" style="width: 200px"required>
             <option value="MOTOR">Motor</option>
             <option value="DEPORTE">Deporte</option>
             <option value="HOGAR">Hogar</option>
