@@ -5,6 +5,7 @@
  */
 package entity;
 
+import dto.NotificacionesDTO;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -121,4 +122,12 @@ public class Notificaciones implements Serializable {
         return "entity.Notificaciones[ id=" + id + " ]";
     }
     
+    public NotificacionesDTO toDTO(){
+        NotificacionesDTO res = new NotificacionesDTO();
+        res.setGanador(ganador);
+        res.setId(id);
+        res.setIdSubasta(idSubasta);
+        res.setIdUsuario(idUsuario);
+        return res;
+    }
 }

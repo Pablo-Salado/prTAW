@@ -9,6 +9,7 @@ import dto.ProductoDTO;
 import dto.UsuarioDTO;
 import dto.PujadoresDTO;
 import entity.Producto;
+import entity.Pujadores;
 import entity.Usuario;
 
 import java.util.Date;
@@ -26,7 +27,7 @@ public class SubastaDTO {
     private Producto producto;
     private Usuario vendedor;
     private Usuario comprador;
-    private List<PujadoresDTO> pujadoresList;
+    private List<Pujadores> pujadoresList;
     private Integer idSUBASTA;
     
     public SubastaDTO(){
@@ -97,11 +98,11 @@ public class SubastaDTO {
         this.comprador = comprador;
     }
 
-    public List<PujadoresDTO> getPujadoresList() {
+    public List<Pujadores> getPujadoresList() {
         return pujadoresList;
     }
 
-    public void setPujadoresList(List<PujadoresDTO> pujadoresList) {
+    public void setPujadoresList(List<Pujadores> pujadoresList) {
         this.pujadoresList = pujadoresList;
     }
    

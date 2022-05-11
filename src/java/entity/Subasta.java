@@ -5,6 +5,7 @@
  */
 package entity;
 
+import dto.SubastaDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -197,6 +198,21 @@ public class Subasta implements Serializable {
 
     public void setPujadoresList(List<Pujadores> pujadoresList) {
         this.pujadoresList = pujadoresList;
+    }
+    
+    public SubastaDTO toDTO(){
+        SubastaDTO res = new SubastaDTO();
+        res.setApertura(apertura);
+        res.setCierre(cierre);
+        res.setComprador(comprador);
+        res.setIdSUBASTA(idSUBASTA);
+        res.setPrecioInicial(precioInicial);
+        res.setProducto(producto);
+        res.setPujaMaxima(pujaMaxima);
+        res.setVendedor(vendedor);
+        res.setPujadoresList(pujadoresList);
+        return res;
+        
     }
     
 }

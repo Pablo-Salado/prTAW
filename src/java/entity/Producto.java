@@ -5,6 +5,7 @@
  */
 package entity;
 
+import dto.ProductoDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -179,6 +180,17 @@ public class Producto implements Serializable {
     @Override
     public String toString() {
         return "entity.Producto[ idPRODUCTO=" + idPRODUCTO + " ]";
+    }
+    
+    public ProductoDTO toDTO(){
+        ProductoDTO res = new ProductoDTO();
+        res.setCategoria(categoria);
+        res.setDescripcion(descripcion);
+        res.setEstado(estado);
+        res.setIdPRODUCTO(idPRODUCTO);
+        res.setTitulo(titulo);
+        res.setUrlFoto(urlFoto);
+        return res;
     }
     
 }

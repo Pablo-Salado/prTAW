@@ -5,6 +5,7 @@
  */
 package entity;
 
+import dto.PujadoresDTO;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -125,6 +126,16 @@ public class Pujadores implements Serializable {
     @Override
     public String toString() {
         return "entity.Pujadores[ iDPuja=" + iDPuja + " ]";
+    }
+    
+    public PujadoresDTO toDTO(){
+        PujadoresDTO res = new PujadoresDTO();
+        res.setFecha(fecha);
+        res.setSubasta(subasta);
+        res.setUsuario(usuario);
+        res.setValorPuja(valorPuja);
+        res.setiDPuja(iDPuja);
+        return res;
     }
     
 }
