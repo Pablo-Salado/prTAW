@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Comprador;
 
 import entity.Subasta;
 import java.io.IOException;
@@ -12,19 +12,15 @@ import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import service.SubastaService;
-import service.UsuarioService;
-
+import servlet.TAWServlet;
 
 /**
  *
- * @author Usuario
+ * @author Gorpax
  */
-public class servletListadoMisProductos extends TAWServlet {
-    @EJB SubastaService subastaService;
-    @EJB UsuarioService userService;
-
+public class servletMisCompras extends TAWServlet {
+@EJB SubastaService subastaService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,14 +32,19 @@ public class servletListadoMisProductos extends TAWServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Subasta> subastas=null;
         if(super.comprobarSession(request, response)){
-        HttpSession session = request.getSession();
-        subastas = this.subastaService.listarSubastas();
+            
+
+        List<Subasta> misCompras = null;
+        
+                misCompras = this.subastaService.listarSubastas();
+           
+        
        
-        request.setAttribute("subastas", subastas);
-        request.getRequestDispatcher("misProductos.jsp").forward(request, response);
-        }
+        request.setAttribute("misCompras", misCompras);
+        request.getRequestDispatcher("misCompras.jsp").forward(request, response);
+
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

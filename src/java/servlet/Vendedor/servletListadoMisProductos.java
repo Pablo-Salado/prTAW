@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Vendedor;
 
-
-import entity.Producto;
 import entity.Subasta;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.ProductoService;
+import javax.servlet.http.HttpSession;
 import service.SubastaService;
 import service.UsuarioService;
+import servlet.TAWServlet;
+
 
 /**
  *
  * @author Usuario
  */
-public class servletBorrarSubasta extends TAWServlet {
-        @EJB UsuarioService usuarioService;
-        @EJB SubastaService subastaService;
-        @EJB ProductoService productoService;
+public class servletListadoMisProductos extends TAWServlet {
+    @EJB SubastaService subastaService;
+    @EJB UsuarioService userService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,17 +37,13 @@ public class servletBorrarSubasta extends TAWServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         if (super.comprobarSession(request, response)) {        
-                        
-            String str = request.getParameter("subasta");
-            Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
-            
-            this.subastaService.borrarSubasta(Integer.parseInt(str));
-            this.productoService.eliminarProducto(sub.getProducto());
-            
-            
-            response.sendRedirect(request.getContextPath() + "/servletListadoMisProductos");
-            
+        List<Subasta> subastas=null;
+        if(super.comprobarSession(request, response)){
+        HttpSession session = request.getSession();
+        subastas = this.subastaService.listarSubastas();
+       
+        request.setAttribute("subastas", subastas);
+        request.getRequestDispatcher("misProductos.jsp").forward(request, response);
         }
     }
 

@@ -3,26 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Vendedor;
 
+import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.ProductoService;
 import service.SubastaService;
 import service.UsuarioService;
 
+
 /**
  *
- * @author X430F
+ * @author Usuario
  */
-public class servletAdminAccesoModificarProducto extends HttpServlet {
-    @EJB SubastaService subastaService;
-    @EJB UsuarioService userService;
+public class servletPublicarProducto extends HttpServlet {
+ @EJB ProductoService productoService;
+ @EJB UsuarioService usuarioService;
+ @EJB SubastaService subastaService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,18 +41,27 @@ public class servletAdminAccesoModificarProducto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String str = request.getParameter("id");
-            if (str != null) {
-                Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
-                request.setAttribute("usuario", usuario);
-            }
-            str = request.getParameter("subasta");
-            if(str != null){
-                Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
-                request.setAttribute("subasta", sub);
-            }
-            
-            request.getRequestDispatcher("/adminPublicarProducto.jsp").forward(request, response);
+         response.setContentType("text/html;charset=UTF-8");
+   
+        String id = request.getParameter("id");
+        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(id));
+        
+        String titulo = request.getParameter("titulo");
+        String descripcion = request.getParameter("descripcion");
+        String categoria = request.getParameter("categoria");
+        String url = request.getParameter("foto");
+        this.productoService.crearProducto(titulo, descripcion, url, "En venta", categoria, null);
+        
+        
+        Date date = new Date(System.currentTimeMillis());
+        String puja = request.getParameter("puja_inicial");
+        List<Producto> pro = this.productoService.listarProductos();
+        this.subastaService.crearSubasta(date, null,Double.parseDouble(puja), Double.parseDouble(puja), user, null, pro.get(pro.size()-1));
+
+        List<Subasta> sub = this.subastaService.listarSubastas();
+        this.productoService.modificarSubasta(pro.get(pro.size()-1), sub.get(sub.size()-1));
+        
+        response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

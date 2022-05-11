@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Vendedor;
 
-
-import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -14,15 +12,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.SubastaService;
 import service.UsuarioService;
 
 /**
  *
  * @author Usuario
  */
-public class servletAccesoModificarProducto extends HttpServlet {
-@EJB SubastaService subastaService;
+public class servletAccesoPublicarProducto extends HttpServlet {
 @EJB UsuarioService userService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,12 +36,7 @@ public class servletAccesoModificarProducto extends HttpServlet {
                 Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
                 request.setAttribute("usuario", usuario);
             }
-            str = request.getParameter("subasta");
-            if(str != null){
-                Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
-                request.setAttribute("subasta", sub);
-            }
-            
+
             request.getRequestDispatcher("/publicarProducto.jsp").forward(request, response);
     }
 

@@ -3,32 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Vendedor;
 
 
-
+import entity.Producto;
 import entity.Subasta;
-import entity.Usuario;
 import java.io.IOException;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import service.PujadoresService;
+import service.ProductoService;
 import service.SubastaService;
 import service.UsuarioService;
+import servlet.TAWServlet;
 
 /**
  *
- * @author Gorpax
+ * @author Usuario
  */
-public class servletPujar extends HttpServlet {
-    @EJB SubastaService subastaService;
-    @EJB UsuarioService usuarioService;
-    @EJB PujadoresService pujadoresService; 
+public class servletBorrarSubasta extends TAWServlet {
+        @EJB UsuarioService usuarioService;
+        @EJB SubastaService subastaService;
+        @EJB ProductoService productoService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,35 +38,18 @@ public class servletPujar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String usuario = request.getParameter("usuario");
-        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(usuario));
-        
-        String subasta = request.getParameter("subasta");
-        
-        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(subasta));
-        Date fecha = new Date(System.currentTimeMillis());
-        String puja = request.getParameter("puja");
-        
-        if(puja.equals("")){
-             response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
-        }else{
-             
-        Double puja_max = Double.valueOf(puja);
-          
-        this.pujadoresService.crearPujador(user, sub, puja_max, fecha);
-       
-        this.subastaService.modificarPujaMaxima(Integer.parseInt(subasta), puja_max);
-        
-        this.usuarioService.restaSaldo(user, user.getSaldo() - puja_max);
-        
-        HttpSession session = request.getSession();
-        session.setAttribute("saldo", user.getSaldo());
-        
-        response.sendRedirect(request.getContextPath()+"/servletListadoSubastas"); 
-        
+         if (super.comprobarSession(request, response)) {        
+                        
+            String str = request.getParameter("subasta");
+            Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
+            
+            this.subastaService.borrarSubasta(Integer.parseInt(str));
+            this.productoService.eliminarProducto(sub.getProducto());
+            
+            
+            response.sendRedirect(request.getContextPath() + "/servletListadoMisProductos");
+            
         }
-       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

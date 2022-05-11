@@ -22,7 +22,7 @@
     </servlet>
     <servlet>
         <servlet-name>servletPujar</servlet-name>
-        <servlet-class>servlet.servletPujar</servlet-class>
+        <servlet-class>servlet.Comprador.servletPujar</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletFavorito</servlet-name>
@@ -34,35 +34,35 @@
     </servlet>
     <servlet>
         <servlet-name>servletAccesoPublicarProducto</servlet-name>
-        <servlet-class>servlet.servletAccesoPublicarProducto</servlet-class>
+        <servlet-class>servlet.Vendedor.servletAccesoPublicarProducto</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletPublicarProducto</servlet-name>
-        <servlet-class>servlet.servletPublicarProducto</servlet-class>
+        <servlet-class>servlet.Vendedor.servletPublicarProducto</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletListadoMisProductos</servlet-name>
-        <servlet-class>servlet.servletListadoMisProductos</servlet-class>
+        <servlet-class>servlet.Vendedor.servletListadoMisProductos</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletBorrarSubasta</servlet-name>
-        <servlet-class>servlet.servletBorrarSubasta</servlet-class>
+        <servlet-class>servlet.Vendedor.servletBorrarSubasta</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletTerminarSubasta</servlet-name>
-        <servlet-class>servlet.servletTerminarSubasta</servlet-class>
+        <servlet-class>servlet.Vendedor.servletTerminarSubasta</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletModificarProducto</servlet-name>
-        <servlet-class>servlet.servletModificarProducto</servlet-class>
+        <servlet-class>servlet.Vendedor.servletModificarProducto</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAccesoModificarProducto</servlet-name>
-        <servlet-class>servlet.servletAccesoModificarProducto</servlet-class>
+        <servlet-class>servlet.Vendedor.servletAccesoModificarProducto</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletMisCompras</servlet-name>
-        <servlet-class>servlet.servletMisCompras</servlet-class>
+        <servlet-class>servlet.Comprador.servletMisCompras</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletFiltrarMisCompras</servlet-name>
@@ -82,23 +82,23 @@
     </servlet>
     <servlet>
         <servlet-name>servletAdminFiltrarSubastas</servlet-name>
-        <servlet-class>servlet.servletAdminFiltrarSubastas</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminFiltrarSubastas</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminAccesoModificarProducto</servlet-name>
-        <servlet-class>servlet.servletAdminAccesoModificarProducto</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminAccesoModificarProducto</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminBorrarSubasta</servlet-name>
-        <servlet-class>servlet.servletAdminBorrarSubasta</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminBorrarSubasta</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminModificarProducto</servlet-name>
-        <servlet-class>servlet.servletAdminModificarProducto</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminModificarProducto</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminPublicarProducto</servlet-name>
-        <servlet-class>servlet.servletAdminPublicarProducto</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminPublicarProducto</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>

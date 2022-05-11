@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Vendedor;
 
+import entity.Producto;
 import entity.Subasta;
-import entity.Usuario;
 import java.io.IOException;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.ProductoService;
 import service.SubastaService;
 import service.UsuarioService;
 
 /**
  *
- * @author X430F
+ * @author Usuario
  */
-@WebServlet(name = "servletAdmin", urlPatterns = {"/servletAdmin"})
-public class servletAdmin extends TAWServlet {
-    @EJB SubastaService subastaService;
-    @EJB UsuarioService usuarioService;
+public class servletModificarProducto extends HttpServlet {
+@EJB UsuarioService usuarioService;
+@EJB ProductoService productoService;
+@EJB SubastaService subastaService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,18 +36,37 @@ public class servletAdmin extends TAWServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(super.comprobarAdmin(request, response)){
-            List<Subasta> subastas = null;
-            List<Usuario> usuarios = null;
+        response.setContentType("text/html;charset=UTF-8");
+   
+        String str;
+        Integer aux;
+        
+        String id = request.getParameter("id");
+        Subasta subasta = this.subastaService.buscarSubasta(Integer.parseInt(id));
+        Producto producto = subasta.getProducto();
+        
+        
+       /*
+        str = request.getParameter("fecha_cierre");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date=new Date();
+     try {
+         date = formatter.parse(str);
+     } catch (ParseException ex) {
+         Logger.getLogger(servletPublicarProducto.class.getName()).log(Level.SEVERE, null, ex);
+     }
+        subasta.setCierre(date);
+        */
+        String titulo = request.getParameter("titulo");
+        String descripcion = request.getParameter("descripcion");
+        String categoria = request.getParameter("categoria");
+        String url = request.getParameter("foto");
 
-            subastas = this.subastaService.listarSubastas();
-            usuarios = this.usuarioService.listarUsuario();
 
+        this.productoService.modificarProducto(producto, titulo, descripcion, url, producto.getEstado(), categoria, subasta);
 
-            request.setAttribute("subastas", subastas);
-            request.setAttribute("usuarios", usuarios);
-            request.getRequestDispatcher("admin.jsp").forward(request, response);
-        }
+        
+        response.sendRedirect(request.getContextPath()+"/servletListadoMisProductos"); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

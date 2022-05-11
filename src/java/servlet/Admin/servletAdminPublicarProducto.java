@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
-
+package servlet.Admin;
 
 import entity.Producto;
 import entity.Subasta;
+import entity.Usuario;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,10 +24,10 @@ import service.UsuarioService;
  *
  * @author X430F
  */
-public class servletAdminBorrarSubasta extends HttpServlet {
+public class servletAdminPublicarProducto extends HttpServlet {
+    @EJB ProductoService productoService;
     @EJB UsuarioService usuarioService;
     @EJB SubastaService subastaService;
-    @EJB ProductoService productoService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,15 +40,26 @@ public class servletAdminBorrarSubasta extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String str = request.getParameter("subasta");
-        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
-        Producto prod = this.productoService.buscarProducto(sub.getProducto().getIdPRODUCTO());
+        
+        String id = request.getParameter("id");
+        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(id));
+        
+        String titulo = request.getParameter("titulo");
+        String descripcion = request.getParameter("descripcion");
+        String categoria = request.getParameter("categoria");
+        String url = request.getParameter("foto");
+        this.productoService.crearProducto(titulo, descripcion, url, "En venta", categoria, null);
+        
+        
+        Date date = new Date(System.currentTimeMillis());
+        String puja = request.getParameter("puja_inicial");
+        List<Producto> pro = this.productoService.listarProductos();
+        this.subastaService.crearSubasta(date, null,Double.parseDouble(puja), Double.parseDouble(puja), user, null, pro.get(pro.size()-1));
 
-        this.subastaService.borrarSubasta(Integer.parseInt(str));
-        this.productoService.eliminarProducto(prod);
-
-
-        response.sendRedirect(request.getContextPath() + "/servletAdmin");
+        List<Subasta> sub = this.subastaService.listarSubastas();
+        this.productoService.modificarSubasta(pro.get(pro.size()-1), sub.get(sub.size()-1));
+        
+        response.sendRedirect(request.getContextPath()+"/servletAdmin");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

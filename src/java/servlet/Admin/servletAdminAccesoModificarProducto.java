@@ -3,36 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Admin;
 
-import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.NotificacionesService;
-import service.ProductoService;
-import service.PujadoresService;
 import service.SubastaService;
 import service.UsuarioService;
 
 /**
  *
- * @author Usuario
+ * @author X430F
  */
-public class servletTerminarSubasta extends HttpServlet {
-@EJB SubastaService subastaService;
-@EJB ProductoService productoService;
-@EJB UsuarioService usuarioService;
-@EJB PujadoresService pujadorService;
-@EJB NotificacionesService notificacionesService;
+public class servletAdminAccesoModificarProducto extends HttpServlet {
+    @EJB SubastaService subastaService;
+    @EJB UsuarioService userService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,44 +34,18 @@ public class servletTerminarSubasta extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String subasta = request.getParameter("subasta");
-        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(subasta));
-        Producto producto = sub.getProducto();
         String str = request.getParameter("id");
-        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(str));
-
-        List<Integer> aux = this.pujadorService.buscarPujadoresSubasta(sub);
-        if(aux.isEmpty()){
-        this.productoService.modificarEstado(producto, "No vendido");
-        }else{
-        
-        Usuario ganador = this.usuarioService.buscarUsuario(this.pujadorService.buscarPujadorMaximo(sub));
-        this.productoService.modificarEstado(producto, "Vendido");
-        this.subastaService.modificarComprador(Integer.parseInt(subasta), ganador);
-        
-        List<Usuario> notificados = new ArrayList<Usuario>();
-        for(Integer i: aux){
-           Usuario usuarioAnyadir = this.usuarioService.buscarUsuario(i);
-           if(!notificados.contains(usuarioAnyadir)){
-               notificados.add(this.usuarioService.buscarUsuario(i));
-           }  
-        }
-        for(Usuario u : notificados){
-            if(u.getIdUSUARIO() == ganador.getIdUSUARIO()){
-                this.notificacionesService.crearSubasta(u, sub, "ha sido el ganador");
-            }else{
-               this.notificacionesService.crearSubasta(u, sub, "NO ha sido el ganador");
+            if (str != null) {
+                Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
+                request.setAttribute("usuario", usuario);
             }
-
-        }
-         
-        }
-        
-        Date date = new Date(System.currentTimeMillis());
-        
-        this.subastaService.modificarFechaCierre(sub.getIdSUBASTA(), date);
-        
-        response.sendRedirect(request.getContextPath()+"/servletListadoMisProductos");
+            str = request.getParameter("subasta");
+            if(str != null){
+                Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
+                request.setAttribute("subasta", sub);
+            }
+            
+            request.getRequestDispatcher("/adminPublicarProducto.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
