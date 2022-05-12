@@ -7,6 +7,8 @@ package service;
 
 import dao.NotificacionesFacade;
 import dao.PujadoresFacade;
+import dao.SubastaFacade;
+import dao.UsuarioFacade;
 import dto.PujadoresDTO;
 import entity.Notificaciones;
 import entity.Producto;
@@ -25,8 +27,13 @@ import java.util.Date;
 @Stateless
 public class PujadoresService {
     @EJB PujadoresFacade pujadoresFC;
+    @EJB UsuarioFacade usuarioFC;
+    @EJB SubastaFacade subastaFC;
     
-    public void rellenarPujador(Pujadores pujadores,Usuario user,Subasta subasta,double puja,Date fecha) {
+    public void rellenarPujador(Integer pujadoresId,Integer userId,Integer subastaId,double puja,Date fecha) {
+        Pujadores pujadores=this.pujadoresFC.find(pujadoresId);
+        Usuario user = this.usuarioFC.find(userId);
+        Subasta subasta = this.subastaFC.find(subastaId);
         
         pujadores.setUsuario(user);
         pujadores.setSubasta(subasta);
@@ -34,11 +41,17 @@ public class PujadoresService {
         pujadores.setFecha(fecha);
         
     }
-    public void crearPujador(Usuario user,Subasta subasta,double puja,Date fecha){
+    public void crearPujador(Integer userId,Integer subastaId,double puja,Date fecha){
+        
+        Usuario user = this.usuarioFC.find(userId);
+        Subasta sub = this.subastaFC.find(subastaId);
         
         Pujadores pujadores = new Pujadores();
         
-        this.rellenarPujador(pujadores, user, subasta, puja, fecha);
+        pujadores.setUsuario(user);
+        pujadores.setSubasta(sub);
+        pujadores.setValorPuja(puja);
+        pujadores.setFecha(fecha);
         
         this.pujadoresFC.create(pujadores);
     }
@@ -55,11 +68,13 @@ public class PujadoresService {
         return listaDTO;
     }
     
-    public List<Integer>  buscarPujadoresSubasta(Subasta subasta){
+    public List<Integer>  buscarPujadoresSubasta(Integer subastaId){
+        Subasta subasta = this.subastaFC.find(subastaId);
         return this.pujadoresFC.getPujadores(subasta);
     }
     
-    public Integer buscarPujadorMaximo(Subasta subasta){
+    public Integer buscarPujadorMaximo(Integer subastaId){
+        Subasta subasta = this.subastaFC.find(subastaId);
         return this.pujadoresFC.getPujadorMaximo(subasta);
     }
 }

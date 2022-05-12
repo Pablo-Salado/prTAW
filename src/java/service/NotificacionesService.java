@@ -6,6 +6,7 @@
 package service;
 
 import dao.NotificacionesFacade;
+import dao.UsuarioFacade;
 import dto.NotificacionesDTO;
 import entity.Notificaciones;
 import javax.ejb.EJB;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 @Stateless
 public class NotificacionesService {
     @EJB NotificacionesFacade notiFC;
+    @EJB UsuarioFacade userFC;
     
     public List<NotificacionesDTO> listaEntityADTO(List<Notificaciones> lista){
         List<NotificacionesDTO> listaDTO = null;
@@ -49,18 +51,21 @@ public class NotificacionesService {
         
     }
     
-    public void rellenarNotificacion(Notificaciones not,Usuario user,Subasta subasta,String ganador) {
+    public void rellenarNotificacion(Integer notId,Usuario user,Subasta subasta,String ganador) {
+        
+        Notificaciones not=this.notiFC.find(notId);
         
         not.setIdUsuario(user);
         not.setIdSubasta(subasta);
         not.setGanador(ganador);
         
     }
-    public void crearSubasta(Usuario user,Subasta subasta,String ganador){
+    public void crearSubasta(Integer userID,Subasta subasta,String ganador){
+        Usuario user = this.userFC.find(userID);
         
         Notificaciones notificacion = new Notificaciones();
         
-        this.rellenarNotificacion(notificacion, user, subasta, ganador);
+        this.rellenarNotificacion(notificacion.getId(), user, subasta, ganador);
         
         this.notiFC.create(notificacion);
     }

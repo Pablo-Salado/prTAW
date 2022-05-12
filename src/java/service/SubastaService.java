@@ -5,10 +5,12 @@
  */
 package service;
 
+import dao.ProductoFacade;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
 import dao.SubastaFacade;
+import dao.UsuarioFacade;
 import dto.SubastaDTO;
 import entity.Producto;
 import entity.Subasta;
@@ -24,7 +26,8 @@ import java.util.Date;
 @Stateless
 public class SubastaService {
     @EJB SubastaFacade subFC;
-
+    @EJB ProductoFacade prodFC;
+    @EJB UsuarioFacade userFC;
     
     
     private List<SubastaDTO> listaEntityADTO (List<Subasta> lista) {
@@ -85,7 +88,12 @@ public class SubastaService {
         this.subFC.remove(subasta);
     }
 
-    public void rellenarSubasta(Subasta subasta, Date fecha_apertura, Date fecha_cierre, double puja_maxima, double precio_inicial, Usuario vendedor, Usuario comprador, Producto producto) {
+    public void rellenarSubasta(Integer subastaId, Date fecha_apertura, Date fecha_cierre, double puja_maxima, double precio_inicial, Integer vendedorId, Integer compradorId, Integer productoId) {
+        
+        Subasta subasta = this.subFC.find(subastaId);
+        Usuario vendedor = this.userFC.find(vendedorId);
+        Usuario comprador = this.userFC.find(compradorId);
+        Producto producto = this.prodFC.find(productoId);
         
         subasta.setApertura(fecha_apertura);
         subasta.setCierre(fecha_cierre);
@@ -97,23 +105,36 @@ public class SubastaService {
         
         
     }
-    public void crearSubasta(Date fecha_apertura, Date fecha_cierre, double puja_maxima, double precio_inicial, Usuario vendedor, Usuario comprador, Producto producto){
+    public void crearSubasta(Date fecha_apertura, Date fecha_cierre, double puja_maxima, double precio_inicial, Integer vendedorId, Integer compradorId, Integer productoId){
         
         Subasta subasta = new Subasta();
+        Usuario vendedor = this.userFC.find(vendedorId);
+        Usuario comprador = this.userFC.find(compradorId);
+        Producto producto = this.prodFC.find(productoId);
         
-        this.rellenarSubasta(subasta, fecha_apertura, fecha_cierre, puja_maxima, precio_inicial, vendedor, comprador, producto);
+        subasta.setApertura(fecha_apertura);
+        subasta.setCierre(fecha_cierre);
+        subasta.setPrecioInicial(precio_inicial);
+        subasta.setPujaMaxima(puja_maxima);
+        subasta.setVendedor(vendedor);
+        subasta.setComprador(comprador);
+        subasta.setProducto(producto);
         
         this.subFC.create(subasta);
     }
-    public void modificarSubasta(Integer id,Date fecha_apertura, Date fecha_cierre, double puja_maxima, double precio_inicial, Usuario vendedor, Usuario comprador, Producto producto){
-        Subasta subasta = this.subFC.find(id);
+    public void modificarSubasta(Integer subastaId,Date fecha_apertura, Date fecha_cierre, double puja_maxima, double precio_inicial, Integer vendedorId, Integer compradorId, Integer productoId){
+        Subasta subasta = this.subFC.find(subastaId);
+        Usuario vendedor = this.userFC.find(vendedorId);
+        Usuario comprador = this.userFC.find(compradorId);
+        Producto producto = this.prodFC.find(productoId);
         
-        this.rellenarSubasta(subasta, fecha_apertura, fecha_cierre, puja_maxima, precio_inicial, vendedor, comprador, producto);
+        
+        this.rellenarSubasta(subastaId, fecha_apertura, fecha_cierre, puja_maxima, precio_inicial, vendedorId, compradorId, productoId);
         
         this.subFC.edit(subasta);
     }
-    public void modificarPujaMaxima(Integer id, double puja_maxima){
-        Subasta subasta = this.subFC.find(id);
+    public void modificarPujaMaxima(Integer subastaId, double puja_maxima){
+        Subasta subasta = this.subFC.find(subastaId);
         
         subasta.setPujaMaxima(puja_maxima);
         
@@ -127,9 +148,9 @@ public class SubastaService {
         
         this.subFC.edit(subasta);
     }
-    public void modificarComprador(Integer id,Usuario comprador){
+    public void modificarComprador(Integer id,Integer compradorId){
         Subasta subasta = this.subFC.find(id);
-        
+        Usuario comprador = this.userFC.find(compradorId);
         subasta.setComprador(comprador);
         this.subFC.edit(subasta);
     }

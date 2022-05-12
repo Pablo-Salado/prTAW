@@ -44,8 +44,9 @@ public class UsuarioService {
         return listaEntityADTO(list);
     }
     
-     public void rellenarUsuario(Usuario user,String nombre,String apellidos,String sexo, String password, String email, String domicilio, String ciudad, Integer edad,String tipo, Double saldo) {
+     public void rellenarUsuario(Integer idUsuario,String nombre,String apellidos,String sexo, String password, String email, String domicilio, String ciudad, Integer edad,String tipo, Double saldo) {
         
+        Usuario user = this.userFC.find(idUsuario);
         user.setNombre(nombre);
         user.setEpellidos(apellidos);
         user.setSexo(sexo);
@@ -63,7 +64,18 @@ public class UsuarioService {
         
         Usuario user = new Usuario();
         
-       this.rellenarUsuario(user, nombre, apellidos, sexo, password, email, domicilio, ciudad, edad, tipo, saldo);
+        user.setNombre(nombre);
+        user.setEpellidos(apellidos);
+        user.setSexo(sexo);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setDomicilio(domicilio);
+        user.setCiudadResidencia(ciudad);
+        user.setEdad(edad);
+        user.setTipoUsuario(tipo);
+        user.setSaldo(saldo);
+        
+       
         
         this.userFC.create(user);
     }
@@ -72,8 +84,9 @@ public class UsuarioService {
         return this.userFC.comprobarUsuario(email, pass);
     }
     
-    public void eliminarUsuario(Usuario user){
-
+    public void eliminarUsuario(Integer idUser){
+        
+        Usuario user = this.userFC.find(idUser);
         this.userFC.remove(user);
     }
     
@@ -83,16 +96,17 @@ public class UsuarioService {
         this.userFC.remove(usuario);
     }
     
-    public void modificarUsuario(Usuario user,String nombre,String apellidos,String sexo, String password, String email, String domicilio, String ciudad, Integer edad,String tipo, Double saldo){
-       this.rellenarUsuario(user, nombre, apellidos, sexo, password, email, domicilio, ciudad, edad, tipo, saldo);
+    public void modificarUsuario(Integer idUser,String nombre,String apellidos,String sexo, String password, String email, String domicilio, String ciudad, Integer edad,String tipo, Double saldo){
        
-       this.userFC.edit(user);
+        this.rellenarUsuario(idUser, nombre, apellidos, sexo, password, email, domicilio, ciudad, edad, tipo, saldo);
+       
+        this.userFC.edit(this.userFC.find(idUser));
     }
     
-    public void modificarUsuarioId(Integer id,String nombre,String apellidos,String sexo, String password, String email, String domicilio, String ciudad, Integer edad,String tipo, Double saldo){
-       Usuario user = this.userFC.find(id);
+    public void modificarUsuarioId(Integer idUser,String nombre,String apellidos,String sexo, String password, String email, String domicilio, String ciudad, Integer edad,String tipo, Double saldo){
+       Usuario user = this.userFC.find(idUser);
         
-       this.rellenarUsuario(user, nombre, apellidos, sexo, password, email, domicilio, ciudad, edad, tipo, saldo);
+       this.rellenarUsuario(idUser, nombre, apellidos, sexo, password, email, domicilio, ciudad, edad, tipo, saldo);
        
        this.userFC.edit(user);
     }

@@ -66,8 +66,10 @@ public class ProductoService {
         this.proFC.create(producto);
     }
     
-    public void eliminarProducto(Producto pro){
-
+    public void eliminarProducto(Integer proId){
+        
+        Producto pro =this.proFC.find(proId);
+        
         this.proFC.remove(pro);
     }
     
@@ -77,7 +79,9 @@ public class ProductoService {
         this.proFC.remove(pro);
     }
     
-    public void modificarProducto(Producto pro,String titulo, String descripcion, String url,String estado, String categoria,Subasta subasta){
+    public void modificarProducto(Integer proId,String titulo, String descripcion, String url,String estado, String categoria,Subasta subasta){
+        Producto pro = this.proFC.find(proId);
+        
         this.rellenarProducto(pro, titulo, descripcion, url, estado, categoria, subasta);
         
         this.proFC.edit(pro);
@@ -91,11 +95,15 @@ public class ProductoService {
         this.proFC.edit(pro);
     }
 
-    public void addProductoFavorito(Producto pro, Usuario user){
+    public void addProductoFavorito(Integer proId, Usuario user){
+        
+        Producto pro = this.proFC.find(proId);
+        
         this.proFC.Fav(pro, user);
     }
     
-    public void eliminarProductoFavorito(Producto pro, Usuario user){
+    public void eliminarProductoFavorito(Integer proId, Usuario user){
+        Producto pro = this.proFC.find(proId);
         this.proFC.noFav(pro, user);
     }
     
@@ -105,12 +113,14 @@ public class ProductoService {
     }
 
     
-    public void modificarSubasta(Producto pro, Subasta sub){
+    public void modificarSubasta(Integer proId, Subasta sub){
+        Producto pro = this.proFC.find(proId);
         pro.setSubasta(sub);
         
         this.proFC.edit(pro);
     }
-    public void modificarEstado(Producto pro, String estado){
+    public void modificarEstado(Integer proId, String estado){
+        Producto pro = this.proFC.find(proId);
         pro.setEstado(estado);
         
         this.proFC.edit(pro);
