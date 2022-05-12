@@ -6,9 +6,12 @@
 package service;
 
 import dao.ProductoFacade;
+import dao.UsuarioFacade;
+import dto.ProductoDTO;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -22,13 +25,26 @@ import javax.persistence.Query;
 @Stateless
 public class ProductoService {
     @EJB ProductoFacade proFC;
+    @EJB UsuarioFacade userFC;
     
-    public Producto buscarProducto(Integer id) {
-        return this.proFC.find(id);
+    private List<ProductoDTO> listaEntityADTO (List<Producto> lista) {
+        List<ProductoDTO> listaDTO = null;
+        if (lista != null) {
+            listaDTO = new ArrayList<>();
+            for (Producto dc:lista) {
+                listaDTO.add(dc.toDTO());
+            }
+        }
+        return listaDTO;
+    }
+    
+    public ProductoDTO buscarProducto(Integer id) {
+        return this.proFC.find(id).toDTO();
     }
 
-    public List<Producto> listarProductos() {
-        return this.proFC.findAll();
+    public List<ProductoDTO> listarProductos() {
+        List<Producto> lista =this.proFC.findAll();
+        return listaEntityADTO(lista);
     }
     
     public void rellenarProducto(Producto producto,String titulo, String descripcion, String url,String estado, String categoria,Subasta subasta){
@@ -83,8 +99,9 @@ public class ProductoService {
         this.proFC.noFav(pro, user);
     }
     
-    public List<Integer> listaFavoritos(Usuario user){
-        return this.proFC.productosFavoritos(user);
+    public List<Integer> listaFavoritos(Integer idUser){
+        
+        return this.proFC.productosFavoritos(this.userFC.find(idUser));
     }
 
     

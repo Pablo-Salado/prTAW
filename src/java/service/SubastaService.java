@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
 import dao.SubastaFacade;
+import dto.SubastaDTO;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
@@ -24,15 +25,30 @@ import java.util.Date;
 public class SubastaService {
     @EJB SubastaFacade subFC;
 
-    public Subasta buscarSubasta(Integer id) {
-        return this.subFC.find(id);
+    
+    
+    private List<SubastaDTO> listaEntityADTO (List<Subasta> lista) {
+        List<SubastaDTO> listaDTO = null;
+        if (lista != null) {
+            listaDTO = new ArrayList<>();
+            for (Subasta dc:lista) {
+                listaDTO.add(dc.toDTO());
+            }
+        }
+        return listaDTO;
+    }
+    
+    
+    public SubastaDTO buscarSubasta(Integer id) {
+        return this.subFC.find(id).toDTO();
     }
 
-    public List<Subasta> listarSubastas() {
-        return this.subFC.findAll();
+    public List<SubastaDTO> listarSubastas() {
+        List<Subasta> list = this.subFC.findAll();
+        return listaEntityADTO(list);
     }
 
-    public List<Subasta> filtrarSubastasFavoritas(String categoria, String min, String max, String nombre, String fav,List<Producto> productos) {
+    public List<SubastaDTO> filtrarSubastasFavoritas(String categoria, String min, String max, String nombre, String fav,List<Producto> productos) {
         List<Subasta> subastas = new ArrayList<Subasta>();
         List<Subasta> aux = new ArrayList<Subasta>();
         if(fav != null){
@@ -55,11 +71,12 @@ public class SubastaService {
             }
             subastas = aux;
         }
-        return subastas;
+        return listaEntityADTO(subastas);
     }
 
-    public List<Subasta> filtrarSubastas(String categoria, String min, String max, String nombre){
-       return this.subFC.filtrarSubasta(categoria, min, max, nombre);
+    public List<SubastaDTO> filtrarSubastas(String categoria, String min, String max, String nombre){
+        List<Subasta> list =this.subFC.filtrarSubasta(categoria, min, max, nombre);
+       return listaEntityADTO(list);
     }
     
     public void borrarSubasta(Integer id) {

@@ -7,13 +7,16 @@ package service;
 
 import dao.NotificacionesFacade;
 import dao.PujadoresFacade;
+import dto.PujadoresDTO;
 import entity.Notificaciones;
+import entity.Producto;
 import entity.Pujadores;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
 import entity.Subasta;
 import entity.Usuario;
+import java.util.ArrayList;
 import java.util.Date;
 /**
  *
@@ -38,6 +41,18 @@ public class PujadoresService {
         this.rellenarPujador(pujadores, user, subasta, puja, fecha);
         
         this.pujadoresFC.create(pujadores);
+    }
+    
+    
+    public List<PujadoresDTO> listaEntityADTO (List<Pujadores> lista) {
+        List<PujadoresDTO> listaDTO = null;
+        if (lista != null) {
+            listaDTO = new ArrayList<>();
+            for (Pujadores dc:lista) {
+                listaDTO.add(dc.toDTO());
+            }
+        }
+        return listaDTO;
     }
     
     public List<Integer>  buscarPujadoresSubasta(Subasta subasta){

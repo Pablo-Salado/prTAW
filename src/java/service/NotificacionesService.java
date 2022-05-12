@@ -6,12 +6,14 @@
 package service;
 
 import dao.NotificacionesFacade;
+import dto.NotificacionesDTO;
 import entity.Notificaciones;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
 import entity.Subasta;
 import entity.Usuario;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,16 +23,30 @@ import entity.Usuario;
 public class NotificacionesService {
     @EJB NotificacionesFacade notiFC;
     
-    public Notificaciones buscarNotificacion(Integer id) {
-        return this.notiFC.find(id);
-    }
-
-    public List<Notificaciones> listarNotificaciones(){
-        return this.notiFC.findAll();
+    public List<NotificacionesDTO> listaEntityADTO(List<Notificaciones> lista){
+        List<NotificacionesDTO> listaDTO = null;
+        if (lista != null) {
+            listaDTO = new ArrayList<>();
+            for (Notificaciones dc:lista) {
+                listaDTO.add(dc.toDTO());
+            }
+        }
+        return listaDTO;
     }
     
-    public List<Notificaciones> listarNotificacionesPorUsuario(Integer id){
-        return this.notiFC.notificacionUsuario(id);
+    public NotificacionesDTO buscarNotificacion(Integer id) {
+        return this.notiFC.find(id).toDTO();
+    }
+
+    public List<NotificacionesDTO> listarNotificaciones(){
+        List<Notificaciones> lista = this.notiFC.findAll();
+        return listaEntityADTO(lista);
+    }
+    
+    public List<NotificacionesDTO> listarNotificacionesPorUsuario(Integer id){
+        List<Notificaciones> lista = this.notiFC.notificacionUsuario(id);
+        return listaEntityADTO(lista);
+        
     }
     
     public void rellenarNotificacion(Notificaciones not,Usuario user,Subasta subasta,String ganador) {

@@ -5,8 +5,7 @@
  */
 package dto;
 
-import entity.Subasta;
-import entity.Usuario;
+
 import java.util.Date;
 
 /**
@@ -18,8 +17,8 @@ public class PujadoresDTO {
     
     private Double valorPuja;
     private Date fecha;
-    private Subasta subasta;
-    private Usuario usuario;
+    private SubastaDTO subasta;
+    private UsuarioDTO usuario;
     private Integer iDPuja;
     
    public PujadoresDTO() {
@@ -49,19 +48,19 @@ public class PujadoresDTO {
         this.fecha = fecha;
     }
 
-    public Subasta getSubasta() {
+    public SubastaDTO getSubasta() {
         return subasta;
     }
 
-    public void setSubasta(Subasta subasta) {
+    public void setSubasta(SubastaDTO subasta) {
         this.subasta = subasta;
     }
 
-    public Usuario getUsuario() {
+    public UsuarioDTO getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioDTO usuario) {
         this.usuario = usuario;
     }
     

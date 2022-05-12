@@ -26,6 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import service.PujadoresService;
 
 /**
  *
@@ -202,15 +203,16 @@ public class Subasta implements Serializable {
     
     public SubastaDTO toDTO(){
         SubastaDTO res = new SubastaDTO();
+        PujadoresService pj = new PujadoresService();
         res.setApertura(apertura);
         res.setCierre(cierre);
-        res.setComprador(comprador);
+        res.setComprador(comprador.toDTO());
         res.setIdSUBASTA(idSUBASTA);
         res.setPrecioInicial(precioInicial);
-        res.setProducto(producto);
+        res.setProducto(producto.toDTO());
         res.setPujaMaxima(pujaMaxima);
-        res.setVendedor(vendedor);
-        res.setPujadoresList(pujadoresList);
+        res.setVendedor(vendedor.toDTO());
+        res.setPujadoresList(pj.listaEntityADTO(pujadoresList));
         return res;
         
     }

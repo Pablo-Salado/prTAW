@@ -5,12 +5,7 @@
  */
 package dto;
 
-import dto.ProductoDTO;
-import dto.UsuarioDTO;
-import dto.PujadoresDTO;
-import entity.Producto;
-import entity.Pujadores;
-import entity.Usuario;
+
 
 import java.util.Date;
 import java.util.List;
@@ -24,10 +19,10 @@ public class SubastaDTO {
     private Date cierre;
     private Double pujaMaxima;
     private Double precioInicial;
-    private Producto producto;
-    private Usuario vendedor;
-    private Usuario comprador;
-    private List<Pujadores> pujadoresList;
+    private ProductoDTO producto;
+    private UsuarioDTO vendedor;
+    private UsuarioDTO comprador;
+    private List<PujadoresDTO> pujadoresList;
     private Integer idSUBASTA;
     
     public SubastaDTO(){
@@ -74,35 +69,35 @@ public class SubastaDTO {
         this.precioInicial = precioInicial;
     }
 
-    public Producto getProducto() {
+    public ProductoDTO getProducto() {
         return producto;
     }
 
-    public void setProducto(Producto producto) {
+    public void setProducto(ProductoDTO producto) {
         this.producto = producto;
     }
 
-    public Usuario getVendedor() {
+    public UsuarioDTO getVendedor() {
         return vendedor;
     }
 
-    public void setVendedor(Usuario vendedor) {
+    public void setVendedor(UsuarioDTO vendedor) {
         this.vendedor = vendedor;
     }
 
-    public Usuario getComprador() {
+    public UsuarioDTO getComprador() {
         return comprador;
     }
 
-    public void setComprador(Usuario comprador) {
+    public void setComprador(UsuarioDTO comprador) {
         this.comprador = comprador;
     }
 
-    public List<Pujadores> getPujadoresList() {
+    public List<PujadoresDTO> getPujadoresList() {
         return pujadoresList;
     }
 
-    public void setPujadoresList(List<Pujadores> pujadoresList) {
+    public void setPujadoresList(List<PujadoresDTO> pujadoresList) {
         this.pujadoresList = pujadoresList;
     }
    

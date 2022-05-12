@@ -5,9 +5,10 @@
  */
 package servlet;
 
-import entity.Producto;
-import entity.Subasta;
-import entity.Usuario;
+import dto.ProductoDTO;
+import dto.SubastaDTO;
+import dto.UsuarioDTO;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,21 +44,21 @@ public class servletFavorito extends TAWServlet {
             
          
         String str = request.getParameter("usuario");
-        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(str));
+        UsuarioDTO user = this.usuarioService.buscarUsuario(Integer.parseInt(str));
        
         str = request.getParameter("subasta");
-        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
+        SubastaDTO sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
         
         String chck = request.getParameter("favorito");
         
-        Producto pro = sub.getProducto();
+        ProductoDTO pro = sub.getProducto();
         
-        List<Subasta> subastas = this.subastaService.listarSubastas();
+        List<SubastaDTO> subastas = this.subastaService.listarSubastas();
         
-        List<Producto> productos = new ArrayList<Producto>();
+        List<ProductoDTO> productos = new ArrayList<ProductoDTO>();
         List<Integer> idPro = this.productoService.listaFavoritos(user);
         for(Integer i: idPro){
-            Producto aux = this.productoService.buscarProducto(i);
+            ProductoDTO aux = this.productoService.buscarProducto(i);
             if(!productos.contains(aux)){
                 productos.add(aux);
             }

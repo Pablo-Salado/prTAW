@@ -131,8 +131,8 @@ public class Pujadores implements Serializable {
     public PujadoresDTO toDTO(){
         PujadoresDTO res = new PujadoresDTO();
         res.setFecha(fecha);
-        res.setSubasta(subasta);
-        res.setUsuario(usuario);
+        res.setSubasta(subasta.toDTO());
+        res.setUsuario(usuario.toDTO());
         res.setValorPuja(valorPuja);
         res.setiDPuja(iDPuja);
         return res;

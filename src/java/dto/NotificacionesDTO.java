@@ -5,8 +5,7 @@
  */
 package dto;
 
-import entity.Subasta;
-import entity.Usuario;
+
 
 /**
  *
@@ -15,8 +14,8 @@ import entity.Usuario;
 public class NotificacionesDTO {
     
     
-    private Subasta idSubasta;
-    private Usuario idUsuario;
+    private SubastaDTO idSubasta;
+    private UsuarioDTO idUsuario;
     private Integer id;
     private String ganador;
 
@@ -41,19 +40,19 @@ public class NotificacionesDTO {
         this.ganador = ganador;
     }
 
-    public Subasta getIdSubasta() {
+    public SubastaDTO getIdSubasta() {
         return idSubasta;
     }
 
-    public void setIdSubasta(Subasta idSubasta) {
+    public void setIdSubasta(SubastaDTO idSubasta) {
         this.idSubasta = idSubasta;
     }
 
-    public Usuario getIdUsuario() {
+    public UsuarioDTO getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(Usuario idUsuario) {
+    public void setIdUsuario(UsuarioDTO idUsuario) {
         this.idUsuario = idUsuario;
     }
     

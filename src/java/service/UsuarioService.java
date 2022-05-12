@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import java.util.List;
 import dao.SubastaFacade;
 import dao.UsuarioFacade;
+import dto.UsuarioDTO;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
@@ -23,12 +24,24 @@ import java.util.Date;
 public class UsuarioService {
     @EJB UsuarioFacade userFC;
     
-    public Usuario buscarUsuario(Integer id) {
-        return this.userFC.find(id);
+    private List<UsuarioDTO> listaEntityADTO (List<Usuario> lista) {
+        List<UsuarioDTO> listaDTO = null;
+        if (lista != null) {
+            listaDTO = new ArrayList<>();
+            for (Usuario dc:lista) {
+                listaDTO.add(dc.toDTO());
+            }
+        }
+        return listaDTO;
+    }
+    
+    public UsuarioDTO buscarUsuario(Integer id) {
+        return this.userFC.find(id).toDTO();
     }
 
-    public List<Usuario> listarUsuario() {
-        return this.userFC.findAll();
+    public List<UsuarioDTO> listarUsuario() {
+        List<Usuario> list =this.userFC.findAll();
+        return listaEntityADTO(list);
     }
     
      public void rellenarUsuario(Usuario user,String nombre,String apellidos,String sexo, String password, String email, String domicilio, String ciudad, Integer edad,String tipo, Double saldo) {

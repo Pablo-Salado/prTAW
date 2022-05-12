@@ -126,8 +126,8 @@ public class Notificaciones implements Serializable {
         NotificacionesDTO res = new NotificacionesDTO();
         res.setGanador(ganador);
         res.setId(id);
-        res.setIdSubasta(idSubasta);
-        res.setIdUsuario(idUsuario);
+        res.setIdSubasta(idSubasta.toDTO());
+        res.setIdUsuario(idUsuario.toDTO());
         return res;
     }
 }
