@@ -5,6 +5,8 @@
  */
 package servlet.Admin;
 
+import dto.SubastaDTO;
+import dto.UsuarioDTO;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
@@ -36,12 +38,12 @@ public class servletAdminAccesoModificarProducto extends HttpServlet {
             throws ServletException, IOException {
         String str = request.getParameter("id");
             if (str != null) {
-                Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
+                UsuarioDTO usuario = this.userService.buscarUsuario(Integer.parseInt(str));
                 request.setAttribute("usuario", usuario);
             }
             str = request.getParameter("subasta");
             if(str != null){
-                Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
+                SubastaDTO sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
                 request.setAttribute("subasta", sub);
             }
             
