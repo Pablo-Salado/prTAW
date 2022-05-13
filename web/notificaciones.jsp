@@ -4,6 +4,8 @@
     Author     : Gorpax
 --%>
 
+<%@page import="dto.NotificacionesDTO"%>
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="entity.Notificaciones"%>
 <%@page import="entity.Producto"%>
@@ -23,7 +25,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Página principal</title>
   </head>
-  <% Usuario user = (Usuario)session.getAttribute("usuario"); %>
+  <% UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario"); %>
   
   <body>
 
@@ -78,10 +80,10 @@
             
                 <div class="px-3 py-2 mb-3">
                     <%
-                        List<Notificaciones> notificaciones = (List)request.getAttribute("notificaciones");
-                        List<Notificaciones> not = new ArrayList<Notificaciones>();
-                        for(Notificaciones noti : notificaciones){
-                            if(noti.getIdUsuario().getIdUSUARIO() == user.getIdUSUARIO()  && !not.contains(noti)){
+                        List<NotificacionesDTO> notificaciones = (List)request.getAttribute("notificaciones");
+                        List<NotificacionesDTO> not = new ArrayList<NotificacionesDTO>();
+                        for(NotificacionesDTO noti : notificaciones){
+                            if(noti.getIdUsuario().getIdUsuario() == user.getIdUsuario()  && !not.contains(noti)){
                                 not.add(noti);
                             }
                         }
@@ -95,9 +97,9 @@
                         <%
                             }else{
                         int cont = 1;
-                        for(Notificaciones n : not){
+                        for(NotificacionesDTO n : not){
                                 
-                            if(n.getIdUsuario().getIdUSUARIO() == user.getIdUSUARIO()){
+                            if(n.getIdUsuario().getIdUsuario() == user.getIdUsuario()){
                         %>
                      <div class="row justify-content-center">
             <div class="container py-2 col-6">

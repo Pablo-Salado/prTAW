@@ -5,6 +5,8 @@
  */
 package dto;
 
+import java.util.List;
+
 /**
  *
  * @author migue
@@ -23,6 +25,7 @@ public class UsuarioDTO {
     private String tipoUsuario;
     private Double saldo;
     private int idUsuario;
+    private List<ProductoDTO> productos;
 
     public UsuarioDTO() {
     }
@@ -113,6 +116,14 @@ public class UsuarioDTO {
 
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
+    }
+
+    public List<ProductoDTO> getProductoList(){
+        return productos;
+    }
+    
+    public void setProductoList(List<ProductoDTO> productos){
+        this.productos = productos;
     }
     
 }

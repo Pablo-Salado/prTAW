@@ -5,6 +5,8 @@
  */
 package servlet;
 
+import dto.NotificacionesDTO;
+import dto.SubastaDTO;
 import entity.Notificaciones;
 import entity.Subasta;
 import java.io.IOException;
@@ -37,11 +39,11 @@ public class servletListarNotificaciones extends TAWServlet {
        if(super.comprobarSession(request, response)){
             
 
-        List<Notificaciones> not = null;
+        List<NotificacionesDTO> not = null;
         
                 not = this.notiService.listarNotificaciones();
         
-        List<Subasta> subastas = null;
+        List<SubastaDTO> subastas = null;
         
                 subastas = this.subastaService.listarSubastas();
            

@@ -206,13 +206,28 @@ public class Subasta implements Serializable {
         PujadoresService pj = new PujadoresService();
         res.setApertura(apertura);
         res.setCierre(cierre);
-        res.setComprador(comprador.toDTO());
+        if(comprador != null){
+            res.setComprador(comprador.toDTO());
+        }else{
+            res.setComprador(null);
+        }
+        
         res.setIdSUBASTA(idSUBASTA);
         res.setPrecioInicial(precioInicial);
         res.setProducto(producto.toDTO());
         res.setPujaMaxima(pujaMaxima);
-        res.setVendedor(vendedor.toDTO());
-        res.setPujadoresList(pj.listaEntityADTO(pujadoresList));
+        if(vendedor != null){
+            res.setVendedor(vendedor.toDTO());
+        }else{
+            res.setVendedor(null);
+        }
+        if(!pujadoresList.isEmpty()){
+            res.setPujadoresList(pj.listaEntityADTO(pujadoresList));
+        }else{
+            res.setPujadoresList(null);
+        }
+        
+
         return res;
         
     }

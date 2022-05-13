@@ -5,6 +5,7 @@
  */
 package servlet.Comprador;
 
+import dto.SubastaDTO;
 import entity.Subasta;
 import java.io.IOException;
 import java.util.List;
@@ -35,7 +36,7 @@ public class servletMisCompras extends TAWServlet {
         if(super.comprobarSession(request, response)){
             
 
-        List<Subasta> misCompras = null;
+        List<SubastaDTO> misCompras = null;
         
                 misCompras = this.subastaService.listarSubastas();
            

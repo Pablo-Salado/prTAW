@@ -24,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import service.ProductoService;
 
 /**
  *
@@ -268,6 +269,7 @@ public class Usuario implements Serializable {
     
     public UsuarioDTO toDTO(){
         UsuarioDTO res = new UsuarioDTO();
+        ProductoService ps = new ProductoService();
         res.setApellidos(epellidos);
         res.setCiudadResidencia(ciudadResidencia);
         res.setDomicilio(domicilio);
@@ -279,6 +281,8 @@ public class Usuario implements Serializable {
         res.setSaldo(saldo);
         res.setSexo(sexo);
         res.setTipoUsuario(tipoUsuario);
+        res.setProductoList(ps.listaEntityADTO(productoList));
+        
         return res;
     }
     

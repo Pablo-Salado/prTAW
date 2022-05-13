@@ -80,8 +80,8 @@ public class UsuarioService {
         this.userFC.create(user);
     }
     
-    public Usuario comprobarUser(String email, String pass){
-        return this.userFC.comprobarUsuario(email, pass);
+    public UsuarioDTO comprobarUser(String email, String pass){
+        return this.userFC.comprobarUsuario(email, pass).toDTO();
     }
     
     public void eliminarUsuario(Integer idUser){
@@ -111,7 +111,8 @@ public class UsuarioService {
        this.userFC.edit(user);
     }
     
-    public void restaSaldo(Usuario user,Double saldo){
+    public void restaSaldo(Integer userId,Double saldo){
+        Usuario user = this.userFC.find(userId);
         user.setSaldo(saldo);
         
         this.userFC.edit(user);
