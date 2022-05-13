@@ -63,10 +63,9 @@ public class servletFavorito extends TAWServlet {
                 productos.add(aux);
             }
         }
-        
         if(chck == null){
             this.productoService.eliminarProductoFavorito(pro.getIdPRODUCTO(), user.getIdUsuario());
-            productos.remove(pro);
+            productos.removeIf(pr -> (pr.getIdPRODUCTO() == pro.getIdPRODUCTO()));
         }else{
             this.productoService.addProductoFavorito(pro.getIdPRODUCTO(), user.getIdUsuario());
             productos.add(pro);

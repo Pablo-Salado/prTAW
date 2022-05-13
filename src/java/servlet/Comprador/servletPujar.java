@@ -63,6 +63,7 @@ public class servletPujar extends HttpServlet {
         this.subastaService.modificarPujaMaxima(Integer.parseInt(subasta), puja_max);
         
         this.usuarioService.restaSaldo(user.getIdUsuario(), user.getSaldo() - puja_max);
+        user.setSaldo(user.getSaldo() - puja_max);
         
         HttpSession session = request.getSession();
         session.setAttribute("saldo", user.getSaldo());
