@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import service.UsuarioService;
 
 /**
@@ -50,13 +51,11 @@ public class servletMarketing extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String strUsuario, accion = "todos";
-        Usuario usuario;
         List<Usuario> usuarios;
         String goTo = "marketing.jsp";
         
-        strUsuario = request.getParameter("usuario");
-        
-        usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuario");
         usuarios = usuarioService.getUsuariosCompradores();
         
         request.setAttribute("usuario", usuario);
