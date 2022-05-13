@@ -15,6 +15,7 @@ import entity.Subasta;
 import entity.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.persistence.Query;
 /**
  *
  * @author Gorpax
@@ -88,5 +89,9 @@ public class UsuarioService {
         user.setSaldo(saldo);
         
         this.userFC.edit(user);
+    }
+
+    public List<Usuario> filtrarUsuario(String nombre, String apellidos, String minEdad, String maxEdad, String tipo_usuario) {        
+        return this.userFC.filtrarUsuarios(nombre, apellidos, minEdad, maxEdad, tipo_usuario);
     }
 }

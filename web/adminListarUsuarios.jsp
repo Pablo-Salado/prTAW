@@ -1,7 +1,7 @@
 <%-- 
     Document   : adminListarUsuarios
     Created on : 09-may-2022, 20:06:26
-    Author     : X430F
+    Author     : Pablo Salado
 --%>
 
 <%@page import="java.util.List"%>
@@ -65,11 +65,32 @@
                   <form method="post" action="servletAdminFiltrarUsuarios">
                     <div class="row align-items-center">
                         <div class="col">
-                            <input class="form-control" type="text" placeholder="Nombre del usuario"  name="nombreUsuario">
+                            <input class="form-control" type="text" placeholder="Nombre"  name="nombre">
                         </div>
                         <div class="col">
-                            <input class="form-control" type="text" placeholder="Apellidos del usuario"  name="apellidosUsuario">
+                            <input class="form-control" type="text" placeholder="Apellidos"  name="apellidos">
                         </div>
+                        <div class="col-auto">
+                          <label class="col-form-label">Rango de edad:</label>
+                        </div>
+                        <div class="col ">
+                            <input class="form-control" type="text" placeholder="min"  name="minEdad" > 
+                        </div>
+                        <div class="col-auto">
+                          <label class="col-form-label">-</label>
+                        </div>
+                        <div class="col">
+                          <input class="form-control" type="text"placeholder="max" name="maxEdad">
+                        </div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example" style="width: auto;" name="tipo_usuario" >
+                                <option selected>Tipo de usuario</option>
+                                <option value="ADMINISTRADOR">Administrador</option>
+                                <option value="CV">Comprador/Vendedor</option>
+                                <option value="MARKETING">Marketing</option>
+                            </select>
+                        </div>
+                        
                       <div class="col-auto">
                         <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
                         <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
