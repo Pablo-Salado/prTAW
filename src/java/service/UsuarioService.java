@@ -60,7 +60,7 @@ public class UsuarioService {
 
     }
      
-    public void crearUsuario(String nombre,String apellidos,String sexo, String password, String email, String domicilio, String ciudad, Integer edad,String tipo, Double saldo){
+    public void crearUsuario(String nombre,String apellidos,String sexo, String password, String email, String domicilio, String ciudad, Integer edad, Double saldo){
         
         Usuario user = new Usuario();
         
@@ -72,7 +72,7 @@ public class UsuarioService {
         user.setDomicilio(domicilio);
         user.setCiudadResidencia(ciudad);
         user.setEdad(edad);
-        user.setTipoUsuario(tipo);
+        user.setTipoUsuario("CV");
         user.setSaldo(saldo);
         
        

@@ -4,7 +4,7 @@
     Author     : Usuario
 --%>
 
-<%@page import="entity.Usuario"%>
+<%@page import="dto.UsuarioDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -37,7 +37,7 @@
     <%
         
 
-        Usuario usuario = (Usuario)request.getAttribute("usuario");
+        UsuarioDTO usuario = (UsuarioDTO)request.getAttribute("usuario");
     %>  
     <body class = "text-center">
         <main class = "form-signin">
