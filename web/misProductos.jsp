@@ -4,9 +4,11 @@
     Author     : Usuario
 --%>
 
-<%@page import="entity.Usuario"%>
+
+<%@page import="dto.UsuarioDTO"%>
+<%@page import="dto.SubastaDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="entity.Subasta"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,7 +18,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <title>JSP Page</title>
     </head>
-    <%Usuario user = (Usuario)session.getAttribute("usuario");%>
+    <%UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");%>
     <body>
       <body>
 
@@ -104,7 +106,7 @@
                 
               </div>
               <div class="col-auto">
-                  <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                  <input class="form-control" type="hidden" value=<%=user.getIdUsuario() %>  name="usuario" onChange="this.form.submit()"> 
                 <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
                 
               </div>
@@ -120,7 +122,7 @@
             
                 <div class="px-3 py-2 mb-3">
                     <%
-                        List<Subasta> subastas = (List)request.getAttribute("subastas");
+                        List<SubastaDTO> subastas = (List)request.getAttribute("subastas");
                         if(subastas.isEmpty()){
                             
                         
@@ -131,8 +133,8 @@
                         <%
                             }else{
                         
-                        for(Subasta sub : subastas){
-                            if(sub.getVendedor().getIdUSUARIO()==user.getIdUSUARIO()){
+                        for(SubastaDTO sub : subastas){
+                            if(sub.getVendedor().getIdUsuario()==user.getIdUsuario()){
                                 
                             
                         %>
@@ -174,10 +176,10 @@
                             <div class="row  mt-3 ">
                         <div class="col">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-primary" href="servletAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA()%>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar</a>
+                                <a class="btn btn-primary" href="servletAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA()%>&id=<%=user.getIdUsuario()%>" role="button">Modificar</a>
                                 <a class="btn btn-primary" href="servletBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar</a>
                                 <% if(sub.getProducto().getEstado().equals("En venta")){%>
-                                <a class="btn btn-primary" href="servletTerminarSubasta?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>" role="button">TerminarSubasta</a>
+                                <a class="btn btn-primary" href="servletTerminarSubasta?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUsuario()%>" role="button">TerminarSubasta</a>
                                 <%}%>
                             </div>
                         </div>

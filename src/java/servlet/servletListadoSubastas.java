@@ -6,7 +6,6 @@
 package servlet;
 
 import dto.SubastaDTO;
-import entity.Subasta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;

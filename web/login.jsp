@@ -49,11 +49,11 @@
                 <h1 class="h3 mb-3 fw-normal pt-3">Iniciar sesión</h1>
                 
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Usuario" name="usuario">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Usuario" name="usuario" required>
                     <label for="floatingInput">Usuario</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Clave" name="clave">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Clave" name="clave" required>
                     <label for="floatingPassword">Clave</label>
                 </div>
                 <div class="checkbox mb-3">

@@ -60,7 +60,7 @@ public class servletPublicarProducto extends HttpServlet {
         String puja = request.getParameter("puja_inicial");
         List<ProductoDTO> pro = this.productoService.listarProductos();
         ProductoDTO producto = pro.get(pro.size()-1);
-        this.subastaService.crearSubasta(date, null,Double.parseDouble(puja), Double.parseDouble(puja), user.getIdUsuario(), null, producto.getIdPRODUCTO());
+        this.subastaService.crearSubasta(date, null,Double.parseDouble(puja), Double.parseDouble(puja), user.getIdUsuario(), producto.getIdPRODUCTO());
 
         List<SubastaDTO> sub = this.subastaService.listarSubastas();
         SubastaDTO subasta = sub.get(sub.size()-1);

@@ -27,6 +27,7 @@ import javax.persistence.Query;
 public class ProductoService {
     @EJB ProductoFacade proFC;
     @EJB UsuarioFacade userFC;
+    @EJB SubastaFacade subFC;
     
     public List<ProductoDTO> listaEntityADTO (List<Producto> lista) {
 
@@ -50,22 +51,25 @@ public class ProductoService {
     }
     
     public void rellenarProducto(Producto producto,String titulo, String descripcion, String url,String estado, String categoria,Integer subastaId){
+        if(subastaId!=null){
+           Subasta subasta = this.subFC.find(subastaId); 
+           producto.setSubasta(subasta);
+        }
         
-        Subasta subasta = this.subFC.find(subastaId);
         
         producto.setTitulo(titulo);
         producto.setDescripcion(descripcion);
         producto.setUrlFoto(url);
         producto.setEstado(estado);
         producto.setCategoria(categoria);
-        producto.setSubasta(subasta);
+        
         
     }
     
     public void crearProducto(String titulo, String descripcion, String url,String estado, String categoria,Integer subastaId){
         Producto producto = new Producto();
-       
-        this.rellenarProducto(producto, titulo, descripcion, url, estado, categoria, subastaId);
+        
+        this.rellenarProducto(producto, titulo, descripcion, url, estado, categoria,subastaId);
         
         this.proFC.create(producto);
     }

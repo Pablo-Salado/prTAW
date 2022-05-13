@@ -5,7 +5,8 @@
  */
 package servlet;
 
-import entity.Usuario;
+
+import dto.UsuarioDTO;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -35,7 +36,7 @@ public class servletRegistro extends HttpServlet {
 
             String str = request.getParameter("id");
             if (str != null) {
-                Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
+                UsuarioDTO usuario = this.userService.buscarUsuario(Integer.parseInt(str));
                 request.setAttribute("usuario", usuario);
             }
 

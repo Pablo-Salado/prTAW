@@ -4,8 +4,9 @@
     Author     : Usuario
 --%>
 
-<%@page import="entity.Subasta"%>
-<%@page import="entity.Usuario"%>
+
+<%@page import="dto.SubastaDTO"%>
+<%@page import="dto.UsuarioDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -24,11 +25,11 @@
      <%
         
 
-    Usuario user = (Usuario)session.getAttribute("usuario");
+    UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
      if (user == null) {
         response.sendRedirect(request.getContextPath());
     } 
-     Subasta sub = (Subasta)request.getAttribute("subasta");
+     SubastaDTO sub = (SubastaDTO)request.getAttribute("subasta");
        
        
     %>  
@@ -86,7 +87,7 @@
         <form method="POST" action="servletModificarProducto">
         <%}%>
             <%if(sub==null){%>
-           <input type="hidden" name="id" value="<%=user.getIdUSUARIO()%>" />
+           <input type="hidden" name="id" value="<%=user.getIdUsuario()%>" />
             <%}else{%>
             <input type="hidden" name="id" value="<%=sub.getIdSUBASTA()%>" />
             <%}%>
@@ -102,11 +103,11 @@
             
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Precio inicial</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="puja_inicial" value="<%= sub==null? "": sub.getPrecioInicial() %>"required>
+                <input type="number" class="form-control" id="exampleFormControlInput1" name="puja_inicial" value="<%= sub==null? "": sub.getPrecioInicial() %>"required>
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Enlace de la foto</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="foto" value="<%= sub==null? "": sub.getProducto().getUrlFoto() %>"required>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="foto" value="<%= sub==null? "": sub.getProducto().getUrlFoto() %>">
             </div>
             
             Categoria:<br>

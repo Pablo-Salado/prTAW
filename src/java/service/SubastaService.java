@@ -108,11 +108,11 @@ public class SubastaService {
         
         
     }
-    public void crearSubasta(Date fecha_apertura, Date fecha_cierre, double puja_maxima, double precio_inicial, Integer vendedorId, Integer compradorId, Integer productoId){
+    public void crearSubasta(Date fecha_apertura, Date fecha_cierre, double puja_maxima, double precio_inicial, Integer vendedorId, Integer productoId){
         
         Subasta subasta = new Subasta();
         Usuario vendedor = this.userFC.find(vendedorId);
-        Usuario comprador = this.userFC.find(compradorId);
+        
         Producto producto = this.prodFC.find(productoId);
         
         subasta.setApertura(fecha_apertura);
@@ -120,7 +120,7 @@ public class SubastaService {
         subasta.setPrecioInicial(precio_inicial);
         subasta.setPujaMaxima(puja_maxima);
         subasta.setVendedor(vendedor);
-        subasta.setComprador(comprador);
+        subasta.setComprador(null);
         subasta.setProducto(producto);
         
         this.subFC.create(subasta);
