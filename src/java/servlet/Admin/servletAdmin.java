@@ -5,6 +5,8 @@
  */
 package servlet.Admin;
 
+import dto.SubastaDTO;
+import dto.UsuarioDTO;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
@@ -38,8 +40,8 @@ public class servletAdmin extends TAWServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if(super.comprobarAdmin(request, response)){
-            List<Subasta> subastas = null;
-            List<Usuario> usuarios = null;
+            List<SubastaDTO> subastas = null;
+            List<UsuarioDTO> usuarios = null;
 
             subastas = this.subastaService.listarSubastas();
             usuarios = this.usuarioService.listarUsuario();
