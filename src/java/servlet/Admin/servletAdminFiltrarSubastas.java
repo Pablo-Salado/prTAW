@@ -5,6 +5,8 @@
  */
 package servlet.Admin;
 
+import dto.SubastaDTO;
+import dto.UsuarioDTO;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
@@ -50,13 +52,13 @@ public class servletAdminFiltrarSubastas extends TAWServlet {
            
            */
         String str = request.getParameter("usuario");
-        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(str));   
+        UsuarioDTO user = this.usuarioService.buscarUsuario(Integer.parseInt(str));   
             
         String min = request.getParameter("minPrice");
         String max = request.getParameter("maxPrice");
         String cat = request.getParameter("categoria");
         String nombre = request.getParameter("nombreSubasta");
-        List<Subasta> subastas = this.subastaService.filtrarSubastas(cat, min, max, nombre);
+        List<SubastaDTO> subastas = this.subastaService.filtrarSubastas(cat, min, max, nombre);
         
         
         
