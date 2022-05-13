@@ -6,6 +6,7 @@
 package servlet.Vendedor;
 
 
+import dto.SubastaDTO;
 import entity.Producto;
 import entity.Subasta;
 import java.io.IOException;
@@ -41,10 +42,10 @@ public class servletBorrarSubasta extends TAWServlet {
          if (super.comprobarSession(request, response)) {        
                         
             String str = request.getParameter("subasta");
-            Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
+            SubastaDTO sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
             
             this.subastaService.borrarSubasta(Integer.parseInt(str));
-            this.productoService.eliminarProducto(sub.getProducto());
+            this.productoService.eliminarProducto(sub.getProducto().getIdPRODUCTO());
             
             
             response.sendRedirect(request.getContextPath() + "/servletListadoMisProductos");

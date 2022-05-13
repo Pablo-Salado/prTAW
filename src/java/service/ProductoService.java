@@ -6,6 +6,7 @@
 package service;
 
 import dao.ProductoFacade;
+import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import dto.ProductoDTO;
 import entity.Producto;
@@ -26,7 +27,7 @@ import javax.persistence.Query;
 public class ProductoService {
     @EJB ProductoFacade proFC;
     @EJB UsuarioFacade userFC;
-    
+    @EJB SubastaFacade subFC;
     private List<ProductoDTO> listaEntityADTO (List<Producto> lista) {
         List<ProductoDTO> listaDTO = null;
         if (lista != null) {
@@ -47,7 +48,9 @@ public class ProductoService {
         return listaEntityADTO(lista);
     }
     
-    public void rellenarProducto(Producto producto,String titulo, String descripcion, String url,String estado, String categoria,Subasta subasta){
+    public void rellenarProducto(Producto producto,String titulo, String descripcion, String url,String estado, String categoria,Integer subastaId){
+        
+        Subasta subasta = this.subFC.find(subastaId);
         
         producto.setTitulo(titulo);
         producto.setDescripcion(descripcion);
@@ -58,10 +61,10 @@ public class ProductoService {
         
     }
     
-    public void crearProducto(String titulo, String descripcion, String url,String estado, String categoria,Subasta subasta){
+    public void crearProducto(String titulo, String descripcion, String url,String estado, String categoria,Integer subastaId){
         Producto producto = new Producto();
-        
-        this.rellenarProducto(producto, titulo, descripcion, url, estado, categoria, subasta);
+       
+        this.rellenarProducto(producto, titulo, descripcion, url, estado, categoria, subastaId);
         
         this.proFC.create(producto);
     }
@@ -79,18 +82,18 @@ public class ProductoService {
         this.proFC.remove(pro);
     }
     
-    public void modificarProducto(Integer proId,String titulo, String descripcion, String url,String estado, String categoria,Subasta subasta){
+    public void modificarProducto(Integer proId,String titulo, String descripcion, String url,String estado, String categoria,Integer subastaId){
         Producto pro = this.proFC.find(proId);
         
-        this.rellenarProducto(pro, titulo, descripcion, url, estado, categoria, subasta);
+        this.rellenarProducto(pro, titulo, descripcion, url, estado, categoria, subastaId);
         
         this.proFC.edit(pro);
     }
     
-    public void modificarProductoId(Integer id,String titulo, String descripcion, String url,String estado, String categoria,Subasta subasta){
+    public void modificarProductoId(Integer id,String titulo, String descripcion, String url,String estado, String categoria,Integer subastaId){
         Producto pro = this.proFC.find(id);
         
-        this.rellenarProducto(pro, titulo, descripcion, url, estado, categoria, subasta);
+        this.rellenarProducto(pro, titulo, descripcion, url, estado, categoria, subastaId);
         
         this.proFC.edit(pro);
     }
@@ -113,7 +116,8 @@ public class ProductoService {
     }
 
     
-    public void modificarSubasta(Integer proId, Subasta sub){
+    public void modificarSubasta(Integer proId, Integer subId){
+        Subasta sub = this.subFC.find(subId);
         Producto pro = this.proFC.find(proId);
         pro.setSubasta(sub);
         

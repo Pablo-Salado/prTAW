@@ -5,6 +5,9 @@
  */
 package servlet.Vendedor;
 
+import dto.ProductoDTO;
+import dto.SubastaDTO;
+import dto.UsuarioDTO;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
@@ -45,32 +48,32 @@ public class servletTerminarSubasta extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String subasta = request.getParameter("subasta");
-        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(subasta));
-        Producto producto = sub.getProducto();
+        SubastaDTO sub = this.subastaService.buscarSubasta(Integer.parseInt(subasta));
+        ProductoDTO producto = sub.getProducto();
         String str = request.getParameter("id");
-        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(str));
+        UsuarioDTO user = this.usuarioService.buscarUsuario(Integer.parseInt(str));
 
-        List<Integer> aux = this.pujadorService.buscarPujadoresSubasta(sub);
+        List<Integer> aux = this.pujadorService.buscarPujadoresSubasta(sub.getIdSUBASTA());
         if(aux.isEmpty()){
-        this.productoService.modificarEstado(producto, "No vendido");
+        this.productoService.modificarEstado(producto.getIdPRODUCTO(), "No vendido");
         }else{
         
-        Usuario ganador = this.usuarioService.buscarUsuario(this.pujadorService.buscarPujadorMaximo(sub));
-        this.productoService.modificarEstado(producto, "Vendido");
-        this.subastaService.modificarComprador(Integer.parseInt(subasta), ganador);
+        UsuarioDTO ganador = this.usuarioService.buscarUsuario(this.pujadorService.buscarPujadorMaximo(sub.getIdSUBASTA()));
+        this.productoService.modificarEstado(producto.getIdPRODUCTO(), "Vendido");
+        this.subastaService.modificarComprador(Integer.parseInt(subasta), ganador.getIdUsuario());
         
-        List<Usuario> notificados = new ArrayList<Usuario>();
+        List<UsuarioDTO> notificados = new ArrayList<UsuarioDTO>();
         for(Integer i: aux){
-           Usuario usuarioAnyadir = this.usuarioService.buscarUsuario(i);
+           UsuarioDTO usuarioAnyadir = this.usuarioService.buscarUsuario(i);
            if(!notificados.contains(usuarioAnyadir)){
                notificados.add(this.usuarioService.buscarUsuario(i));
            }  
         }
-        for(Usuario u : notificados){
-            if(u.getIdUSUARIO() == ganador.getIdUSUARIO()){
-                this.notificacionesService.crearSubasta(u, sub, "ha sido el ganador");
+        for(UsuarioDTO u : notificados){
+            if(u.getIdUsuario() == ganador.getIdUsuario()){
+                this.notificacionesService.crearSubasta(u.getIdUsuario(), sub.getIdSUBASTA(), "ha sido el ganador");
             }else{
-               this.notificacionesService.crearSubasta(u, sub, "NO ha sido el ganador");
+               this.notificacionesService.crearSubasta(u.getIdUsuario(), sub.getIdSUBASTA(), "NO ha sido el ganador");
             }
 
         }

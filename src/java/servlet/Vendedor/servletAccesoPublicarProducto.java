@@ -5,6 +5,7 @@
  */
 package servlet.Vendedor;
 
+import dto.UsuarioDTO;
 import entity.Usuario;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -33,7 +34,7 @@ public class servletAccesoPublicarProducto extends HttpServlet {
             throws ServletException, IOException {
             String str = request.getParameter("id");
             if (str != null) {
-                Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
+                UsuarioDTO usuario = this.userService.buscarUsuario(Integer.parseInt(str));
                 request.setAttribute("usuario", usuario);
             }
 

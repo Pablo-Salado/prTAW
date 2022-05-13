@@ -5,6 +5,7 @@
  */
 package servlet.Vendedor;
 
+import dto.SubastaDTO;
 import entity.Subasta;
 import java.io.IOException;
 import java.util.List;
@@ -37,7 +38,7 @@ public class servletListadoMisProductos extends TAWServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Subasta> subastas=null;
+        List<SubastaDTO> subastas=null;
         if(super.comprobarSession(request, response)){
         HttpSession session = request.getSession();
         subastas = this.subastaService.listarSubastas();

@@ -6,6 +6,7 @@
 package service;
 
 import dao.NotificacionesFacade;
+import dao.SubastaFacade;
 import dao.UsuarioFacade;
 import dto.NotificacionesDTO;
 import entity.Notificaciones;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class NotificacionesService {
     @EJB NotificacionesFacade notiFC;
     @EJB UsuarioFacade userFC;
+    @EJB SubastaFacade subFC;
     
     public List<NotificacionesDTO> listaEntityADTO(List<Notificaciones> lista){
         List<NotificacionesDTO> listaDTO = null;
@@ -60,9 +62,9 @@ public class NotificacionesService {
         not.setGanador(ganador);
         
     }
-    public void crearSubasta(Integer userID,Subasta subasta,String ganador){
+    public void crearSubasta(Integer userID,Integer subastaId,String ganador){
         Usuario user = this.userFC.find(userID);
-        
+        Subasta subasta = this.subFC.find(subastaId);
         Notificaciones notificacion = new Notificaciones();
         
         this.rellenarNotificacion(notificacion.getId(), user, subasta, ganador);

@@ -5,6 +5,8 @@
  */
 package servlet.Vendedor;
 
+import dto.ProductoDTO;
+import dto.SubastaDTO;
 import entity.Producto;
 import entity.Subasta;
 import java.io.IOException;
@@ -42,8 +44,8 @@ public class servletModificarProducto extends HttpServlet {
         Integer aux;
         
         String id = request.getParameter("id");
-        Subasta subasta = this.subastaService.buscarSubasta(Integer.parseInt(id));
-        Producto producto = subasta.getProducto();
+        SubastaDTO subasta = this.subastaService.buscarSubasta(Integer.parseInt(id));
+        ProductoDTO producto = subasta.getProducto();
         
         
        /*
@@ -63,7 +65,7 @@ public class servletModificarProducto extends HttpServlet {
         String url = request.getParameter("foto");
 
 
-        this.productoService.modificarProducto(producto, titulo, descripcion, url, producto.getEstado(), categoria, subasta);
+        this.productoService.modificarProducto(producto.getIdPRODUCTO(), titulo, descripcion, url, producto.getEstado(), categoria, subasta.getIdSUBASTA());
 
         
         response.sendRedirect(request.getContextPath()+"/servletListadoMisProductos"); 
