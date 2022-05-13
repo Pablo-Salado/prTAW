@@ -6,6 +6,7 @@
 package servlet;
 
 
+import dto.SubastaDTO;
 import entity.Subasta;
 import java.io.IOException;
 import java.util.List;
@@ -40,7 +41,7 @@ public class servletFiltrarMisCompras extends TAWServlet {
         String max = request.getParameter("maxPrice");
         String cat = request.getParameter("categoria");
         String nombre = request.getParameter("nombreSubasta");
-        List<Subasta> misCompras = null;
+        List<SubastaDTO> misCompras = null;
         
         misCompras = this.subastaService.filtrarSubastas(cat, min, max, nombre);
 

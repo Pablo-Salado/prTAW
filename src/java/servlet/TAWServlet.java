@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import dto.UsuarioDTO;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,7 +34,7 @@ public abstract class TAWServlet extends HttpServlet {
     protected boolean comprobarSession (HttpServletRequest request, HttpServletResponse response) 
                 throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Usuario user = (Usuario)session.getAttribute("usuario");
+        UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
         if (user == null) {
             response.sendRedirect(request.getContextPath());
             return false;
@@ -46,7 +47,7 @@ public abstract class TAWServlet extends HttpServlet {
     protected boolean comprobarAdmin (HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException{
         HttpSession session = request.getSession();
-        Usuario user = (Usuario)session.getAttribute("usuario");
+        UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
         if (user.getTipoUsuario().equals("ADMINISTRADOR")) {
             return true;
         } else {

@@ -27,7 +27,7 @@ public class ProductoService {
     @EJB ProductoFacade proFC;
     @EJB UsuarioFacade userFC;
     
-    private List<ProductoDTO> listaEntityADTO (List<Producto> lista) {
+    public List<ProductoDTO> listaEntityADTO (List<Producto> lista) {
         List<ProductoDTO> listaDTO = null;
         if (lista != null) {
             listaDTO = new ArrayList<>();
@@ -95,15 +95,16 @@ public class ProductoService {
         this.proFC.edit(pro);
     }
 
-    public void addProductoFavorito(Integer proId, Usuario user){
+    public void addProductoFavorito(Integer proId, Integer userId){
         
         Producto pro = this.proFC.find(proId);
-        
+        Usuario user = this.userFC.find(userId);
         this.proFC.Fav(pro, user);
     }
     
-    public void eliminarProductoFavorito(Integer proId, Usuario user){
+    public void eliminarProductoFavorito(Integer proId, Integer userId){
         Producto pro = this.proFC.find(proId);
+        Usuario user = this.userFC.find(userId);
         this.proFC.noFav(pro, user);
     }
     

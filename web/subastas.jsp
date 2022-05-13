@@ -1,5 +1,8 @@
 
 
+<%@page import="dto.SubastaDTO"%>
+<%@page import="dto.ProductoDTO"%>
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="entity.Producto"%>
 <%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>
@@ -17,12 +20,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Página principal</title>
   </head>
-  <% Usuario user = (Usuario)session.getAttribute("usuario");
+  <% UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
      Double saldo = (Double)session.getAttribute("saldo");
      if(saldo != null){
          user.setSaldo(saldo);
      }
-     List<Producto> productos = (List)session.getAttribute("productos");
+     List<ProductoDTO> productos = (List)session.getAttribute("productos");
      if(productos != null){
          user.setProductoList(productos);
      }
@@ -114,7 +117,7 @@
                 </div>
               </div>
               <div class="col-auto">
-                  <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                  <input class="form-control" type="hidden" value=<%=user.getIdUsuario() %>  name="usuario" onChange="this.form.submit()"> 
                 <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
                 
               </div>
@@ -133,7 +136,7 @@
                 <div class="row row-cols-auto justify-content-center">
                     <%
 
-                    List<Subasta> subastas = (List)request.getAttribute("subastas");
+                    List<SubastaDTO> subastas = (List)request.getAttribute("subastas");
                     if(subastas.isEmpty()){
 
                         %>
@@ -143,7 +146,7 @@
                         <%
                             }else{
                         
-                    for (Subasta sub :subastas) {
+                    for (SubastaDTO sub :subastas) {
                      
                          if(sub.getComprador() == null){
                     %> 
@@ -181,7 +184,7 @@
                                 <button type="submit" class="btn btn-primary" value=<%=sub.getPujaMaxima() %>>Pujar</button>
                                 
                                 <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subasta" >
-                                <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" >  
+                                <input class="form-control" type="hidden" value=<%=user.getIdUsuario() %>  name="usuario" >  
                           </div>
                             </form> 
                         </div>
@@ -235,7 +238,7 @@
                                         </label>
 
                                           <input class="form-control" type="hidden" value=<%=sub.getIdSUBASTA() %>  name="subasta" onChange="this.form.submit()" >
-                                          <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                                          <input class="form-control" type="hidden" value=<%=user.getIdUsuario() %>  name="usuario" onChange="this.form.submit()"> 
                                           
                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="favorito" onChange="this.form.submit()">
                                            
@@ -244,7 +247,7 @@
                                             if(productos == null){
                                                 productos = user.getProductoList();
                                             }
-                                            for (Producto pro: productos){
+                                            for (ProductoDTO pro: productos){
                                             if(pro.getIdPRODUCTO() == sub.getProducto().getIdPRODUCTO() ){
                                             %>
                                             

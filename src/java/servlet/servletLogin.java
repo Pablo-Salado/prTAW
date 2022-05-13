@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package servlet;
+import dto.UsuarioDTO;
 import entity.Usuario;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -34,7 +35,7 @@ public class servletLogin extends HttpServlet {
         String usuario = request.getParameter("usuario");
         String clave = request.getParameter("clave");        
         
-        Usuario user = this.userService.comprobarUser(usuario, clave);
+        UsuarioDTO user = this.userService.comprobarUser(usuario, clave);
         
         if (user == null) {
             String strError = "El usuario o la clave son incorrectos";

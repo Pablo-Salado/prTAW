@@ -7,6 +7,8 @@ package servlet.Comprador;
 
 
 
+import dto.SubastaDTO;
+import dto.UsuarioDTO;
 import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
@@ -42,11 +44,11 @@ public class servletPujar extends HttpServlet {
             throws ServletException, IOException {
         
         String usuario = request.getParameter("usuario");
-        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(usuario));
+        UsuarioDTO user = this.usuarioService.buscarUsuario(Integer.parseInt(usuario));
         
         String subasta = request.getParameter("subasta");
         
-        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(subasta));
+        SubastaDTO sub = this.subastaService.buscarSubasta(Integer.parseInt(subasta));
         Date fecha = new Date(System.currentTimeMillis());
         String puja = request.getParameter("puja");
         
@@ -56,11 +58,11 @@ public class servletPujar extends HttpServlet {
              
         Double puja_max = Double.valueOf(puja);
           
-        this.pujadoresService.crearPujador(user, sub, puja_max, fecha);
+        this.pujadoresService.crearPujador(user.getIdUsuario(), sub.getIdSUBASTA(), puja_max, fecha);
        
         this.subastaService.modificarPujaMaxima(Integer.parseInt(subasta), puja_max);
         
-        this.usuarioService.restaSaldo(user, user.getSaldo() - puja_max);
+        this.usuarioService.restaSaldo(user.getIdUsuario(), user.getSaldo() - puja_max);
         
         HttpSession session = request.getSession();
         session.setAttribute("saldo", user.getSaldo());

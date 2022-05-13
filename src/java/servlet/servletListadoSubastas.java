@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import dto.SubastaDTO;
 import entity.Subasta;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,7 +37,7 @@ public class servletListadoSubastas extends TAWServlet {
         if(super.comprobarSession(request, response)){
             
 
-        List<Subasta> subastas = null;
+        List<SubastaDTO> subastas = null;
         
                 subastas = this.subastaService.listarSubastas();
            

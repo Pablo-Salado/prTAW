@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import java.util.List;
 import dao.SubastaFacade;
 import dao.UsuarioFacade;
+import dto.ProductoDTO;
 import dto.SubastaDTO;
 import entity.Producto;
 import entity.Subasta;
@@ -48,16 +49,18 @@ public class SubastaService {
 
     public List<SubastaDTO> listarSubastas() {
         List<Subasta> list = this.subFC.findAll();
-        return listaEntityADTO(list);
+        List<SubastaDTO> lista = listaEntityADTO(list);
+        return lista;
+        
     }
 
-    public List<SubastaDTO> filtrarSubastasFavoritas(String categoria, String min, String max, String nombre, String fav,List<Producto> productos) {
+    public List<SubastaDTO> filtrarSubastasFavoritas(String categoria, String min, String max, String nombre, String fav,List<ProductoDTO> productos) {
         List<Subasta> subastas = new ArrayList<Subasta>();
         List<Subasta> aux = new ArrayList<Subasta>();
         if(fav != null){
                 subastas = this.subFC.filtrarSubasta(categoria, min, max, nombre);
                 for(Subasta s: subastas){
-                    for(Producto p:productos){
+                    for(ProductoDTO p:productos){
                         if(s.getProducto().getIdPRODUCTO() == p.getIdPRODUCTO() && s.getComprador()==null){
                             aux.add(s);
                         }

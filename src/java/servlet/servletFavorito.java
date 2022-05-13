@@ -56,7 +56,7 @@ public class servletFavorito extends TAWServlet {
         List<SubastaDTO> subastas = this.subastaService.listarSubastas();
         
         List<ProductoDTO> productos = new ArrayList<ProductoDTO>();
-        List<Integer> idPro = this.productoService.listaFavoritos(user);
+        List<Integer> idPro = this.productoService.listaFavoritos(user.getIdUsuario());
         for(Integer i: idPro){
             ProductoDTO aux = this.productoService.buscarProducto(i);
             if(!productos.contains(aux)){
@@ -65,10 +65,10 @@ public class servletFavorito extends TAWServlet {
         }
         
         if(chck == null){
-            this.productoService.eliminarProductoFavorito(pro, user);
+            this.productoService.eliminarProductoFavorito(pro.getIdPRODUCTO(), user.getIdUsuario());
             productos.remove(pro);
         }else{
-            this.productoService.addProductoFavorito(pro, user);
+            this.productoService.addProductoFavorito(pro.getIdPRODUCTO(), user.getIdUsuario());
             productos.add(pro);
         }
         

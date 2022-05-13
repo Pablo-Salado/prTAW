@@ -1,6 +1,9 @@
 package servlet;
 
 
+import dto.ProductoDTO;
+import dto.SubastaDTO;
+import dto.UsuarioDTO;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
@@ -45,18 +48,18 @@ public class servletFiltrarSubastas extends TAWServlet {
            
            */
          String str = request.getParameter("usuario");
-         Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(str));   
+         UsuarioDTO user = this.usuarioService.buscarUsuario(Integer.parseInt(str));   
             
          String fav = request.getParameter("filtroFavorito");
          String min = request.getParameter("minPrice");
         String max = request.getParameter("maxPrice");
         String cat = request.getParameter("categoria");
         String nombre = request.getParameter("nombreSubasta");
-        List<Subasta> subastas = new ArrayList<Subasta>();
-        List<Producto> productos = new ArrayList<Producto>();
-        List<Integer> idPro = this.productoService.listaFavoritos(user);
+        List<SubastaDTO> subastas = new ArrayList<SubastaDTO>();
+        List<ProductoDTO> productos = new ArrayList<ProductoDTO>();
+        List<Integer> idPro = this.productoService.listaFavoritos(user.getIdUsuario());
         for(Integer i: idPro){
-            Producto pro = this.productoService.buscarProducto(i);
+            ProductoDTO pro = this.productoService.buscarProducto(i);
             if(!productos.contains(pro)){
                 productos.add(pro);
             }

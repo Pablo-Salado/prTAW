@@ -6,6 +6,8 @@
 
 
 
+<%@page import="dto.SubastaDTO"%>
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="entity.Producto"%>
 <%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>
@@ -23,7 +25,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Página principal</title>
   </head>
-  <% Usuario user = (Usuario)session.getAttribute("usuario"); %>
+  <% UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario"); %>
   
   <body>
 
@@ -111,7 +113,7 @@
                 
               </div>
               <div class="col-auto">
-                  <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                  <input class="form-control" type="hidden" value=<%=user.getIdUsuario() %>  name="usuario" onChange="this.form.submit()"> 
                 <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
                 
               </div>
@@ -127,7 +129,7 @@
             
                 <div class="px-3 py-2 mb-3">
                     <%
-                        List<Subasta> subastas = (List)request.getAttribute("misCompras");
+                        List<SubastaDTO> subastas = (List)request.getAttribute("misCompras");
                         if(subastas.isEmpty()){
                             
                         
@@ -138,8 +140,8 @@
                         <%
                             }else{
                         
-                        for(Subasta sub : subastas){
-                            if(sub.getComprador()!= null && sub.getComprador().getIdUSUARIO() == user.getIdUSUARIO()){
+                        for(SubastaDTO sub : subastas){
+                            if(sub.getComprador()!= null && sub.getComprador().getIdUsuario() == user.getIdUsuario()){
                                 
                             
                         %>
