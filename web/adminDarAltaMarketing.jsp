@@ -1,7 +1,7 @@
 <%-- 
-    Document   : adminPublicarUsuario
-    Created on : 10-may-2022, 18:55:18
-    Author     : Pablo Salado
+    Document   : adminDarAltaMarketing
+    Created on : 13-may-2022, 15:05:42
+    Author     : Pablo Salado Cespedosa
 --%>
 
 <%@page import="entity.Usuario"%>
@@ -26,7 +26,6 @@
          if (user == null) {
             response.sendRedirect(request.getContextPath());
         } 
-         Usuario usuarioModificar = (Usuario) request.getAttribute("usuarioModificar");
        
     %>
     <header>
@@ -50,7 +49,7 @@
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                       <li><a class="dropdown-item" href="servletAdmin">Listar productos</a></li>
                                       <li><a class="dropdown-item" href="servletAdminListarUsuarios">Listar usuarios</a></li>
-                                      <li><a class="dropdown-item" href="adminDarAltaMarketing.jsp">Dar de alta a usuarios de marketing</a></li>
+                                      <li><a class="dropdown-item" href="#">Dar de alta a usuarios de marketing</a></li>
                                       <li><a class="dropdown-item" href="servletLogout">Cerrar sesión</a></li>
                                   </ul>
                               </div>
@@ -65,58 +64,51 @@
         <div class="text-center border-bottom primary">
             <h1 class="text-primary">Datos del usuario </h1>
         </div>
-        <%if(usuarioModificar==null){%>
         <form method="POST" action="servletAdminCrearUsuario">
-        <%}else{%>
-        <form method="POST" action="servletAdminModificarUsuario">
-        <%}%>
-            <%if(usuarioModificar==null){%>
            <input type="hidden" name="id" value="<%=user.getIdUSUARIO()%>" />
-            <%}else{%>
-            <input type="hidden" name="id" value="<%=usuarioModificar.getIdUSUARIO()%>" />
-            <%}%>
+            
             <div class="container mb-3 col-4">
                 
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="nombre" value="<%= usuarioModificar==null? "": usuarioModificar.getNombre() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="nombre" value="">
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="apellidos" value="<%= usuarioModificar==null? "": usuarioModificar.getEpellidos() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="apellidos" value="">
             </div>
             
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Sexo (H o M)</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="sexo" value="<%= usuarioModificar==null? "": usuarioModificar.getSexo() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="sexo" value="">
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Email</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="email" value="<%= usuarioModificar==null? "": usuarioModificar.getEmail() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="email" value="">
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="exampleFormControlInput1" name="password" value="<%= usuarioModificar==null? "": usuarioModificar.getPassword() %>">
+                <input type="password" class="form-control" id="exampleFormControlInput1" name="password" value="">
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Domicilio</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="domicilio" value="<%= usuarioModificar==null? "": usuarioModificar.getDomicilio() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="domicilio" value="">
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Ciudad de residencia</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="ciudadResidencia" value="<%= usuarioModificar==null? "": usuarioModificar.getCiudadResidencia() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="ciudadResidencia" value="">
             </div>           
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Edad</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="edad" value="<%= usuarioModificar==null? "": usuarioModificar.getEdad() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="edad" value="">
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Tipo de usuario</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="tipoUsuario" value="<%= usuarioModificar==null? "": usuarioModificar.getTipoUsuario() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="tipoUsuario" value="MARKETING">
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Saldo</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="saldo" value="<%= usuarioModificar==null? "": usuarioModificar.getSaldo() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="saldo" value="">
             </div>
             <input type="submit" value="Enviar" class="mb-3 bt" />
             </div>
@@ -125,3 +117,4 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
+

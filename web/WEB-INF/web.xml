@@ -124,6 +124,10 @@
         <servlet-name>servletAdminBorrarUsuario</servlet-name>
         <servlet-class>servlet.servletAdminBorrarUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletAdminDarAltaMarketing</servlet-name>
+        <servlet-class>servlet.servletAdminDarAltaMarketing</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -247,6 +251,10 @@
     <servlet-mapping>
         <servlet-name>servletAdminBorrarUsuario</servlet-name>
         <url-pattern>/servletAdminBorrarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminDarAltaMarketing</servlet-name>
+        <url-pattern>/servletAdminDarAltaMarketing</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

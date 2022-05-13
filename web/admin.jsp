@@ -44,7 +44,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
                                       <li><a class="dropdown-item" href="#">Listar productos</a></li>
                                       <li><a class="dropdown-item" href="servletAdminListarUsuarios">Listar usuarios</a></li>
-                                      <li><a class="dropdown-item" href="">Dar de alta a usuarios de marketing</a></li>
+                                      <li><a class="dropdown-item" href="adminDarAltaMarketing.jsp">Dar de alta a usuarios de marketing</a></li>
                                       <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
 
                                 </ul>
