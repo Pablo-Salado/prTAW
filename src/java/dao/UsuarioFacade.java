@@ -132,7 +132,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             nonEmptyParam++;
         if(!emptyParam(maxEdad))
             nonEmptyParam++;
-        if(!emptyParam(tipo_usuario))
+        if(!tipo_usuario.contains("Tipo de usuario"))
             nonEmptyParam++;
         
         return nonEmptyParam;
@@ -179,7 +179,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
                 numAnds--;
             }
         }
-        if(!emptyParam(tipo_usuario)){
+        if(!tipo_usuario.contains("Tipo de usuario")){
             query += "u.tipoUsuario LIKE :tipoUsuario";
             if(numAnds>1){
                 query += " AND ";
@@ -196,14 +196,14 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             }
             
             if(!emptyParam(minEdad)){
-                q.setParameter("min", "%"+minEdad+"%");
+                q.setParameter("min", Integer.parseInt(minEdad));
             }
             
             if(!emptyParam(maxEdad)){
-                q.setParameter("max", "%"+maxEdad+"%");
+                q.setParameter("max", Integer.parseInt(maxEdad));
             }
                 
-            if(!emptyParam(tipo_usuario)){
+            if(!tipo_usuario.contains("Tipo de usuario")){
                 q.setParameter("tipoUsuario", "%"+tipo_usuario+"%");
             }
             List<Usuario> usuariosFiltrados = q.getResultList();

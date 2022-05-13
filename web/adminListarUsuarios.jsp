@@ -74,13 +74,13 @@
                           <label class="col-form-label">Rango de edad:</label>
                         </div>
                         <div class="col ">
-                            <input class="form-control" type="text" placeholder="min"  name="minEdad" > 
+                            <input class="form-control" type="number" placeholder="min"  name="minEdad" > 
                         </div>
                         <div class="col-auto">
                           <label class="col-form-label">-</label>
                         </div>
                         <div class="col">
-                          <input class="form-control" type="text"placeholder="max" name="maxEdad">
+                          <input class="form-control" type="number"placeholder="max" name="maxEdad">
                         </div>
                         <div class="col">
                             <select class="form-select" aria-label="Default select example" style="width: auto;" name="tipo_usuario" >
