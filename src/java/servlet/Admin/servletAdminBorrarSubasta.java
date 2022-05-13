@@ -6,6 +6,8 @@
 package servlet.Admin;
 
 
+import dto.ProductoDTO;
+import dto.SubastaDTO;
 import entity.Producto;
 import entity.Subasta;
 import java.io.IOException;
@@ -39,11 +41,11 @@ public class servletAdminBorrarSubasta extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String str = request.getParameter("subasta");
-        Subasta sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
-        Producto prod = this.productoService.buscarProducto(sub.getProducto().getIdPRODUCTO());
+        SubastaDTO sub = this.subastaService.buscarSubasta(Integer.parseInt(str));
+        ProductoDTO prod = this.productoService.buscarProducto(sub.getProducto().getIdPRODUCTO());
 
         this.subastaService.borrarSubasta(Integer.parseInt(str));
-        this.productoService.eliminarProducto(prod);
+        this.productoService.eliminarProducto(prod.getIdPRODUCTO());
 
 
         response.sendRedirect(request.getContextPath() + "/servletAdmin");

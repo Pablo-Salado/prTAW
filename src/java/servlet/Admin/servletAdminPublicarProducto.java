@@ -5,6 +5,9 @@
  */
 package servlet.Admin;
 
+import dto.ProductoDTO;
+import dto.SubastaDTO;
+import dto.UsuarioDTO;
 import entity.Producto;
 import entity.Subasta;
 import entity.Usuario;
@@ -42,7 +45,7 @@ public class servletAdminPublicarProducto extends HttpServlet {
             throws ServletException, IOException {
         
         String id = request.getParameter("id");
-        Usuario user = this.usuarioService.buscarUsuario(Integer.parseInt(id));
+        UsuarioDTO user = this.usuarioService.buscarUsuario(Integer.parseInt(id));
         
         String titulo = request.getParameter("titulo");
         String descripcion = request.getParameter("descripcion");
@@ -53,11 +56,11 @@ public class servletAdminPublicarProducto extends HttpServlet {
         
         Date date = new Date(System.currentTimeMillis());
         String puja = request.getParameter("puja_inicial");
-        List<Producto> pro = this.productoService.listarProductos();
-        this.subastaService.crearSubasta(date, null,Double.parseDouble(puja), Double.parseDouble(puja), user, null, pro.get(pro.size()-1));
+        List<ProductoDTO> pro = this.productoService.listarProductos();
+        this.subastaService.crearSubasta(date, null,Double.parseDouble(puja), Double.parseDouble(puja), user.getIdUsuario(), null, pro.get(pro.size()-1).getIdPRODUCTO());
 
-        List<Subasta> sub = this.subastaService.listarSubastas();
-        this.productoService.modificarSubasta(pro.get(pro.size()-1), sub.get(sub.size()-1));
+        List<SubastaDTO> sub = this.subastaService.listarSubastas();
+        this.productoService.modificarSubasta(pro.get(pro.size()-1).getIdPRODUCTO(), sub.get(sub.size()-1));
         
         response.sendRedirect(request.getContextPath()+"/servletAdmin");
     }
