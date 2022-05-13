@@ -1,7 +1,7 @@
 <%-- 
     Document   : adminPublicarProducto
     Created on : 29-abr-2022, 13:07:37
-    Author     : X430F
+    Author     : Pablo Salado
 --%>
 
 <%@page import="entity.Subasta"%>

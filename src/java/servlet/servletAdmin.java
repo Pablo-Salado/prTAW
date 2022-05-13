@@ -19,7 +19,7 @@ import service.UsuarioService;
 
 /**
  *
- * @author X430F
+ * @author Pablo Salado
  */
 @WebServlet(name = "servletAdmin", urlPatterns = {"/servletAdmin"})
 public class servletAdmin extends TAWServlet {

@@ -1,7 +1,7 @@
 <%-- 
     Document   : adminPublicarUsuario
     Created on : 10-may-2022, 18:55:18
-    Author     : X430F
+    Author     : Pablo Salado
 --%>
 
 <%@page import="entity.Usuario"%>

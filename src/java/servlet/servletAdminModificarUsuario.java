@@ -17,7 +17,7 @@ import service.UsuarioService;
 
 /**
  *
- * @author X430F
+ * @author Pablo Salado
  */
 public class servletAdminModificarUsuario extends HttpServlet {
     @EJB UsuarioService usuarioService;
