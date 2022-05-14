@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  *
- * @author migue
+ * @author Miguel Angel Cosano Ramirez
  */
 public class PujadoresDTO {
 

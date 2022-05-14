@@ -148,7 +148,7 @@
                         
                     for (SubastaDTO sub :subastas) {
                      
-                         if(sub.getComprador() == null){
+                         if(sub.getCierre()==null){
                     %> 
                     <!-- Modal -->
                     <div class="modal fade" id="modal<%=sub.getIdSUBASTA()%>" tabindex = "-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -287,19 +287,7 @@
             </div>
           </section>
       </article>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link">Previous</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
+     
       
       <footer class="py-3 my-4">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">

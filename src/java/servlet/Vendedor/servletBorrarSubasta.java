@@ -21,7 +21,7 @@ import servlet.TAWServlet;
 
 /**
  *
- * @author Usuario
+ * @author Miguel Angel Cosano Ramirez
  */
 public class servletBorrarSubasta extends TAWServlet {
         @EJB UsuarioService usuarioService;

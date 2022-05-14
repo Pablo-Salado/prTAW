@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author migue
+ * @author Miguel Angel Cosano Ramirez
  */
 public class UsuarioDTO {
 

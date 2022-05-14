@@ -9,7 +9,7 @@ package dto;
 
 /**
  *
- * @author migue
+ * @author Miguel Angel Cosano Ramirez
  */
 public class NotificacionesDTO {
     
