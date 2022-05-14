@@ -62,7 +62,7 @@ public class servletAdminModificarProducto extends HttpServlet {
         String url = request.getParameter("foto");
 
 
-        this.productoService.modificarProducto(producto.getIdPRODUCTO(), titulo, descripcion, url, producto.getEstado(), categoria, subasta);
+        this.productoService.modificarProducto(producto.getIdPRODUCTO(), titulo, descripcion, url, producto.getEstado(), categoria, subasta.getIdSUBASTA());
 
         
         response.sendRedirect(request.getContextPath()+"/servletAdmin");

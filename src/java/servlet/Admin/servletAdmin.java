@@ -40,7 +40,7 @@ public class servletAdmin extends TAWServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if(super.comprobarAdmin(request, response)){
-            List<Subasta> subastas;
+            List<SubastaDTO> subastas;
 
             subastas = this.subastaService.listarSubastas();
             

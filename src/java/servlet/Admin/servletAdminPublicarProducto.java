@@ -57,10 +57,10 @@ public class servletAdminPublicarProducto extends HttpServlet {
         Date date = new Date(System.currentTimeMillis());
         String puja = request.getParameter("puja_inicial");
         List<ProductoDTO> pro = this.productoService.listarProductos();
-        this.subastaService.crearSubasta(date, null,Double.parseDouble(puja), Double.parseDouble(puja), user.getIdUsuario(), null, pro.get(pro.size()-1).getIdPRODUCTO());
+        this.subastaService.crearSubasta(date, null,Double.parseDouble(puja), Double.parseDouble(puja), user.getIdUsuario(), pro.get(pro.size()-1).getIdPRODUCTO());
 
         List<SubastaDTO> sub = this.subastaService.listarSubastas();
-        this.productoService.modificarSubasta(pro.get(pro.size()-1).getIdPRODUCTO(), sub.get(sub.size()-1));
+        this.productoService.modificarSubasta(pro.get(pro.size()-1).getIdPRODUCTO(), sub.get(sub.size()-1).getIdSUBASTA());
         
         response.sendRedirect(request.getContextPath()+"/servletAdmin");
     }

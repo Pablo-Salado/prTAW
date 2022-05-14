@@ -3,23 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Admin;
 
+import dto.UsuarioDTO;
+import entity.Subasta;
+import entity.Usuario;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SubastaService;
 import service.UsuarioService;
 
 /**
  *
  * @author Pablo Salado
  */
-public class servletAdminCrearUsuario extends HttpServlet {
-    @EJB UsuarioService usuarioService;
-
+public class servletAdminAccesoModificarUsuarios extends HttpServlet {
+    @EJB SubastaService subastaService;
+    @EJB UsuarioService userService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,34 +35,19 @@ public class servletAdminCrearUsuario extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {       
-        String nombre = request.getParameter("nombre");
-        String apellidos = request.getParameter("apellidos");
-        String sexo = request.getParameter("sexo");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String domicilio = request.getParameter("domicilio");
-        if(domicilio.equals("")){
-            domicilio = null;
-        }
-        String ciudad = request.getParameter("ciudadResidencia");
-        if(ciudad.equals("")){
-            ciudad = null;
-        }
-        String edad = request.getParameter("edad");
-        Integer edadInt;
-        if(edad.equals("")){
-            edadInt = null;
-        }else {
-            edadInt = Integer.parseInt(edad);
-        }
-        String tipo = request.getParameter("tipoUsuario");
-        String saldo = request.getParameter("saldo");
-        Double saldoDouble = Double.parseDouble(saldo);
-        
-        this.usuarioService.crearUsuario(nombre, apellidos, sexo, password, email, domicilio, ciudad, edadInt, tipo, saldoDouble);
-        
-        response.sendRedirect(request.getContextPath()+"/servletAdminListarUsuarios");
+            throws ServletException, IOException {
+            String str = request.getParameter("id");
+            if (str != null) {
+                UsuarioDTO usuario = this.userService.buscarUsuario(Integer.parseInt(str));
+                request.setAttribute("usuario", usuario);
+            }
+            str = request.getParameter("usuario");
+            if (str != null) {
+                UsuarioDTO usuarioModificar = this.userService.buscarUsuario(Integer.parseInt(str));
+                request.setAttribute("usuarioModificar", usuarioModificar);
+            }
+            
+            request.getRequestDispatcher("/adminPublicarUsuario.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

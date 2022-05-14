@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Admin;
 
-import entity.Subasta;
+import dto.UsuarioDTO;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,16 +14,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.SubastaService;
 import service.UsuarioService;
+import servlet.TAWServlet;
 
 /**
  *
  * @author Pablo Salado
  */
-public class servletAdminAccesoModificarUsuarios extends HttpServlet {
-    @EJB SubastaService subastaService;
-    @EJB UsuarioService userService;
+public class servletAdminBorrarUsuario extends TAWServlet {
+    @EJB UsuarioService usuarioService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,18 +35,14 @@ public class servletAdminAccesoModificarUsuarios extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String str = request.getParameter("id");
-            if (str != null) {
-                Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
-                request.setAttribute("usuario", usuario);
-            }
-            str = request.getParameter("usuario");
-            if (str != null) {
-                Usuario usuarioModificar = this.userService.buscarUsuario(Integer.parseInt(str));
-                request.setAttribute("usuarioModificar", usuarioModificar);
-            }
+        if(super.comprobarSession(request, response)){
+            String str = request.getParameter("usuario");
+            UsuarioDTO usuario = this.usuarioService.buscarUsuario(Integer.parseInt(str));
             
-            request.getRequestDispatcher("/adminPublicarUsuario.jsp").forward(request, response);
+            this.usuarioService.eliminarUsuario(usuario.getIdUsuario());
+            
+            response.sendRedirect(request.getContextPath() + "/servletAdminListarUsuarios");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

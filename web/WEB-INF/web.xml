@@ -102,27 +102,27 @@
     </servlet>
     <servlet>
         <servlet-name>servletAdminListarUsuarios</servlet-name>
-        <servlet-class>servlet.servletAdminListarUsuarios</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminListarUsuarios</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminFiltrarUsuarios</servlet-name>
-        <servlet-class>servlet.servletAdminFiltrarUsuarios</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminFiltrarUsuarios</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminAccesoModificarUsuarios</servlet-name>
-        <servlet-class>servlet.servletAdminAccesoModificarUsuarios</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminAccesoModificarUsuarios</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminCrearUsuario</servlet-name>
-        <servlet-class>servlet.servletAdminCrearUsuario</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminCrearUsuario</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminModificarUsuario</servlet-name>
-        <servlet-class>servlet.servletAdminModificarUsuario</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminModificarUsuario</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminBorrarUsuario</servlet-name>
-        <servlet-class>servlet.servletAdminBorrarUsuario</servlet-class>
+        <servlet-class>servlet.Admin.servletAdminBorrarUsuario</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletAdminDarAltaMarketing</servlet-name>

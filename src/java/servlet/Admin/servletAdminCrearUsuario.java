@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Admin;
 
-import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +17,7 @@ import service.UsuarioService;
  *
  * @author Pablo Salado
  */
-public class servletAdminBorrarUsuario extends TAWServlet {
+public class servletAdminCrearUsuario extends HttpServlet {
     @EJB UsuarioService usuarioService;
 
     /**
@@ -32,15 +30,35 @@ public class servletAdminBorrarUsuario extends TAWServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        if(super.comprobarSession(request, response)){
-            String str = request.getParameter("usuario");
-            Usuario usuario = this.usuarioService.buscarUsuario(Integer.parseInt(str));
-            
-            this.usuarioService.eliminarUsuario(usuario);
-            
-            response.sendRedirect(request.getContextPath() + "/servletAdminListarUsuarios");
+            throws ServletException, IOException {       
+        String nombre = request.getParameter("nombre");
+        String apellidos = request.getParameter("apellidos");
+        String sexo = request.getParameter("sexo");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String domicilio = request.getParameter("domicilio");
+        if(domicilio.equals("")){
+            domicilio = null;
         }
+        String ciudad = request.getParameter("ciudadResidencia");
+        if(ciudad.equals("")){
+            ciudad = null;
+        }
+        String edad = request.getParameter("edad");
+        Integer edadInt;
+        if(edad.equals("")){
+            edadInt = null;
+        }else {
+            edadInt = Integer.parseInt(edad);
+        }
+        String tipo = request.getParameter("tipoUsuario");
+        String saldo = request.getParameter("saldo");
+        Double saldoDouble = Double.parseDouble(saldo);
+        
+        this.usuarioService.crearUsuario(nombre, apellidos, sexo, password, email, domicilio, ciudad, edadInt, saldoDouble);
+        //this.usuarioService.crearUsuario(nombre, apellidos, sexo, password, email, domicilio, ciudad, edadInt, tipo, saldoDouble);
+        
+        response.sendRedirect(request.getContextPath()+"/servletAdminListarUsuarios");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
