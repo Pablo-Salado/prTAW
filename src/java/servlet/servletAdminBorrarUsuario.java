@@ -4,23 +4,24 @@
  * and open the template in the editor.
  */
 package servlet;
-import dto.UsuarioDTO;
+
 import entity.Usuario;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import service.UsuarioService;
 
 /**
  *
- * @author Usuario
+ * @author Pablo Salado
  */
-public class servletLogin extends HttpServlet {
-    @EJB UsuarioService userService;
+public class servletAdminBorrarUsuario extends TAWServlet {
+    @EJB UsuarioService usuarioService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,27 +33,13 @@ public class servletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");        
-        
-        UsuarioDTO user = this.userService.comprobarUser(usuario, clave);
-        
-        if (user == null) {
-            String strError = "El usuario o la clave son incorrectos";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("login.jsp").forward(request, response);                
-        } else if (user.getTipoUsuario().equals("ADMINISTRADOR")){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletAdmin");
-        }else if (user.getTipoUsuario().equals("MARKETING")){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletMarketing");
-        }else {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletListadoSubastas");                
+        if(super.comprobarSession(request, response)){
+            String str = request.getParameter("usuario");
+            Usuario usuario = this.usuarioService.buscarUsuario(Integer.parseInt(str));
+            
+            this.usuarioService.eliminarUsuario(usuario);
+            
+            response.sendRedirect(request.getContextPath() + "/servletAdminListarUsuarios");
         }
     }
 

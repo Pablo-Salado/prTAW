@@ -4,11 +4,16 @@
  * and open the template in the editor.
  */
 package servlet;
-import dto.UsuarioDTO;
+
+import dao.UsuarioFacade;
 import entity.Usuario;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +22,23 @@ import service.UsuarioService;
 
 /**
  *
- * @author Usuario
+ * @author javie
  */
-public class servletLogin extends HttpServlet {
-    @EJB UsuarioService userService;
+@WebServlet(name = "servletMarketing", urlPatterns = {"/servletMarketing"})
+public class servletMarketing extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @EJB 
+    private UsuarioService usuarioService;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,28 +50,20 @@ public class servletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");        
+        String strUsuario, accion = "todos";
+        List<Usuario> usuarios;
+        String goTo = "marketing.jsp";
         
-        UsuarioDTO user = this.userService.comprobarUser(usuario, clave);
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuario");
+        usuarios = usuarioService.getUsuariosCompradores();
         
-        if (user == null) {
-            String strError = "El usuario o la clave son incorrectos";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("login.jsp").forward(request, response);                
-        } else if (user.getTipoUsuario().equals("ADMINISTRADOR")){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletAdmin");
-        }else if (user.getTipoUsuario().equals("MARKETING")){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletMarketing");
-        }else {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletListadoSubastas");                
-        }
+        request.setAttribute("usuario", usuario);
+        request.setAttribute("usuarios", usuarios);
+        request.setAttribute("accion", accion);
+        
+        RequestDispatcher rd = request.getRequestDispatcher(goTo);
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

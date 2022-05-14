@@ -1,14 +1,19 @@
 <%-- 
-    Author     : Pablo Salado
+    Document   : misListas
+    Created on : 05-may-2022, 21:51:38
+    Author     : javie
 --%>
 
+
+<%@page import="entity.Lista"%>
+<%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Subasta"%>
-<%@page import="entity.Usuario"%>
+<%@page import="entity.Subasta"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
+     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -17,11 +22,9 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-        <title>Admin</title>
+        <title>Mis listas</title>
     </head>
-    <% 
-        Usuario user = (Usuario)session.getAttribute("usuario");
-    %>
+    <% Usuario user = (Usuario)request.getAttribute("usuario"); %>
     <body>
         <header>
             <div class="px-3 py-3 bg-dark text-white shadow">
@@ -42,72 +45,17 @@
                                   <i class="bi bi-person-circle"></i> Admin
                                 </button>           
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
-                                      <li><a class="dropdown-item" href="#">Listar productos</a></li>
-                                      <li><a class="dropdown-item" href="servletAdminListarUsuarios">Listar usuarios</a></li>
-                                      <li><a class="dropdown-item" href="adminDarAltaMarketing.jsp">Dar de alta a usuarios de marketing</a></li>
+                                      <li><a class="dropdown-item" href="servletListarListas?usuario=<%=user.getIdUSUARIO()%>">Mis Listas</a></li>
+                                      <li><a class="dropdown-item" href="servletMarketing?usuario=<%=user.getIdUSUARIO()%>">Compradores</a></li>  
                                       <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
 
                                 </ul>
                             </div>
                           </div>
-                          <div class ="col-auto">
-                              <a href ="servletAdminAccesoModificarProducto" class="btn btn-primary">Crear producto</a>
-                          </div>
                         </div>
                       </div>
                   </div>
               </div>
-
-          </div>
-            <div class="px-3 py-2 mb-3 shadow">
-          
-                <div class="container">
-                  <form method="post" action="servletAdminFiltrarSubastas">
-                  <div class="row align-items-center">
-                    <div class="col">
-                        <input class="form-control" type="text" placeholder="Nombre de la subasta"  name="nombreSubasta"> 
-                    </div>
-                    <div class="col">
-                      <select class="form-select" aria-label="Default select example" style="width: auto;" name="categoria">
-                        <option selected>CATEGORIAS</option>
-                        <option value="MOTOR">MOTOR</option>
-                        <option value="DEPORTE">DEPORTE</option>
-                        <option value="HOGAR">HOGAR</option>
-                        <option value="INFORMATICA">INFORMATICA</option>
-                        <option value="IMAGEN Y SONIDO">IMAGEN Y SONIDO</option>
-                        <option value="TELEFONIA">TELEFONIA</option>
-                        <option value="MODA">MODA</option>
-                        <option value="JUEGOS">JUEGOS</option>
-                        <option value="AFICIONES Y OCIO">AFICIONES Y OCIO</option>
-                        <option value="OTROS">OTROS</option>
-                      </select>
-                    </div>
-                    <div class="col-auto">
-                      <label class="col-form-label">Rango de precio:</label>
-                    </div>
-                    <div class="col ">
-                      <input class="form-control" type="number" min="0" placeholder="Precio minimo"  name="minPrice"> 
-
-                    </div>
-                    <div class="col-auto">
-                      <label class="col-form-label">-</label>
-                    </div>
-                    <div class="col">
-                      <input class="form-control" type="number" min="0" placeholder="Precio maximo" name="maxPrice">
-
-                    </div>
-                    <div class="col">
-
-                    </div>
-                    <div class="col-auto">
-                        <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
-                      <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
-
-                    </div>
-                  </div>
-                  </form>
-
-
             </div>
         </header>
         <article>
@@ -118,47 +66,35 @@
                     <%
                     
                     
-                    List<Subasta> subastas = (List)request.getAttribute("subastas");
+                    List<Lista> listas = (List)request.getAttribute("listas");
                     
-                    for (Subasta sub :subastas) {
-                         
+                    for (Lista l : listas) {
+                           
                     %> 
                   <div class="col py-4">
                     
                     <div class="card shadow" style="width: 18rem;">
                       <div class="card-header">
-                          Categoría: <%=sub.getProducto().getCategoria() %>
-                      </div>
-                        <img src=<%= sub.getProducto().getUrlFoto() %> class="card-img-top" alt=<%= sub.getProducto().getTitulo() %> style="max-height: 150px; object-fit: contain;">
-                             <hr>  
-                      <div class="card-body">
-                        <h5 class="card-title"><%= sub.getProducto().getTitulo() %></h5>
-                        <p class="card-text overflow-auto" style="min-height:  70px"><%= sub.getProducto().getDescripcion() %></p>
+                          Titulo: <%=l.getNombre()%>
                       </div>
                       <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Precio inicial: EUR <%= sub.getPrecioInicial() %></li>
-                        <li class="list-group-item">Puja actual: EUR <%= sub.getPujaMaxima() %></li>
-                        <li class="list-group-item">Fecha limite: <%= sub.getCierre() %> </li>
-                        <li class="list-group-item">Vendedor: <%= sub.getVendedor().getNombre() %> </li>
-                        <% if(sub.getComprador() != null){ %>
-                            <li class="list-group-item">Comprador: <%= sub.getComprador().getNombre() %> </li>
-                        <% } %>
-                      </ul>
+                        <li class="list-group-item">Descripcion: <%=l.getDescripcion() %></li>
+                        <li class="list-group-item">Atributos: <%= l.getAtributos()%></li>
+                      </ul> 
                       <div class="card-body">
                         <div class="row row-cols-auto align-items-center justify-content-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-primary" href="servletAdminAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar subasta</a>
-                                <a class="btn btn-primary" href="servletAdminBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar subasta</a>
+                                <a class="btn btn-primary" href="servletBorrarLista?idLista=<%= l.getIdLISTA()%>&usuario=<%= user.getIdUSUARIO() %>" role="button">Borrar</a>
+                                <a class="btn btn-primary" href="servletFiltrarCompradores?idLista=<%= l.getIdLISTA()%>&usuario=<%= user.getIdUSUARIO() %>" role="button">Listar usuarios</a>
+                                <a class="btn btn-primary" href="servletEnviarMensaje?idLista=<%= l.getIdLISTA()%>&usuario=<%= user.getIdUSUARIO() %>" role="button">Enviar mensaje</a>
                             </div>
                         </div> 
                       </div>
                     </div>
-                  </div>
                        <%
                           }
                     %> 
                 </div>
-            </div>
           </section>
     </article>
                 

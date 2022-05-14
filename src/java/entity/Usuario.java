@@ -48,6 +48,9 @@ import service.ProductoService;
     , @NamedQuery(name = "Usuario.findBySaldo", query = "SELECT u FROM Usuario u WHERE u.saldo = :saldo")})
 public class Usuario implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Lista> listaList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -265,6 +268,15 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entity.Usuario[ idUSUARIO=" + idUSUARIO + " ]";
+    }
+
+    @XmlTransient
+    public List<Lista> getListaList() {
+        return listaList;
+    }
+
+    public void setListaList(List<Lista> listaList) {
+        this.listaList = listaList;
     }
     
     public UsuarioDTO toDTO(){

@@ -4,22 +4,25 @@
  * and open the template in the editor.
  */
 package servlet;
-import dto.UsuarioDTO;
+
+import entity.Subasta;
 import entity.Usuario;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import service.SubastaService;
 import service.UsuarioService;
 
 /**
  *
- * @author Usuario
+ * @author Pablo Salado
  */
-public class servletLogin extends HttpServlet {
+public class servletAdminAccesoModificarUsuarios extends HttpServlet {
+    @EJB SubastaService subastaService;
     @EJB UsuarioService userService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,28 +35,18 @@ public class servletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");        
-        
-        UsuarioDTO user = this.userService.comprobarUser(usuario, clave);
-        
-        if (user == null) {
-            String strError = "El usuario o la clave son incorrectos";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("login.jsp").forward(request, response);                
-        } else if (user.getTipoUsuario().equals("ADMINISTRADOR")){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletAdmin");
-        }else if (user.getTipoUsuario().equals("MARKETING")){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletMarketing");
-        }else {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletListadoSubastas");                
-        }
+            String str = request.getParameter("id");
+            if (str != null) {
+                Usuario usuario = this.userService.buscarUsuario(Integer.parseInt(str));
+                request.setAttribute("usuario", usuario);
+            }
+            str = request.getParameter("usuario");
+            if (str != null) {
+                Usuario usuarioModificar = this.userService.buscarUsuario(Integer.parseInt(str));
+                request.setAttribute("usuarioModificar", usuarioModificar);
+            }
+            
+            request.getRequestDispatcher("/adminPublicarUsuario.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -24,7 +24,7 @@ import servlet.TAWServlet;
 
 /**
  *
- * @author X430F
+ * @author Pablo Salado
  */
 public class servletAdminFiltrarSubastas extends TAWServlet {
     @EJB UsuarioService usuarioService;

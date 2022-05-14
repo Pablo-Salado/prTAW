@@ -4,23 +4,34 @@
  * and open the template in the editor.
  */
 package servlet;
-import dto.UsuarioDTO;
+
+import entity.Lista;
 import entity.Usuario;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import service.ListaService;
 import service.UsuarioService;
 
 /**
  *
- * @author Usuario
+ * @author javie
  */
-public class servletLogin extends HttpServlet {
-    @EJB UsuarioService userService;
+@WebServlet(name = "servletListarListas", urlPatterns = {"/servletListarListas"})
+public class servletListarListas extends HttpServlet {
+
+    @EJB 
+    private ListaService listaService;
+    
+    @EJB 
+    private UsuarioService usuarioService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,28 +43,22 @@ public class servletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");        
+        String strUsuario;
+        Usuario usuario;
+        List<Lista> listas, listas2;
+        String goTo = "misListas.jsp";
         
-        UsuarioDTO user = this.userService.comprobarUser(usuario, clave);
+        strUsuario = request.getParameter("usuario");
         
-        if (user == null) {
-            String strError = "El usuario o la clave son incorrectos";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("login.jsp").forward(request, response);                
-        } else if (user.getTipoUsuario().equals("ADMINISTRADOR")){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletAdmin");
-        }else if (user.getTipoUsuario().equals("MARKETING")){
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletMarketing");
-        }else {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            response.sendRedirect(request.getContextPath() + "/servletListadoSubastas");                
-        }
+        usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
+        //listas2 = listaService.getListasPorUsuario(usuario);
+        listas = usuario.getListaList();
+        
+        request.setAttribute("usuario", usuario);
+        request.setAttribute("listas", listas);
+        
+        RequestDispatcher rd = request.getRequestDispatcher(goTo);
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

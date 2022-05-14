@@ -22,7 +22,7 @@ import servlet.TAWServlet;
 
 /**
  *
- * @author X430F
+ * @author Pablo Salado
  */
 @WebServlet(name = "servletAdmin", urlPatterns = {"/servletAdmin"})
 public class servletAdmin extends TAWServlet {
@@ -40,15 +40,11 @@ public class servletAdmin extends TAWServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if(super.comprobarAdmin(request, response)){
-            List<SubastaDTO> subastas = null;
-            List<UsuarioDTO> usuarios = null;
+            List<Subasta> subastas;
 
             subastas = this.subastaService.listarSubastas();
-            usuarios = this.usuarioService.listarUsuario();
-
-
+            
             request.setAttribute("subastas", subastas);
-            request.setAttribute("usuarios", usuarios);
             request.getRequestDispatcher("admin.jsp").forward(request, response);
         }
     }

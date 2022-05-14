@@ -100,6 +100,34 @@
         <servlet-name>servletAdminPublicarProducto</servlet-name>
         <servlet-class>servlet.Admin.servletAdminPublicarProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletAdminListarUsuarios</servlet-name>
+        <servlet-class>servlet.servletAdminListarUsuarios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminFiltrarUsuarios</servlet-name>
+        <servlet-class>servlet.servletAdminFiltrarUsuarios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminAccesoModificarUsuarios</servlet-name>
+        <servlet-class>servlet.servletAdminAccesoModificarUsuarios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminCrearUsuario</servlet-name>
+        <servlet-class>servlet.servletAdminCrearUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminModificarUsuario</servlet-name>
+        <servlet-class>servlet.servletAdminModificarUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminBorrarUsuario</servlet-name>
+        <servlet-class>servlet.servletAdminBorrarUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletAdminDarAltaMarketing</servlet-name>
+        <servlet-class>servlet.servletAdminDarAltaMarketing</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -199,6 +227,34 @@
     <servlet-mapping>
         <servlet-name>servletAdminPublicarProducto</servlet-name>
         <url-pattern>/servletAdminPublicarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminListarUsuarios</servlet-name>
+        <url-pattern>/servletAdminListarUsuarios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminFiltrarUsuarios</servlet-name>
+        <url-pattern>/servletAdminFiltrarUsuarios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminAccesoModificarUsuarios</servlet-name>
+        <url-pattern>/servletAdminAccesoModificarUsuarios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminCrearUsuario</servlet-name>
+        <url-pattern>/servletAdminCrearUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminModificarUsuario</servlet-name>
+        <url-pattern>/servletAdminModificarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminBorrarUsuario</servlet-name>
+        <url-pattern>/servletAdminBorrarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletAdminDarAltaMarketing</servlet-name>
+        <url-pattern>/servletAdminDarAltaMarketing</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
