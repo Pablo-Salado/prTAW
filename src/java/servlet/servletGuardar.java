@@ -42,8 +42,9 @@ public class servletGuardar extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String ciudad = request.getParameter("ciudad");
+        String tipo = request.getParameter("tipo");
         
-        this.userService.crearUsuario(nombre, apellidos, sexo, password, email, domicilio, ciudad, edad, 0.0);
+        this.userService.crearUsuario(nombre, apellidos, sexo, password, email, domicilio, ciudad, edad, tipo, 0.0);
         
          response.sendRedirect(request.getContextPath()); 
     }

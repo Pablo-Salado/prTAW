@@ -44,6 +44,7 @@
             <form method="POST" action="servletGuardar">
                 <h1 class="h3 mb-3 fw-normal">¿Nuevo cliente? Por aquí, por favor:</h1>
                 <input type="hidden" name="id" value="" />
+                <input type="hidden" name="tipo" value="CV"/>
                 <div class="form-floating">
                     <input type="text" class="form-control" size="30" id="floatingName" placeholder="Nombre" name="nombre">
                     <label for="floatingName">Nombre</label>
