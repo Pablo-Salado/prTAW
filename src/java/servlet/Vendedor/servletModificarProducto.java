@@ -48,17 +48,7 @@ public class servletModificarProducto extends HttpServlet {
         ProductoDTO producto = subasta.getProducto();
         
         
-       /*
-        str = request.getParameter("fecha_cierre");
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date=new Date();
-     try {
-         date = formatter.parse(str);
-     } catch (ParseException ex) {
-         Logger.getLogger(servletPublicarProducto.class.getName()).log(Level.SEVERE, null, ex);
-     }
-        subasta.setCierre(date);
-        */
+      
         String titulo = request.getParameter("titulo");
         String descripcion = request.getParameter("descripcion");
         String categoria = request.getParameter("categoria");

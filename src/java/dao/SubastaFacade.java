@@ -32,6 +32,14 @@ public class SubastaFacade extends AbstractFacade<Subasta> {
     public SubastaFacade() {
         super(Subasta.class);
     }
+    public List<Subasta> obtenerSubastasUsuario(Integer idUsuario){
+        Query q;
+        
+        q = this.getEntityManager().createQuery("SELECT s FROM Subasta s WHERE s.vendedor.idUSUARIO = :idUsuario");
+        q.setParameter("idUsuario", idUsuario);
+        List<Subasta> res = (List<Subasta>)q.getResultList();
+        return res;
+    }
     
     public List<Subasta> filtrarSubasta(String cat, String min, String max, String nombre){
        Query q; 

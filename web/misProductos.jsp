@@ -132,8 +132,10 @@
                         
                         %>
                         <div class="container py-2 align-items-center justify-content-center" >
-                            <h2 class="text-center">No existen compras</h2>
+                            <h2 class="text-center">No tienes productos en venta</h2>
+                           
                         </div>
+                        
                         <%
                             }else{
                         

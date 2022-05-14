@@ -6,6 +6,7 @@
 package servlet.Vendedor;
 
 import dto.SubastaDTO;
+import dto.UsuarioDTO;
 import entity.Subasta;
 import java.io.IOException;
 import java.util.List;
@@ -41,7 +42,9 @@ public class servletListadoMisProductos extends TAWServlet {
         List<SubastaDTO> subastas=null;
         if(super.comprobarSession(request, response)){
         HttpSession session = request.getSession();
-        subastas = this.subastaService.listarSubastas();
+        
+        UsuarioDTO user= (UsuarioDTO)session.getAttribute("usuario");
+        subastas = this.subastaService.listarSubastasUsuario(user.getIdUsuario());
        
         request.setAttribute("subastas", subastas);
         request.getRequestDispatcher("misProductos.jsp").forward(request, response);
