@@ -54,5 +54,17 @@ public abstract class TAWServlet extends HttpServlet {
             return false;
         }       
     }
+       
+    protected boolean comprobarMarketing (HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException{
+        HttpSession session = request.getSession();
+        Usuario user = (Usuario)session.getAttribute("usuario");
+        if (user.getTipoUsuario().equals("MARKETING")) {
+            return true;
+        } else {
+            response.sendRedirect(request.getContextPath());
+            return false;
+        }       
+    }
 
 }

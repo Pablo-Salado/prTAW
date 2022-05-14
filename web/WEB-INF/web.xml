@@ -100,6 +100,26 @@
         <servlet-name>servletAdminPublicarProducto</servlet-name>
         <servlet-class>servlet.servletAdminPublicarProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletBorrarLista</servlet-name>
+        <servlet-class>servlet.servletBorrarLista</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletGuardarLista</servlet-name>
+        <servlet-class>servlet.servletGuardarLista</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletFiltrarCompradores</servlet-name>
+        <servlet-class>servlet.servletFiltrarCompradores</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletListarListas</servlet-name>
+        <servlet-class>servlet.servletListarListas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletMarketing</servlet-name>
+        <servlet-class>servlet.servletMarketing</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListadoSubastas</servlet-name>
         <url-pattern>/servletListadoSubastas</url-pattern>
@@ -199,6 +219,26 @@
     <servlet-mapping>
         <servlet-name>servletAdminPublicarProducto</servlet-name>
         <url-pattern>/servletAdminPublicarProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletBorrarLista</servlet-name>
+        <url-pattern>/servletBorrarLista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletGuardarLista</servlet-name>
+        <url-pattern>/servletGuardarLista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletFiltrarCompradores</servlet-name>
+        <url-pattern>/servletFiltrarCompradores</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletListarListas</servlet-name>
+        <url-pattern>/servletListarListas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletMarketing</servlet-name>
+        <url-pattern>/servletMarketing</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

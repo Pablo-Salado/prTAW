@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import service.UsuarioService;
 
 /**
@@ -24,7 +25,7 @@ import service.UsuarioService;
  * @author javie
  */
 @WebServlet(name = "servletMarketing", urlPatterns = {"/servletMarketing"})
-public class servletMarketing extends HttpServlet {
+public class servletMarketing extends TAWServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,14 +50,17 @@ public class servletMarketing extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (comprobarMarketing(request, response)) {
         String strUsuario, accion = "todos";
         Usuario usuario;
         List<Usuario> usuarios;
+        
         String goTo = "marketing.jsp";
         
-        strUsuario = request.getParameter("usuario");
+        HttpSession session = request.getSession();
+        usuario = (Usuario) session.getAttribute("usuario");
         
-        usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
+        //usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
         usuarios = usuarioService.getUsuariosCompradores();
         
         request.setAttribute("usuario", usuario);
@@ -65,6 +69,7 @@ public class servletMarketing extends HttpServlet {
         
         RequestDispatcher rd = request.getRequestDispatcher(goTo);
         rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

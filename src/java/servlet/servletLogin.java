@@ -44,6 +44,10 @@ public class servletLogin extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("usuario", user);
             response.sendRedirect(request.getContextPath() + "/servletAdmin");
+        } else if (user.getTipoUsuario().equals("MARKETING")){
+            HttpSession session = request.getSession();
+            session.setAttribute("usuario", user);
+            response.sendRedirect(request.getContextPath() + "/servletMarketing");
         }else {
             HttpSession session = request.getSession();
             session.setAttribute("usuario", user);

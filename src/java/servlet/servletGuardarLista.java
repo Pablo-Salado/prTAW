@@ -5,10 +5,12 @@
  */
 package servlet;
 
+import dto.ListaDTO;
 import entity.Lista;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -17,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import service.ListaService;
 import service.UsuarioService;
 
@@ -25,7 +28,7 @@ import service.UsuarioService;
  * @author javie
  */
 @WebServlet(name = "servletGuardarLista", urlPatterns = {"/servletGuardarLista"})
-public class servletGuardarLista extends HttpServlet {
+public class servletGuardarLista extends TAWServlet {
 
     @EJB
     private ListaService listaService;
@@ -44,9 +47,11 @@ public class servletGuardarLista extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombre, apellidos, sexo, email, domicilio, ciudad_residencia, minEdad,  maxEdad, tipo_usuario, saldo, titulo, descripcion, atr, strUsuario, idLista;
+        if (comprobarMarketing(request, response)) {
+        String nombre, apellidos, sexo, email, domicilio, ciudad_residencia, minEdad,  maxEdad, tipo_usuario, saldo, titulo, descripcion, atr, strUsuario, idLista, accion;
         Usuario usuario;
         List<Lista> listas;
+        List<ListaDTO> listasDTO = new ArrayList<>();
         Lista nueva;
         String goTo = "misListas.jsp";
              
@@ -62,11 +67,14 @@ public class servletGuardarLista extends HttpServlet {
         maxEdad = request.getParameter("maxEdad");
         tipo_usuario = request.getParameter("tipo_usuario");
         saldo = request.getParameter("saldo");
-        strUsuario = request.getParameter("usuario");
+        //strUsuario = request.getParameter("usuario");
         idLista = request.getParameter("idLista");
+        accion = request.getParameter("accion");
         
-        usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
         
+        //usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
+        HttpSession session = request.getSession();
+        usuario = (Usuario) session.getAttribute("usuario");
         
         atr = nombre + "," + apellidos + "," + sexo + "," + email + "," + domicilio + "," + ciudad_residencia
             + "," + minEdad + "," + maxEdad + "," + tipo_usuario + "," + saldo + ",";
@@ -80,10 +88,14 @@ public class servletGuardarLista extends HttpServlet {
         nueva.setUsuario(usuario);
         nueva.setAtributos(atr);
         
-        if(idLista.compareTo("idLista") == 0){ // SI ESTAMOS EDITANDO
+        if(accion.compareTo("editar") == 0){ // SI ESTAMOS EDITANDO
             listas.remove(listaService.buscar(Integer.parseInt(idLista)));
+            nueva = listaService.buscar(Integer.parseInt(idLista));
+            nueva.setNombre(titulo);
+            nueva.setDescripcion(descripcion);
+            nueva.setUsuario(usuario);
+            nueva.setAtributos(atr);
             listaService.editar(nueva);
-            
         }else{
             listaService.crear(nueva);
         }   
@@ -93,11 +105,17 @@ public class servletGuardarLista extends HttpServlet {
         //listas = usuario.getListaList();
         //listas = listaService.getListasPorUsuario(usuario);
         
+        for(Lista l: listas){
+            listasDTO.add(l.toDTO());
+        }
+        
+        
         request.setAttribute("usuario", usuario);
-        request.setAttribute("listas", listas);
+        request.setAttribute("listas", listasDTO);
         
         RequestDispatcher rd = request.getRequestDispatcher(goTo);
         rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
