@@ -53,9 +53,9 @@ public class NotificacionesService {
         
     }
     
-    public void rellenarNotificacion(Integer notId,Usuario user,Subasta subasta,String ganador) {
+    private void rellenarNotificacion(Notificaciones not,Usuario user,Subasta subasta,String ganador) {
         
-        Notificaciones not=this.notiFC.find(notId);
+        
         
         not.setIdUsuario(user);
         not.setIdSubasta(subasta);
@@ -67,7 +67,7 @@ public class NotificacionesService {
         Subasta subasta = this.subFC.find(subastaId);
         Notificaciones notificacion = new Notificaciones();
         
-        this.rellenarNotificacion(notificacion.getId(), user, subasta, ganador);
+        this.rellenarNotificacion(notificacion, user, subasta, ganador);
         
         this.notiFC.create(notificacion);
     }

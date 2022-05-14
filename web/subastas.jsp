@@ -211,8 +211,8 @@
                         <div class="row row-cols-auto align-items-center justify-content-center">
                           <div class="col">
                               <%
-                                  if(user.getSaldo() > sub.getPujaMaxima()){
-                                      
+                                  if(user.getSaldo() > sub.getPujaMaxima() && sub.getVendedor().getIdUsuario()!=user.getIdUsuario()){
+                                   
                                   
                                   %>
                                   <button type="button" class="btn btn-primary" value=<%=sub.getPujaMaxima() %> data-bs-toggle="modal" data-bs-target=#modal<%=sub.getIdSUBASTA()%>>

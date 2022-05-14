@@ -140,7 +140,7 @@
                             }else{
                         
                         for(SubastaDTO sub : subastas){
-                            if(sub.getVendedor().getIdUsuario()==user.getIdUsuario()){
+                            
                                 
                             
                         %>
@@ -164,7 +164,7 @@
                              
                              %>
                               <div class="row">
-                                Fecha finalización subasta: <%=format.format(sub.getCierre())%>
+                                Fecha finalización: <%=format.format(sub.getCierre())%>
                               </div>
                               <%}%>
                               <div class="row">
@@ -202,7 +202,7 @@
                     </div>
                         <%
                             
-                              }
+                              
                             }
                         }   
                             %>
