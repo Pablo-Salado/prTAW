@@ -43,19 +43,19 @@
         <main class = "form-signin">
             <form method="POST" action="servletGuardar">
                 <h1 class="h3 mb-3 fw-normal">¿Nuevo cliente? Por aquí, por favor:</h1>
-                <input type="hidden" name="id" value="" />
-                <input type="hidden" name="tipo" value="CV"/>
+                <input type="hidden" name="id" value="" required/>
+                <input type="hidden" name="tipo" value="CV" required/>
                 <div class="form-floating">
-                    <input type="text" class="form-control" size="30" id="floatingName" placeholder="Nombre" name="nombre">
+                    <input type="text" class="form-control" size="30" id="floatingName" placeholder="Nombre" name="nombre" required>
                     <label for="floatingName">Nombre</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" size="30" id="floatingSurname" placeholder="Apellidos" name="apellidos">
+                    <input type="text" class="form-control" size="30" id="floatingSurname" placeholder="Apellidos" name="apellidos" required>
                     <label for="floatingSurname">Apellidos</label>
                 </div>
                 Sexo:
                <div>
-                    <input type="radio" id="Masculino" name="sexo" value="H"checked>
+                    <input type="radio" id="Masculino" name="sexo" value="H"checked >
                     <label for="Masculino">Masculino</label>
                 </div>
 
@@ -64,23 +64,23 @@
                     <label for="Femenino">Femenino</label>
                 </div>
                 <div class="form-floating">
-                    <input type="number" class="form-control" size="30" id="floatingEdad" placeholder="Edad" name="edad">
+                    <input type="number" class="form-control" size="30" id="floatingEdad" placeholder="Edad" name="edad" required>
                     <label for="floatingEdad">Edad</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" size="30" id="floatingInput" placeholder="Email" name="email">
+                    <input type="text" class="form-control" size="30" id="floatingInput" placeholder="Email" name="email" required>
                     <label for="floatingInput">Email</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" size="30" id="floatingPassword" placeholder="Contraseña" name="password">
+                    <input type="password" class="form-control" size="30" id="floatingPassword" placeholder="Contraseña" name="password" required>
                     <label for="floatingPassword">Contraseña</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" size="30" id="floatingDomicilio" placeholder="Domicilio" name="domicilio">
+                    <input type="text" class="form-control" size="30" id="floatingDomicilio" placeholder="Domicilio" name="domicilio" required>
                     <label for="floatingDomicilio">Domicilio</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" size="30" id="floatingCiudad" placeholder="Ciudad" name="ciudad">
+                    <input type="text" class="form-control" size="30" id="floatingCiudad" placeholder="Ciudad" name="ciudad" required>
                     <label for="floatingCiudad">Ciudad</label>
                 </div>
                 <button class="w-60 btn btn-lg btn-primary" type="submit" value="Enviar">Continuar</button>
