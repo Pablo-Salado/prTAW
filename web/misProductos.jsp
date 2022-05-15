@@ -1,26 +1,30 @@
 <%-- 
     Document   : misProductos
     Created on : 15-abr-2022, 12:38:41
-    Author     : Usuario
+    Author     : Miguel Angel Cosano Ramirez
 --%>
 
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="dto.UsuarioDTO"%>
 <%@page import="dto.SubastaDTO"%>
 <%@page import="java.util.List"%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-        <title>JSP Page</title>
-    </head>
-    <%UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");%>
-    <body>
-      <body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <title>Página principal</title>
+  </head>
+  <% UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario"); %>
+  
+  <body>
 
       <header>
         <div class="px-3 py-3 bg-dark text-white shadow">
@@ -68,7 +72,7 @@
         <div class="px-3 py-2 mb-3 shadow">
           
           <div class="container">
-            <form method="post" action="servletFiltrarMisProductos">
+            <form method="post" action="servletFiltrarMisCompras">
             <div class="row align-items-center">
                 <div class="col">
                     <input class="form-control" type="text" placeholder="Nombre del producto"  name="nombreSubasta"> 
@@ -128,18 +132,20 @@
                         
                         %>
                         <div class="container py-2 align-items-center justify-content-center" >
-                            <h2 class="text-center">No tienes ninguna subasta</h2>
+                            <h2 class="text-center">No tienes productos en venta</h2>
+                           
                         </div>
+                        
                         <%
                             }else{
                         
                         for(SubastaDTO sub : subastas){
-                            if(sub.getVendedor().getIdUsuario()==user.getIdUsuario()){
+                            
                                 
                             
                         %>
                     <div class="container py-2">
-                      <div class="card shadow" style"max-height: 200px; min-height:200px">
+                      <div class="card shadow" style"max-height: 300px; min-height:200px">
                         <h5 class="card-header">Categoria: <%= sub.getProducto().getCategoria() %></h5>
                         <div class="card-body">
                           <div class="row row-cols-auto align-items-center" >
@@ -151,9 +157,16 @@
                               <div class="row">
                                   Nombre del producto: <%=sub.getProducto().getTitulo() %>
                               </div>
+                              
+                              <%
+                             if(!sub.getProducto().getEstado().equals("En venta")){
+                             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                             
+                             %>
                               <div class="row">
-                                Fecha de la compra: <%=sub.getCierre() %>
+                                Fecha finalización: <%=format.format(sub.getCierre())%>
                               </div>
+                              <%}%>
                               <div class="row">
                               Coste:  <%=sub.getPujaMaxima() %> EUR
                               </div>
@@ -170,11 +183,12 @@
                             <div class="col-5 ps-4">
                               <%=sub.getProducto().getDescripcion() %>
                             </div>
+                            <div class="col">
+                            
+                        </div>
                             
                             
                           </div>
-                            <div class="row  mt-3 ">
-                        <div class="col">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a class="btn btn-primary" href="servletAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA()%>&id=<%=user.getIdUsuario()%>" role="button">Modificar</a>
                                 <a class="btn btn-primary" href="servletBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar</a>
@@ -183,13 +197,12 @@
                                 <%}%>
                             </div>
                         </div>
-                    </div>
-                        </div>
+                            
                       </div>
                     </div>
                         <%
                             
-                              }
+                              
                             }
                         }   
                             %>
@@ -199,19 +212,9 @@
                 
           </section>
       </article>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link">Previous</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
+                
+                
+      
       
       <footer class="py-3 my-4">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
@@ -221,11 +224,9 @@
           <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Sobre nosotros</a></li>
         </ul>
-        <p class="text-center text-muted">Â© 2022 Company, Inc</p>
+        <p class="text-center text-muted">© 2022 Company, Inc</p>
       </footer>      
       
        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
   </body>
-    </body>
 </html>

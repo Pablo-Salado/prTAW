@@ -28,7 +28,7 @@ import service.UsuarioService;
 
 /**
  *
- * @author Usuario
+ * @author Miguel Angel Cosano Ramirez
  */
 public class servletTerminarSubasta extends HttpServlet {
 @EJB SubastaService subastaService;

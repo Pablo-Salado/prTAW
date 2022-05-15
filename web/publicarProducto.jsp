@@ -1,7 +1,7 @@
 <%-- 
     Document   : publicarProducto
     Created on : 14-abr-2022, 20:55:57
-    Author     : Usuario
+    Author     : Miguel Angel Cosano Ramirez
 --%>
 
 

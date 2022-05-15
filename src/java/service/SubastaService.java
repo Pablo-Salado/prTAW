@@ -53,6 +53,13 @@ public class SubastaService {
         return lista;
         
     }
+    
+    public List<SubastaDTO> listarSubastasUsuario(Integer idUsuario){
+        List<Subasta> list = this.subFC.obtenerSubastasUsuario(idUsuario);
+        List<SubastaDTO> lista = listaEntityADTO(list); 
+        
+        return lista;
+    }
 
     public List<SubastaDTO> filtrarSubastasFavoritas(String categoria, String min, String max, String nombre, String fav,List<ProductoDTO> productos) {
         List<Subasta> subastas = new ArrayList<Subasta>();
