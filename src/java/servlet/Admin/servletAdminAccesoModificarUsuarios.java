@@ -6,10 +6,7 @@
 package servlet.Admin;
 
 import dto.UsuarioDTO;
-import entity.Subasta;
-import entity.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
