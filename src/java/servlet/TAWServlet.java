@@ -61,7 +61,7 @@ public abstract class TAWServlet extends HttpServlet {
     protected boolean comprobarMarketing (HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException{
         HttpSession session = request.getSession();
-        Usuario user = (Usuario)session.getAttribute("usuario");
+        UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
         if (user.getTipoUsuario().equals("MARKETING")) {
             return true;
         } else {

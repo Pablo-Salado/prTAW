@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="dto.ListaDTO"%>
 <%@page import="entity.Lista"%>
 <%@page import="entity.Usuario"%>
@@ -25,7 +26,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <title>Mis listas</title>
     </head>
-    <% Usuario user = (Usuario)session.getAttribute("usuario"); %>
+    <% UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario"); %>
     <body>
         <header>
             <div class="px-3 py-3 bg-dark text-white shadow">
@@ -46,8 +47,8 @@
                                   <i class="bi bi-person-circle"></i> Marketing
                                 </button>           
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
-                                      <li><a class="dropdown-item" href="servletListarListas?usuario=<%=user.getIdUSUARIO()%>">Mis Listas</a></li>
-                                      <li><a class="dropdown-item" href="servletMarketing?usuario=<%=user.getIdUSUARIO()%>">Compradores</a></li>  
+                                      <li><a class="dropdown-item" href="servletListarListas">Mis Listas</a></li>
+                                      <li><a class="dropdown-item" href="servletMarketing">Compradores</a></li>  
                                       <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
 
                                 </ul>

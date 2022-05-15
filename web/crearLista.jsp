@@ -4,6 +4,7 @@
     Author     : Javier Santiburcio
 --%>
 
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,7 +20,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <title>Nueva lista</title>
     </head>
-    <% Usuario user = (Usuario)session.getAttribute("usuario");%>
+    <% UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");%>
     <body>
         <header>
             <div class="px-3 py-3 bg-dark text-white shadow">
@@ -40,8 +41,8 @@
                                   <i class="bi bi-person-circle"></i> Marketing
                                 </button>           
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
-                                      <li><a class="dropdown-item" href="servletListarListas?usuario=<%=user.getIdUSUARIO()%>">Mis Listas</a></li>
-                                      <li><a class="dropdown-item" href="servletMarketing?usuario=<%=user.getIdUSUARIO()%>">Compradores</a></li>                                      
+                                      <li><a class="dropdown-item" href="servletListarListas">Mis Listas</a></li>
+                                      <li><a class="dropdown-item" href="servletMarketing">Compradores</a></li>                                      
                                       <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
                                 </ul>
                             </div>
@@ -206,7 +207,7 @@
                         <input class="form-control" type="number" id="exampleFormControlInput1" name="saldo" value="<%=saldo%>"> 
                     </div>
             </div>
-            <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+            
             <input class="form-control" type="hidden" value=<%=idLista%>  name="idLista"> 
             <input class="form-control" type="hidden" value=<%=accion%>  name="accion"> 
             <input type="submit" value="Guardar" class="mb-3 bt" />

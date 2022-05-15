@@ -17,8 +17,7 @@ public class ListaDTO {
     private String nombre;
     private String descripcion;
     private String atributos;
-    //private UsuarioDTO usuario; HAY QUE CAMBIARLO
-    private Usuario usuario;
+    private Usuario usuario; 
     
     public ListaDTO(){
         

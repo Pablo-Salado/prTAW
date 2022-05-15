@@ -6,8 +6,11 @@
 package service;
 
 import dao.ListaFacade;
+import dao.UsuarioFacade;
+import dto.ListaDTO;
 import entity.Lista;
 import entity.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ejb.EJB;
@@ -20,9 +23,18 @@ import javax.ejb.Stateless;
 @Stateless
 public class ListaService {
     @EJB ListaFacade listaFC;
+    @EJB UsuarioFacade userFC;
+    
+    public ListaService(){}
    
-    public void crear(Lista nuevo){
-        listaFC.create(nuevo);
+    public void crear(ListaDTO nuevo){
+        
+        Lista lista = new Lista();
+        lista.setAtributos(nuevo.getAtributos());
+        lista.setDescripcion(nuevo.getDescripcion());
+        lista.setNombre(nuevo.getNombre());
+        lista.setUsuario(nuevo.getUsuario());
+        listaFC.create(lista);
     }
     
     public List<Lista> todas(){
@@ -37,11 +49,34 @@ public class ListaService {
          return this.listaFC.findAll().stream().filter(l -> l.getUsuario() == usuario).collect(Collectors.toList());
     }
     
-    public Lista buscar(Integer idLista){
-        return listaFC.find(idLista);
+    public ListaDTO buscar(Integer idLista){
+        return listaFC.find(idLista).toDTO();
     }
 
-    public void editar(Lista nueva) {
-        listaFC.edit(nueva);
+    public void editar(ListaDTO nueva) {
+        Lista lista = listaFC.find(nueva.getIdLISTA());
+        lista.setIdLISTA(nueva.getIdLISTA());
+        lista.setAtributos(nueva.getAtributos());
+        lista.setDescripcion(nueva.getDescripcion());
+        lista.setNombre(nueva.getNombre());
+        lista.setUsuario(nueva.getUsuario());
+        listaFC.edit(lista);
+    }
+
+    public List<ListaDTO> listaTODTO(List<Lista> listaList) {
+        List<ListaDTO> listaDTO = null;
+        if (listaList != null) {
+            listaDTO = new ArrayList<>();
+            for (Lista l : listaList) {
+                ListaDTO list = new ListaDTO();
+                list.setAtributos(l.getAtributos());
+                list.setDescripcion(l.getDescripcion());
+                list.setNombre(l.getNombre());
+                list.setIdLISTA(l.getIdLISTA());
+                list.setUsuario(l.getUsuario());
+                listaDTO.add(list);
+            }
+        }
+        return listaDTO;
     }
 }

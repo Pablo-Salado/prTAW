@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Marketing;
 
-import dao.UsuarioFacade;
+import dto.ListaDTO;
+import dto.UsuarioDTO;
+import entity.Lista;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -18,24 +21,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import service.ListaService;
 import service.UsuarioService;
+import servlet.TAWServlet;
 
 /**
  *
  * @author Javier Santiburcio
  */
-@WebServlet(name = "servletMarketing", urlPatterns = {"/servletMarketing"})
-public class servletMarketing extends TAWServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+@WebServlet(name = "servletBorrarLista", urlPatterns = {"/servletBorrarLista"})
+public class servletBorrarLista extends TAWServlet {
+    
+    @EJB 
+    private ListaService listaService;
+    
     @EJB 
     private UsuarioService usuarioService;
     
@@ -51,21 +50,30 @@ public class servletMarketing extends TAWServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (comprobarMarketing(request, response)) {
-        String strUsuario, accion = "todos";
-        Usuario usuario;
-        List<Usuario> usuarios;
+        String idLista, strUsuario;
+        UsuarioDTO usuario;
+        List<Lista> listas;
+        List<ListaDTO> listasDTO = new ArrayList<>();
+        String goTo = "misListas.jsp";
         
-        String goTo = "marketing.jsp";
-        
+        //strUsuario = request.getParameter("usuario");
         HttpSession session = request.getSession();
-        usuario = (Usuario) session.getAttribute("usuario");
-        
+        usuario = (UsuarioDTO) session.getAttribute("usuario");
+        idLista = request.getParameter("idLista");
+               
         //usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
-        usuarios = usuarioService.getUsuariosCompradores();
+        listasDTO = usuario.getListaList();
         
-        request.setAttribute("usuario", usuario);
-        request.setAttribute("usuarios", usuarios);
-        request.setAttribute("accion", accion);
+        listasDTO.remove(listaService.buscar(Integer.parseInt(idLista)));
+        listaService.borrar(Integer.parseInt(idLista));
+        //listas = listaService.getListasPorUsuario(usuario);
+        
+        //for(Lista l: listasDTO){
+          //  listasDTO.add(l.toDTO());
+        //}
+        
+        
+        request.setAttribute("listas", listasDTO);
         
         RequestDispatcher rd = request.getRequestDispatcher(goTo);
         rd.forward(request, response);

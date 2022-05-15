@@ -4,6 +4,7 @@
     Author     : Javier Santiburcio
 --%>
 
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="dto.ListaDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
@@ -21,7 +22,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <title>Lista</title>
     </head>
-    <% Usuario user = (Usuario)session.getAttribute("usuario"); %>
+    <% UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario"); %>
     <body>
         <header>
             <div class="px-3 py-3 bg-dark text-white shadow">
@@ -62,19 +63,19 @@
                 <div class="row row-cols-auto justify-content-center">
                     <%
                     
-                    List<Usuario> usuarios = (List)request.getAttribute("usuarios");
-                    for (Usuario u :usuarios) {
+                    List<UsuarioDTO> usuarios = (List)request.getAttribute("usuarios");
+                    for (UsuarioDTO u :usuarios) {
              
                     %> 
                   <div class="col py-4">
                     
                     <div class="card shadow" style="width: 18rem;">
                       <div class="card-header">
-                          idUSUARIO: <%=u.getIdUSUARIO()%>
+                          idUSUARIO: <%=u.getIdUsuario()%>
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">Nombre: <%=u.getNombre() %></li>
-                        <li class="list-group-item">Apellidos: <%= u.getEpellidos()%></li>
+                        <li class="list-group-item">Apellidos: <%= u.getApellidos()%></li>
                         <li class="list-group-item">Sexo: <%= u.getSexo() %> </li>
                         <li class="list-group-item">Email: <%=  u.getEmail()%> </li>
                         <li class="list-group-item">Domicilio: <%= u.getDomicilio()%></li>

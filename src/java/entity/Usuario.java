@@ -5,8 +5,10 @@
  */
 package entity;
 
+import dto.ListaDTO;
 import dto.UsuarioDTO;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -24,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import service.ListaService;
 import service.ProductoService;
 
 /**
@@ -282,6 +285,7 @@ public class Usuario implements Serializable {
     public UsuarioDTO toDTO(){
         UsuarioDTO res = new UsuarioDTO();
         ProductoService ps = new ProductoService();
+        ListaService ls = new ListaService();
         res.setApellidos(epellidos);
         res.setCiudadResidencia(ciudadResidencia);
         res.setDomicilio(domicilio);
@@ -294,7 +298,7 @@ public class Usuario implements Serializable {
         res.setSexo(sexo);
         res.setTipoUsuario(tipoUsuario);
         res.setProductoList(ps.listaEntityADTO(productoList));
-        
+        res.setListaList(ls.listaTODTO(listaList));        
         return res;
     }
     

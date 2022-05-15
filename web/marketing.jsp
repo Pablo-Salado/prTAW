@@ -3,6 +3,7 @@
     Created on : 04-may-2022, 13:36:01
     Author     : Javier Santiburcio
 --%>
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Subasta"%>
@@ -21,7 +22,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <title>Marketing</title>
     </head>
-    <% Usuario user = (Usuario)session.getAttribute("usuario");%>
+    <% UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");%>
     <body>
         <header>
             <div class="px-3 py-3 bg-dark text-white shadow">
@@ -42,8 +43,8 @@
                                   <i class="bi bi-person-circle"></i> Marketing
                                 </button>           
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
-                                      <li><a class="dropdown-item" href="servletListarListas?usuario=<%=user.getIdUSUARIO()%>">Mis Listas</a></li>
-                                      <li><a class="dropdown-item" href="servletMarketing?usuario=<%=user.getIdUSUARIO()%>">Compradores</a></li>                                      
+                                      <li><a class="dropdown-item" href="servletListarListas">Mis Listas</a></li>
+                                      <li><a class="dropdown-item" href="servletMarketing">Compradores</a></li>                                      
                                       <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
                                 </ul>
                             </div>
@@ -83,7 +84,7 @@
                         idLista = (String) request.getAttribute("idLista");
                     }
                     
-                    List<Usuario> usuarios = (List)request.getAttribute("usuarios");
+                    List<UsuarioDTO> usuarios = (List)request.getAttribute("usuarios");
                    
                     
             %>
@@ -184,7 +185,7 @@
                         
                     </div>
                     <div class="col-auto">
-                      <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                      <!--<input class="form-control" type="hidden" value=<%=user.getIdUsuario() %>  name="usuario" onChange="this.form.submit()"> -->
                       <button type="submit" name="accion" value="filtrar" class="btn btn-primary">Filtrar</button>
                       <%
                           //if(accion.compareTo("milista") != 0){
@@ -214,18 +215,18 @@
                     <%
                     
                     
-                    for (Usuario u :usuarios) {
+                    for (UsuarioDTO u :usuarios) {
              
                     %> 
                   <div class="col py-4">
                     
                     <div class="card shadow" style="width: 18rem;">
                       <div class="card-header">
-                          idUSUARIO: <%=u.getIdUSUARIO()%>
+                          idUSUARIO: <%=u.getIdUsuario()%>
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">Nombre: <%=u.getNombre() %></li>
-                        <li class="list-group-item">Apellidos: <%= u.getEpellidos()%></li>
+                        <li class="list-group-item">Apellidos: <%= u.getApellidos()%></li>
                         <li class="list-group-item">Sexo: <%= u.getSexo() %> </li>
                         <li class="list-group-item">Email: <%=  u.getEmail()%> </li>
                         <li class="list-group-item">Domicilio: <%= u.getDomicilio()%></li>

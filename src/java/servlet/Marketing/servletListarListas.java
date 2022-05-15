@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Marketing;
 
 import dto.ListaDTO;
+import dto.UsuarioDTO;
 import entity.Lista;
 import entity.Usuario;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import service.ListaService;
 import service.UsuarioService;
+import servlet.TAWServlet;
 
 /**
  *
@@ -48,24 +50,25 @@ public class servletListarListas extends TAWServlet {
             throws ServletException, IOException {
         if (comprobarMarketing(request, response)) {
         String strUsuario;
-        Usuario usuario;
+        UsuarioDTO usuario;
         List<Lista> listas, listas2;
         List<ListaDTO> listasDTO = new ArrayList<>();
         String goTo = "misListas.jsp";
         
         HttpSession session = request.getSession();
-        usuario = (Usuario) session.getAttribute("usuario");
+        usuario = (UsuarioDTO) session.getAttribute("usuario");
         //strUsuario = request.getParameter("usuario");
         
         //usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
         //listas2 = listaService.getListasPorUsuario(usuario);
-        listas = usuario.getListaList();
+        listasDTO = usuario.getListaList();
         
-        for(Lista l: listas){
-            listasDTO.add(l.toDTO());
-        }
+        //for(ListaDTO l: listasDTO){
+          //  listasDTO.add(l.toDTO());
+        //}
         
-        request.setAttribute("usuario", usuario);
+        
+        //request.setAttribute("usuario", usuario);
         request.setAttribute("listas", listasDTO);
         
         RequestDispatcher rd = request.getRequestDispatcher(goTo);

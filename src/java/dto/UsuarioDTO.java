@@ -5,6 +5,7 @@
  */
 package dto;
 
+import entity.Lista;
 import java.util.List;
 
 /**
@@ -26,7 +27,8 @@ public class UsuarioDTO {
     private Double saldo;
     private int idUsuario;
     private List<ProductoDTO> productos;
-
+    private List<ListaDTO> listaList;
+    
     public UsuarioDTO() {
     }
     
@@ -124,6 +126,14 @@ public class UsuarioDTO {
     
     public void setProductoList(List<ProductoDTO> productos){
         this.productos = productos;
+    }
+
+    public List<ListaDTO> getListaList() {
+        return this.listaList;
+    }
+    
+    public void setListaList(List<ListaDTO> listaList) {
+        this.listaList = listaList;
     }
     
 }

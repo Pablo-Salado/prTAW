@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Marketing;
 
+import dto.ListaDTO;
+import dto.UsuarioDTO;
 import entity.Lista;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import service.ListaService;
 import service.UsuarioService;
+import servlet.TAWServlet;
 
 /**
  *
@@ -44,9 +48,10 @@ public class servletFiltrarCompradores extends TAWServlet {
             throws ServletException, IOException {
         if (comprobarMarketing(request, response)) {
         String nombre, apellidos, sexo, email, domicilio, ciudad_residencia, minEdad,  maxEdad, tipo_usuario, saldo, accion = "", strUsuario, idLista, titulo, descripcion;
-        Usuario usuario;
-        Lista lista;
+        UsuarioDTO usuario;
+        ListaDTO lista;
         List<Usuario> usuarios;
+        List<UsuarioDTO> usuariosDTO = new ArrayList<>();
         String goTo = "marketing.jsp";
         
         
@@ -64,7 +69,7 @@ public class servletFiltrarCompradores extends TAWServlet {
         accion = request.getParameter("accion");
         
         HttpSession session = request.getSession();
-        usuario = (Usuario) session.getAttribute("usuario");
+        usuario = (UsuarioDTO) session.getAttribute("usuario");
         //strUsuario = request.getParameter("usuario");
         
         //usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario)); 
@@ -76,7 +81,10 @@ public class servletFiltrarCompradores extends TAWServlet {
         if(accion.compareTo("filtrar") == 0){ // SI ESTAMOS FILTRANDO
             usuarios = usuarioService.filtrarCompradores2(nombre,  apellidos, sexo, email, 
                 domicilio, ciudad_residencia, minEdad,  maxEdad, tipo_usuario, saldo);
-            request.setAttribute("usuarios", usuarios);
+            for(Usuario u : usuarios){
+                usuariosDTO.add(u.toDTO());
+            }
+            request.setAttribute("usuarios", usuariosDTO);
             request.setAttribute("accion", "filtrar");
             
         }else if (accion.compareTo("guardar") == 0){ // SI QUEREMOS GUARDAR FILTRO
@@ -134,14 +142,21 @@ public class servletFiltrarCompradores extends TAWServlet {
             
             usuarios = usuarioService.filtrarCompradores2(nombre,  apellidos, sexo, email, 
                 domicilio, ciudad_residencia, minEdad,  maxEdad, tipo_usuario, saldo);
-            
-            request.setAttribute("usuarios", usuarios);
+            for(Usuario u : usuarios){
+                usuariosDTO.add(u.toDTO());
+            }
+            request.setAttribute("usuarios", usuariosDTO);
             goTo = "lista.jsp";
             
         }
         
         request.setAttribute("nombre",nombre);
         request.setAttribute("apellidos",apellidos);
+        if(sexo.compareTo("Hombre")==0){
+            sexo = "M";
+        }else if(sexo.compareTo("Mujer")==0){
+            sexo = "H";
+        }
         request.setAttribute("sexo",sexo);
         request.setAttribute("email",email);
         request.setAttribute("domicilio",domicilio);
