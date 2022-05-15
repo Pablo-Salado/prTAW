@@ -7,8 +7,6 @@ package servlet.Admin;
 
 import dto.ProductoDTO;
 import dto.SubastaDTO;
-import entity.Producto;
-import entity.Subasta;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

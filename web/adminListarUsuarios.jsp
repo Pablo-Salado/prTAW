@@ -115,7 +115,7 @@
                     
                     <div class="card shadow" style="width: 18rem;">
                       <div class="card-header">
-                          Id del usuario <%=user.getIdUsuario()%>
+                          Id del usuario <%=u.getIdUsuario()%>
                       </div>
                             <hr>  
                       <div class="card-body">
@@ -140,8 +140,8 @@
                       <div class="card-body">
                         <div class="row row-cols-auto align-items-center justify-content-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-primary" href="servletAdminAccesoModificarUsuarios?usuario=<%=user.getIdUsuario()%>&id=<%=user.getIdUsuario()%>" role="button">Modificar usuario</a>
-                                <a class="btn btn-primary" href="servletAdminBorrarUsuario?usuario=<%= user.getIdUsuario() %>" role="button">Borrar usuario</a>
+                                <a class="btn btn-primary" href="servletAdminAccesoModificarUsuarios?usuario=<%=u.getIdUsuario()%>&id=<%=user.getIdUsuario()%>" role="button">Modificar usuario</a>
+                                <a class="btn btn-primary" href="servletAdminBorrarUsuario?usuario=<%= u.getIdUsuario() %>" role="button">Borrar usuario</a>
                             </div>
                         </div> 
                       </div>
