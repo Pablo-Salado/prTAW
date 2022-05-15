@@ -51,6 +51,9 @@ public class servletPublicarProducto extends HttpServlet {
         String descripcion = request.getParameter("descripcion");
         String categoria = request.getParameter("categoria");
         String url = request.getParameter("foto");
+        if(url.equals("")){
+            url="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png";
+        }
         this.productoService.crearProducto(titulo, descripcion, url, "En venta", categoria, null);
         
         

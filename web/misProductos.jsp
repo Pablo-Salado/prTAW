@@ -155,7 +155,7 @@
                             
                             <div class="col ps-5">
                               <div class="row">
-                                  Categoria del producto: <%=sub.getProducto().getCategoria() %>
+                                  Categoria: <%=sub.getProducto().getCategoria() %>
                               </div>
                               
                               <%
