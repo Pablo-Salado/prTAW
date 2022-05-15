@@ -83,7 +83,12 @@ public class UsuarioService {
     }
     
     public UsuarioDTO comprobarUser(String email, String pass){
-        return this.userFC.comprobarUsuario(email, pass).toDTO();
+        if(this.userFC.comprobarUsuario(email, pass) == null){
+            return null;
+        }else{
+            return this.userFC.comprobarUsuario(email, pass).toDTO();
+        }
+        
     }
     
     public void eliminarUsuario(Integer idUser){
