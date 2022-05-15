@@ -5,6 +5,7 @@
  */
 package entity;
 
+import dto.ListaDTO;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -126,4 +127,13 @@ public class Lista implements Serializable {
         return "entity.Lista[ idLISTA=" + idLISTA + " ]";
     }
     
+    public ListaDTO toDTO(){
+        ListaDTO res = new ListaDTO();
+        res.setIdLISTA(idLISTA);
+        res.setAtributos(atributos);
+        res.setDescripcion(descripcion);
+        res.setNombre(nombre);
+        res.setUsuario(usuario);
+        return res;
+    }
 }

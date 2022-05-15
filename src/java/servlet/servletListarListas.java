@@ -5,10 +5,12 @@
  */
 package servlet;
 
+import dto.ListaDTO;
 import entity.Lista;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -17,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import service.ListaService;
 import service.UsuarioService;
 
@@ -25,7 +28,7 @@ import service.UsuarioService;
  * @author javie
  */
 @WebServlet(name = "servletListarListas", urlPatterns = {"/servletListarListas"})
-public class servletListarListas extends HttpServlet {
+public class servletListarListas extends TAWServlet {
 
     @EJB 
     private ListaService listaService;
@@ -43,22 +46,31 @@ public class servletListarListas extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (comprobarMarketing(request, response)) {
         String strUsuario;
         Usuario usuario;
         List<Lista> listas, listas2;
+        List<ListaDTO> listasDTO = new ArrayList<>();
         String goTo = "misListas.jsp";
         
-        strUsuario = request.getParameter("usuario");
+        HttpSession session = request.getSession();
+        usuario = (Usuario) session.getAttribute("usuario");
+        //strUsuario = request.getParameter("usuario");
         
-        usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
+        //usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario));
         //listas2 = listaService.getListasPorUsuario(usuario);
         listas = usuario.getListaList();
         
+        for(Lista l: listas){
+            listasDTO.add(l.toDTO());
+        }
+        
         request.setAttribute("usuario", usuario);
-        request.setAttribute("listas", listas);
+        request.setAttribute("listas", listasDTO);
         
         RequestDispatcher rd = request.getRequestDispatcher(goTo);
         rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

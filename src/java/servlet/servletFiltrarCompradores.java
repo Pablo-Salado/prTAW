@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import service.ListaService;
 import service.UsuarioService;
 
@@ -25,7 +26,7 @@ import service.UsuarioService;
  * @author javie
  */
 @WebServlet(name = "servletFiltrarCompradores", urlPatterns = {"/servletFiltrarCompradores"})
-public class servletFiltrarCompradores extends HttpServlet {
+public class servletFiltrarCompradores extends TAWServlet {
 
     @EJB UsuarioService usuarioService;
     
@@ -41,11 +42,13 @@ public class servletFiltrarCompradores extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombre, apellidos, sexo, email, domicilio, ciudad_residencia, minEdad,  maxEdad, tipo_usuario, saldo, accion = "", strUsuario, idLista;
+        if (comprobarMarketing(request, response)) {
+        String nombre, apellidos, sexo, email, domicilio, ciudad_residencia, minEdad,  maxEdad, tipo_usuario, saldo, accion = "", strUsuario, idLista, titulo, descripcion;
         Usuario usuario;
         Lista lista;
         List<Usuario> usuarios;
         String goTo = "marketing.jsp";
+        
         
         nombre = request.getParameter("nombre");
         apellidos = request.getParameter("apellidos");
@@ -57,10 +60,14 @@ public class servletFiltrarCompradores extends HttpServlet {
         maxEdad = request.getParameter("maxEdad");
         tipo_usuario = request.getParameter("tipo_usuario");
         saldo = request.getParameter("saldo");
-        accion = request.getParameter("accion");
-        strUsuario = request.getParameter("usuario");
         
-        usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario)); 
+        accion = request.getParameter("accion");
+        
+        HttpSession session = request.getSession();
+        usuario = (Usuario) session.getAttribute("usuario");
+        //strUsuario = request.getParameter("usuario");
+        
+        //usuario = usuarioService.buscarUsuario(Integer.parseInt(strUsuario)); 
         
         if(accion == null){
             accion = "";
@@ -74,11 +81,34 @@ public class servletFiltrarCompradores extends HttpServlet {
             
         }else if (accion.compareTo("guardar") == 0){ // SI QUEREMOS GUARDAR FILTRO
             goTo = "crearLista.jsp";
-           
+            request.setAttribute("accion", accion);
         }else if(accion.compareTo("editar") == 0){
            idLista = request.getParameter("idLista");
            
+           lista = listaService.buscar(Integer.parseInt(idLista));
+           titulo = lista.getNombre();
+           descripcion = lista.getDescripcion();
+           String[] atribs = lista.getAtributos().split(",");
+           nombre = atribs[0];
+            apellidos = atribs[1];
+            sexo = atribs[2];
+            email = atribs[3];
+            domicilio = atribs[4];
+            ciudad_residencia = atribs[5];
+            minEdad = atribs[6]; 
+            maxEdad = atribs[7]; 
+            tipo_usuario= atribs[8];
+            if(atribs.length < 10){
+                saldo = "";
+            }else{
+                saldo= atribs[9];
+            }
+           
+           request.setAttribute("accion", accion);
            request.setAttribute("idLista", idLista);
+           request.setAttribute("titulo", titulo);
+           request.setAttribute("descripcion", descripcion);
+                      
            
            goTo = "crearLista.jsp";
         }else{ // Si llegamos desde mis listas 
@@ -106,7 +136,7 @@ public class servletFiltrarCompradores extends HttpServlet {
                 domicilio, ciudad_residencia, minEdad,  maxEdad, tipo_usuario, saldo);
             
             request.setAttribute("usuarios", usuarios);
-            request.setAttribute("accion", "milista");
+            goTo = "lista.jsp";
             
         }
         
@@ -126,7 +156,7 @@ public class servletFiltrarCompradores extends HttpServlet {
         
         RequestDispatcher rd = request.getRequestDispatcher(goTo);
         rd.forward(request, response);
-        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

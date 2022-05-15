@@ -39,8 +39,7 @@ public class servletListadoSubastas extends TAWServlet {
         List<SubastaDTO> subastas = null;
         
                 subastas = this.subastaService.listarSubastas();
-           
-        
+          
        
         request.setAttribute("subastas", subastas);
         

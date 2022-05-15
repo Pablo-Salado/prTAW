@@ -10,3 +10,6 @@ nb-configuration.xml
 nbproject/
 build.xml
 /src/conf/MANIFEST.MF
+src/conf/persistence.xml
+web/WEB-INF/glassfish-resources.xml
+src/conf/persistence.xml

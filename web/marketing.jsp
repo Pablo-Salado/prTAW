@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <title>Marketing</title>
     </head>
-    <% Usuario user = (Usuario)request.getAttribute("usuario");%>
+    <% Usuario user = (Usuario)session.getAttribute("usuario");%>
     <body>
         <header>
             <div class="px-3 py-3 bg-dark text-white shadow">
@@ -136,23 +136,23 @@
                         <input class="form-control" type="text" placeholder="Ciudad de residencia" style="width: auto;" name="ciudad_residencia" value="<%=ciudad_residencia%>"> 
                     </div>
                     <div class="col-auto">
-                      <label class="col-form-label">Rango de edad:</label>
+                      <label class="col-form-label">Edad:</label>
                     </div>
                     <div class="col ">
-                      <input class="form-control" type="number" min="0" placeholder="Edad minima"  name="minEdad" value="<%=minEdad%>"> 
+                      <input class="form-control" type="number" min="0" placeholder="Mínima"  name="minEdad" value="<%=minEdad%>"> 
                       
                     </div>
                     <div class="col-auto">
                       <label class="col-form-label">-</label>
                     </div>
                     <div class="col">
-                      <input class="form-control" type="number" min="0" placeholder="Edad maxima" name="maxEdad" value="<%=maxEdad%>">
+                      <input class="form-control" type="number" min="0" placeholder="Máxima" name="maxEdad" value="<%=maxEdad%>">
                       
                     </div>
                     <div class="col">
                       <select class="form-select" aria-label="Default select example" style="width: auto;" name="tipo_usuario">
                         <%
-                            if(sexo.compareTo("CV") == 0){
+                            if(tipo_usuario.compareTo("CV") == 0){
                         %>
                         <option selected>CV</option>
                         <option value="ADMINISTRADOR">ADMINISTRADOR</option>
@@ -187,16 +187,17 @@
                       <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
                       <button type="submit" name="accion" value="filtrar" class="btn btn-primary">Filtrar</button>
                       <%
-                          if(accion.compareTo("milista") != 0){
+                          //if(accion.compareTo("milista") != 0){
                       %>
                       <button type="submit" name="accion" value="guardar" class="btn btn-primary">Guardar</button>
                       <%
-                          }else{                         
+                          //}else{                         
                       %>
-                      <button type="submit" name="accion" value="guardar" class="btn btn-primary">Guardar como nueva lista</button>
+                      <!--<button type="submit" name="accion" value="guardar" class="btn btn-primary">Guardar como nueva lista</button>
                       <button type="submit" name="accion" value="editar" class="btn btn-primary">Guardar lista editada</button>
+                      -->
                       <%
-                          }
+                          //}
                       %>
                     </div>
                   </div>

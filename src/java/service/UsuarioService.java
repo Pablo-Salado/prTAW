@@ -158,9 +158,8 @@ public class UsuarioService {
         int inMinEd, inMaxEd;
         double inSaldo = 0;
         try{
-            inMinEd = Integer.getInteger(minEdad);
-            inMaxEd = Integer.getInteger(maxEdad);
-            inSaldo = Double.valueOf(saldo);
+            inMinEd = Integer.parseInt(minEdad);
+            inMaxEd = Integer.parseInt(maxEdad);
         }catch(Exception e){
             inMinEd = -1;
             inMaxEd = -1;
@@ -169,6 +168,7 @@ public class UsuarioService {
         
         
         if(saldo.compareTo("") != 0){
+            inSaldo = Double.valueOf(saldo);
             for(Usuario u : c){
                 boolean b = (u.getNombre().compareTo(nombre)== 0 || nombre.compareTo("") == 0) && (u.getEpellidos().compareTo(apellidos)== 0 || apellidos.compareTo("") == 0) 
                 && (u.getSexo().compareTo(sexo) == 0 || sexo.compareTo("Sexo") == 0) && (u.getEmail().compareTo(email)==0 || email.compareTo("") == 0) 

@@ -1,20 +1,16 @@
 <%-- 
-    Document   : misListas
-    Created on : 05-may-2022, 21:51:38
+    Document   : lista
+    Created on : 14-may-2022, 18:53:26
     Author     : javie
 --%>
 
-
 <%@page import="dto.ListaDTO"%>
-<%@page import="entity.Lista"%>
-<%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>
-<%@page import="entity.Subasta"%>
-<%@page import="entity.Subasta"%>
+<%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-     <head>
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -23,7 +19,7 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-        <title>Mis listas</title>
+        <title>Lista</title>
     </head>
     <% Usuario user = (Usuario)session.getAttribute("usuario"); %>
     <body>
@@ -43,7 +39,7 @@
                           <div class ="col-auto">
                               <div class="dropdown">
                                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="bi bi-person-circle"></i> Marketing
+                                  <i class="bi bi-person-circle"></i> Admin
                                 </button>           
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
                                       <li><a class="dropdown-item" href="servletListarListas?usuario=<%=user.getIdUSUARIO()%>">Mis Listas</a></li>
@@ -66,32 +62,27 @@
                 <div class="row row-cols-auto justify-content-center">
                     <%
                     
-                    
-                    List<ListaDTO> listas = (List)request.getAttribute("listas");
-                    
-                    for (ListaDTO l : listas) {
-                           
+                    List<Usuario> usuarios = (List)request.getAttribute("usuarios");
+                    for (Usuario u :usuarios) {
+             
                     %> 
                   <div class="col py-4">
                     
                     <div class="card shadow" style="width: 18rem;">
                       <div class="card-header">
-                          Titulo: <%=l.getNombre()%>
+                          idUSUARIO: <%=u.getIdUSUARIO()%>
                       </div>
                       <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Descripcion: <%=l.getDescripcion() %></li>
-                        <li class="list-group-item">Atributos: <%= l.getAtributos()%></li>
+                        <li class="list-group-item">Nombre: <%=u.getNombre() %></li>
+                        <li class="list-group-item">Apellidos: <%= u.getEpellidos()%></li>
+                        <li class="list-group-item">Sexo: <%= u.getSexo() %> </li>
+                        <li class="list-group-item">Email: <%=  u.getEmail()%> </li>
+                        <li class="list-group-item">Domicilio: <%= u.getDomicilio()%></li>
+                        <li class="list-group-item">Ciudad de residencia: <%=u.getCiudadResidencia() %></li>
+                        <li class="list-group-item">Edad: <%= u.getEdad()%></li>
+                        <li class="list-group-item">Tipo de usuario: <%= u.getTipoUsuario()%></li>
+                        <li class="list-group-item">Saldo: <%= u.getSaldo()%></li>
                       </ul> 
-                      <div class="card-body">
-                        <div class="row row-cols-auto align-items-center justify-content-center">
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-primary" href="servletFiltrarCompradores?idLista=<%= l.getIdLISTA()%>&accion=editar" role="button">Editar</a>
-                                <a class="btn btn-primary" href="servletFiltrarCompradores?idLista=<%= l.getIdLISTA()%>" role="button">Listar</a>
-                                <a class="btn btn-primary" href="servletEnviarMensaje?idLista=<%= l.getIdLISTA()%>" role="button">Notificar</a>
-                                <a class="btn btn-primary" href="servletBorrarLista?idLista=<%= l.getIdLISTA()%>" role="button">Borrar</a>
-                            </div>
-                        </div> 
-                      </div>
                     </div>
                        <%
                           }

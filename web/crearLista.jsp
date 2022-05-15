@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <title>Nueva lista</title>
     </head>
-    <% Usuario user = (Usuario)request.getAttribute("usuario");%>
+    <% Usuario user = (Usuario)session.getAttribute("usuario");%>
     <body>
         <header>
             <div class="px-3 py-3 bg-dark text-white shadow">
@@ -37,14 +37,12 @@
                           <div class ="col-auto">
                               <div class="dropdown">
                                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="bi bi-person-circle"></i> Admin
+                                  <i class="bi bi-person-circle"></i> Marketing
                                 </button>           
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 300px">
-                                      <li><a class="dropdown-item" href="#">Listar productos</a></li>
-                                      <li><a class="dropdown-item" href="">Listar usuarios</a></li>
-                                      <li><a class="dropdown-item" href="">Dar de alta a usuarios de marketing</a></li>
+                                      <li><a class="dropdown-item" href="servletListarListas?usuario=<%=user.getIdUSUARIO()%>">Mis Listas</a></li>
+                                      <li><a class="dropdown-item" href="servletMarketing?usuario=<%=user.getIdUSUARIO()%>">Compradores</a></li>                                      
                                       <li><a class="dropdown-item" href="servletLogout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
-
                                 </ul>
                             </div>
                           </div>                          
@@ -60,28 +58,57 @@
                  
                 <div class="row row-cols-auto justify-content-center">
                     <%
+                    String nombre = "";
+                    String apellidos = "";
+                    String sexo = "";
+                    String email = "";
+                    String domicilio = "";
+                    String ciudad_residencia = "";
+                    String minEdad = "";
+                    String maxEdad = "";
+                    String tipo_usuario = "";
+                    String strSaldo = "";
+                    String idLista = "";
+                    String titulo = "";
+                    String descripcion = "";
+                    String accion = "";
+                       
+                    Double saldo = null;
+                        
+                    nombre = (String) request.getAttribute("nombre");
+                    apellidos = (String) request.getAttribute("apellidos");
+                    sexo = (String) request.getAttribute("sexo");
+                    email = (String) request.getAttribute("email");
+                    domicilio = (String) request.getAttribute("domicilio");
+                    ciudad_residencia = (String) request.getAttribute("ciudad_residencia");
+                    minEdad = (String) request.getAttribute("minEdad");
+                    maxEdad = (String) request.getAttribute("maxEdad");
+                    tipo_usuario = (String) request.getAttribute("tipo_usuario");
+                    strSaldo = (String) request.getAttribute("saldo");
                     
-                    String nombre = (String) request.getAttribute("nombre");
-                    String apellidos = (String) request.getAttribute("apellidos");
-                    String sexo = (String) request.getAttribute("sexo");
-                    String email = (String) request.getAttribute("email");
-                    String domicilio = (String) request.getAttribute("domicilio");
-                    String ciudad_residencia = (String) request.getAttribute("ciudad_residencia");
-                    String minEdad = (String) request.getAttribute("minEdad");
-                    String maxEdad = (String) request.getAttribute("maxEdad");
-                    String tipo_usuario = (String) request.getAttribute("tipo_usuario");
-                    String saldo = (String) request.getAttribute("saldo");
-                    String idLista = (String) request.getAttribute("idLista");
+                    accion = (String)request.getAttribute("accion");
+                    
+                    if(accion.compareTo("editar")==0){
+                        titulo = (String) request.getAttribute("titulo");
+                        descripcion = (String) request.getAttribute("descripcion");
+                    }
+                    
+                    idLista = (String) request.getAttribute("idLista");
+                    
+                    
+                    if(strSaldo.compareTo("") != 0){
+                        saldo = Double.parseDouble(strSaldo);
+                    }
                     %> 
                   <div class="container mb-3 col-4">
                       <form action="servletGuardarLista" method="post">
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Titulo</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="titulo" value="Titulo">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="titulo" value="<%=titulo%>">
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Descripcion</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="descripcion" value="Descripcion">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="descripcion" value="<%=descripcion%>">
             </div>
             
             <div class=" mb-3">
@@ -97,10 +124,28 @@
                     </div>
                     <div class="col">
                         <label for="exampleFormControlInput1" class="form-label">Sexo</label>
-                      <select class="form-select" id="exampleFormControlInput1" aria-label="Default select example" style="width: auto;" name="sexo" value="<%=sexo%>">
+                      <select class="form-select" id="exampleFormControlInput1" aria-label="Default select example" style="width: auto;" name="sexo">
+                       <%
+                            if(sexo.compareTo("H") == 0){
+                        %>
+                        <option selected>Mujer</option>
+                        <option value="M">Hombre</option>
+                        <option value="Sexo">Sexo</option>
+                        <%
+                            }else if(sexo.compareTo("M") == 0){
+                        %>
+                        <option selected>Hombre</option>
+                        <option value="H">Mujer</option>
+                        <option value="Sexo">Sexo</option>
+                        <%
+                            }else{
+                        %>
                         <option selected>Sexo</option>
                         <option value="M">Hombre</option>
-                        <option value="H">Mujer</option>
+                        <option value="H">Mujer</option>                        
+                        <%                                                 
+                           }
+                        %>
                       </select>
                     </div>
                     <div class="col">
@@ -132,19 +177,38 @@
                     <div class="col">
                         <label for="exampleFormControlInput1" class="form-label">Tipo</label>
                       <select class="form-select" id="exampleFormControlInput1" aria-label="Default select example" style="width: auto;" name="tipo_usuario" value="<%=tipo_usuario%>">
-                        <option selected>Tipo</option>
-                        <option value="CV">CV</option>
+                        <%
+                            if(tipo_usuario.compareTo("CV") == 0){
+                        %>
+                        <option selected>CV</option>
                         <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                        <option value="Tipo">Tipo</option>
+                        <%
+                            }else if(tipo_usuario.compareTo("ADMINISTRADOR") == 0){
+                        %>
+                        <option selected>ADMINISTRADOR</option>
+                        <option value="CV">CV</option>
+                        <option value="Tipo">Tipo</option>
+                        <%
+                            }else{
+                        %>
+                        <option selected>Tipo</option>
+                        <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                        <option value="CV">CV</option>                       
+                        <%                                                 
+                           }
+                        %>
                       </select>
                     </div>
                     
                     <div class="col">
                         <label for="exampleFormControlInput1" class="form-label">Saldo</label>
-                        <input class="form-control" type="text" id="exampleFormControlInput1" name="saldo" value="<%=saldo%>"> 
+                        <input class="form-control" type="number" id="exampleFormControlInput1" name="saldo" value="<%=saldo%>"> 
                     </div>
             </div>
             <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
             <input class="form-control" type="hidden" value=<%=idLista%>  name="idLista"> 
+            <input class="form-control" type="hidden" value=<%=accion%>  name="accion"> 
             <input type="submit" value="Guardar" class="mb-3 bt" />
             </form>
             </div>
