@@ -70,7 +70,7 @@
     </servlet>
     <servlet>
         <servlet-name>servletFiltrarMisProductos</servlet-name>
-        <servlet-class>servlet.servletFiltrarMisProductos</servlet-class>
+        <servlet-class>servlet.Vendedor.servletFiltrarMisProductos</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>servletListarNotificaciones</servlet-name>

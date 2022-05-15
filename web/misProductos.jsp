@@ -72,7 +72,7 @@
         <div class="px-3 py-2 mb-3 shadow">
           
           <div class="container">
-            <form method="post" action="servletFiltrarMisCompras">
+            <form method="post" action="servletFiltrarMisProductos">
             <div class="row align-items-center">
                 <div class="col">
                     <input class="form-control" type="text" placeholder="Nombre del producto"  name="nombreSubasta"> 
@@ -168,7 +168,10 @@
                               </div>
                               <%}%>
                               <div class="row">
-                              Coste:  <%=sub.getPujaMaxima() %> EUR
+                              Puja inicial:  <%=sub.getPrecioInicial() %> EUR
+                              </div>
+                              <div class="row">
+                              Puja actual:  <%=sub.getPujaMaxima() %> EUR
                               </div>
                               <div class="row">
                                Vendedor: <%=sub.getVendedor().getNombre()%>
