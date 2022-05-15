@@ -4,6 +4,7 @@
     Author     : Pablo Salado
 --%>
 
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,11 +23,11 @@
     </head>
     <%
         
-        Usuario user = (Usuario)session.getAttribute("usuario");
+        UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
          if (user == null) {
             response.sendRedirect(request.getContextPath());
         } 
-         Usuario usuarioModificar = (Usuario) request.getAttribute("usuarioModificar");
+         UsuarioDTO usuarioModificar = (UsuarioDTO) request.getAttribute("usuarioModificar");
        
     %>
     <header>
@@ -71,9 +72,9 @@
         <form method="POST" action="servletAdminModificarUsuario">
         <%}%>
             <%if(usuarioModificar==null){%>
-           <input type="hidden" name="id" value="<%=user.getIdUSUARIO()%>" />
+           <input type="hidden" name="id" value="<%=user.getIdUsuario()%>" />
             <%}else{%>
-            <input type="hidden" name="id" value="<%=usuarioModificar.getIdUSUARIO()%>" />
+            <input type="hidden" name="id" value="<%=usuarioModificar.getIdUsuario()%>" />
             <%}%>
             <div class="container mb-3 col-4">
                 
@@ -83,7 +84,7 @@
             </div>
             <div class=" mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="apellidos" value="<%= usuarioModificar==null? "": usuarioModificar.getEpellidos() %>">
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="apellidos" value="<%= usuarioModificar==null? "": usuarioModificar.getApellidos() %>">
             </div>
             
             <div class=" mb-3">

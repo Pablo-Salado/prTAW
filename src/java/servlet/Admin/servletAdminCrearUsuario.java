@@ -55,7 +55,7 @@ public class servletAdminCrearUsuario extends HttpServlet {
         String saldo = request.getParameter("saldo");
         Double saldoDouble = Double.parseDouble(saldo);
         
-        this.usuarioService.crearUsuario(nombre, apellidos, sexo, password, email, domicilio, ciudad, edadInt, saldoDouble);
+        this.usuarioService.crearUsuario(nombre, apellidos, sexo, password, email, domicilio, ciudad, edadInt, tipo, saldoDouble);
         //this.usuarioService.crearUsuario(nombre, apellidos, sexo, password, email, domicilio, ciudad, edadInt, tipo, saldoDouble);
         
         response.sendRedirect(request.getContextPath()+"/servletAdminListarUsuarios");

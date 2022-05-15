@@ -4,6 +4,7 @@
     Author     : Pablo Salado
 --%>
 
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -21,8 +22,8 @@
         <title>Listar Usuarios (admin)</title>
     </head>
     <%
-        Usuario user = (Usuario)session.getAttribute("usuario");
-        List<Usuario> usuarios = (List) request.getAttribute("usuarios");
+        UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
+        List<UsuarioDTO> usuarios = (List) request.getAttribute("usuarios");
     %>
     <body>
         <header>
@@ -92,7 +93,7 @@
                         </div>
                         
                       <div class="col-auto">
-                        <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                        <input class="form-control" type="hidden" value=<%=user.getIdUsuario() %>  name="usuario" onChange="this.form.submit()"> 
                         <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
                       </div>
                     </div>
@@ -107,18 +108,18 @@
                 <div class="row row-cols-auto justify-content-center">
                     <%
                     
-                    for (Usuario u : usuarios) {
+                    for (UsuarioDTO u : usuarios) {
                          
                     %> 
                   <div class="col py-4">
                     
                     <div class="card shadow" style="width: 18rem;">
                       <div class="card-header">
-                          Id del usuario <%=u.getIdUSUARIO()%>
+                          Id del usuario <%=user.getIdUsuario()%>
                       </div>
                             <hr>  
                       <div class="card-body">
-                        <h5 class="card-title"><%= u.getNombre()+" "+u.getEpellidos() %></h5>
+                        <h5 class="card-title"><%= u.getNombre()+" "+ u.getApellidos() %></h5>
                         <p class="card-text overflow-auto" style="min-height:  70px"><%= u.getEmail() %></p>
                       </div>
                       <ul class="list-group list-group-flush">
@@ -139,8 +140,8 @@
                       <div class="card-body">
                         <div class="row row-cols-auto align-items-center justify-content-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-primary" href="servletAdminAccesoModificarUsuarios?usuario=<%=u.getIdUSUARIO()%>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar usuario</a>
-                                <a class="btn btn-primary" href="servletAdminBorrarUsuario?usuario=<%= u.getIdUSUARIO() %>" role="button">Borrar usuario</a>
+                                <a class="btn btn-primary" href="servletAdminAccesoModificarUsuarios?usuario=<%=user.getIdUsuario()%>&id=<%=user.getIdUsuario()%>" role="button">Modificar usuario</a>
+                                <a class="btn btn-primary" href="servletAdminBorrarUsuario?usuario=<%= user.getIdUsuario() %>" role="button">Borrar usuario</a>
                             </div>
                         </div> 
                       </div>

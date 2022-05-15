@@ -4,6 +4,7 @@
     Author     : Pablo Salado Cespedosa
 --%>
 
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,7 +23,7 @@
     </head>
     <%
         
-        Usuario user = (Usuario)session.getAttribute("usuario");
+        UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
          if (user == null) {
             response.sendRedirect(request.getContextPath());
         } 
@@ -65,7 +66,7 @@
             <h1 class="text-primary">Datos del usuario </h1>
         </div>
         <form method="POST" action="servletAdminCrearUsuario">
-           <input type="hidden" name="id" value="<%=user.getIdUSUARIO()%>" />
+           <input type="hidden" name="id" value="<%=user.getIdUsuario()%>" />
             
             <div class="container mb-3 col-4">
                 

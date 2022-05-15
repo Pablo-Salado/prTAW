@@ -4,6 +4,8 @@
     Author     : Pablo Salado
 --%>
 
+<%@page import="dto.SubastaDTO"%>
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="entity.Subasta"%>
 <%@page import="entity.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,11 +26,11 @@
      <%
         
 
-    Usuario user = (Usuario)session.getAttribute("usuario");
+    UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
      if (user == null) {
         response.sendRedirect(request.getContextPath());
     } 
-     Subasta sub = (Subasta)request.getAttribute("subasta");
+     SubastaDTO sub = (SubastaDTO)request.getAttribute("subasta");
        
        
     %>  
@@ -77,7 +79,7 @@
         <form method="POST" action="servletAdminModificarProducto">
         <%}%>
             <%if(sub==null){%>
-           <input type="hidden" name="id" value="<%=user.getIdUSUARIO()%>" />
+           <input type="hidden" name="id" value="<%= user.getIdUsuario() %>" />
             <%}else{%>
             <input type="hidden" name="id" value="<%=sub.getIdSUBASTA()%>" />
             <%}%>

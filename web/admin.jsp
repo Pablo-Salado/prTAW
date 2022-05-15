@@ -2,6 +2,8 @@
     Author     : Pablo Salado
 --%>
 
+<%@page import="dto.SubastaDTO"%>
+<%@page import="dto.UsuarioDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Subasta"%>
 <%@page import="entity.Usuario"%>
@@ -20,7 +22,7 @@
         <title>Admin</title>
     </head>
     <% 
-        Usuario user = (Usuario)session.getAttribute("usuario");
+        UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario");
     %>
     <body>
         <header>
@@ -100,7 +102,7 @@
 
                     </div>
                     <div class="col-auto">
-                        <input class="form-control" type="hidden" value=<%=user.getIdUSUARIO() %>  name="usuario" onChange="this.form.submit()"> 
+                        <input class="form-control" type="hidden" value=<%=user.getIdUsuario() %>  name="usuario" onChange="this.form.submit()"> 
                       <button type="submit" value="Filtrar" class="btn btn-primary">Filtrar</button>
 
                     </div>
@@ -118,9 +120,9 @@
                     <%
                     
                     
-                    List<Subasta> subastas = (List)request.getAttribute("subastas");
+                    List<SubastaDTO> subastas = (List)request.getAttribute("subastas");
                     
-                    for (Subasta sub :subastas) {
+                    for (SubastaDTO sub :subastas) {
                          
                     %> 
                   <div class="col py-4">
@@ -147,7 +149,7 @@
                       <div class="card-body">
                         <div class="row row-cols-auto align-items-center justify-content-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-primary" href="servletAdminAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUSUARIO()%>" role="button">Modificar subasta</a>
+                                <a class="btn btn-primary" href="servletAdminAccesoModificarProducto?subasta=<%= sub.getIdSUBASTA() %>&id=<%=user.getIdUsuario()%>" role="button">Modificar subasta</a>
                                 <a class="btn btn-primary" href="servletAdminBorrarSubasta?subasta=<%= sub.getIdSUBASTA() %>" role="button">Borrar subasta</a>
                             </div>
                         </div> 

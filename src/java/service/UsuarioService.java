@@ -120,8 +120,9 @@ public class UsuarioService {
         this.userFC.edit(user);
     }
 
-    public List<Usuario> filtrarUsuario(String nombre, String apellidos, String minEdad, String maxEdad, String tipo_usuario) {        
-        return this.userFC.filtrarUsuarios(nombre, apellidos, minEdad, maxEdad, tipo_usuario);
+    public List<UsuarioDTO> filtrarUsuario(String nombre, String apellidos, String minEdad, String maxEdad, String tipo_usuario) {    
+        List<Usuario> list = this.userFC.filtrarUsuarios(nombre, apellidos, minEdad, maxEdad, tipo_usuario);
+        return listaEntityADTO(list);
     }
     
     public List<Usuario> getUsuariosCompradores() {    

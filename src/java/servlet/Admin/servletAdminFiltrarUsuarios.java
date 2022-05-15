@@ -5,6 +5,7 @@
  */
 package servlet.Admin;
 
+import dto.UsuarioDTO;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,7 +36,7 @@ public class servletAdminFiltrarUsuarios extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nombre, apellidos, minEdad, maxEdad, tipo_usuario;
-        List<Usuario> usuarios;
+        List<UsuarioDTO> usuarios;
         
         nombre = request.getParameter("nombre");
         apellidos = request.getParameter("apellidos");
