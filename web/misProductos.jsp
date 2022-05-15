@@ -20,7 +20,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <title>Página principal</title>
+    <title>P?gina principal</title>
   </head>
   <% UsuarioDTO user = (UsuarioDTO)session.getAttribute("usuario"); %>
   
@@ -146,7 +146,7 @@
                         %>
                     <div class="container py-2">
                       <div class="card shadow" style"max-height: 300px; min-height:200px">
-                        <h5 class="card-header">Categoria: <%= sub.getProducto().getCategoria() %></h5>
+                        <h5 class="card-header">Titulo: <%= sub.getProducto().getTitulo() %></h5>
                         <div class="card-body">
                           <div class="row row-cols-auto align-items-center" >
                             <div class="col ps-4">
@@ -155,7 +155,7 @@
                             
                             <div class="col ps-5">
                               <div class="row">
-                                  Nombre del producto: <%=sub.getProducto().getTitulo() %>
+                                  Categoria del producto: <%=sub.getProducto().getCategoria() %>
                               </div>
                               
                               <%
@@ -164,7 +164,7 @@
                              
                              %>
                               <div class="row">
-                                Fecha finalización: <%=format.format(sub.getCierre())%>
+                                Fecha finalizacion: <%=format.format(sub.getCierre())%>
                               </div>
                               <%}%>
                               <div class="row">
@@ -224,7 +224,7 @@
           <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Sobre nosotros</a></li>
         </ul>
-        <p class="text-center text-muted">© 2022 Company, Inc</p>
+        <p class="text-center text-muted">? 2022 Company, Inc</p>
       </footer>      
       
        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
