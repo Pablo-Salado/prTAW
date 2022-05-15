@@ -8,9 +8,7 @@ package servlet.Vendedor;
 import dto.ProductoDTO;
 import dto.SubastaDTO;
 import dto.UsuarioDTO;
-import entity.Producto;
-import entity.Subasta;
-import entity.Usuario;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;

@@ -6,7 +6,6 @@
 package servlet.Vendedor;
 
 import dto.UsuarioDTO;
-import entity.Usuario;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

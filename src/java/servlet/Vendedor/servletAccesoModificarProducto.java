@@ -8,8 +8,6 @@ package servlet.Vendedor;
 
 import dto.SubastaDTO;
 import dto.UsuarioDTO;
-import entity.Subasta;
-import entity.Usuario;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
