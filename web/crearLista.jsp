@@ -1,7 +1,7 @@
 <%-- 
     Document   : crearLista
     Created on : 06-may-2022, 10:47:47
-    Author     : javie
+    Author     : Javier Santiburcio
 --%>
 
 <%@page import="entity.Usuario"%>

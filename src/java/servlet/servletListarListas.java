@@ -25,7 +25,7 @@ import service.UsuarioService;
 
 /**
  *
- * @author javie
+ * @author Javier Santiburcio
  */
 @WebServlet(name = "servletListarListas", urlPatterns = {"/servletListarListas"})
 public class servletListarListas extends TAWServlet {

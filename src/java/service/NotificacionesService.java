@@ -19,7 +19,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Gorpax
+ * @author Alex Medina 50%
+ *         Miguel Angel Cosano 50%
  */
 @Stateless
 public class NotificacionesService {

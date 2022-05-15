@@ -20,7 +20,7 @@ import service.UsuarioService;
 
 /**
  *
- * @author Gorpax
+ * @author Alejandro Medina
  */
 public class servletFiltrarSubastas extends TAWServlet {
     @EJB SubastaService subastaService;

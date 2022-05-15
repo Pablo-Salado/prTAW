@@ -1,7 +1,9 @@
 <%-- 
     Document   : registro
     Created on : 12-abr-2022, 13:12:09
-    Author     : Usuario
+    Author     : Pablo Salado 33%
+                 Alejandro Medina 33%
+                 Miguel Angel Cosano 33%
 --%>
 
 <%@page import="dto.UsuarioDTO"%>

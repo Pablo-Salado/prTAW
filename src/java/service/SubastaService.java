@@ -22,7 +22,8 @@ import java.util.Date;
 
 /**
  *
- * @author Gorpax
+ * @author Alex Medina 50%
+ *         Miguel Angel Cosano 50%
  */
 @Stateless
 public class SubastaService {

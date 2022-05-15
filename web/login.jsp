@@ -1,7 +1,10 @@
 <%-- 
     Document   : login
     Created on : 11-abr-2022, 15:35:46
-    Author     : Usuario
+    Author     : Pablo Salado 33%
+                 Alejandro Medina 33%
+                 Miguel Angel Cosano 33%
+                 
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

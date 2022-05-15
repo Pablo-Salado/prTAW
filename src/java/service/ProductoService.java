@@ -21,7 +21,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 /**
  *
- * @author Gorpax
+ * @author Alex Medina 50%
+ *         Miguel Angel Cosano 50%
  */
 @Stateless
 public class ProductoService {

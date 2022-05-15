@@ -23,7 +23,7 @@ import service.UsuarioService;
 
 /**
  *
- * @author javie
+ * @author Javier Santiburcio
  */
 @WebServlet(name = "servletFiltrarCompradores", urlPatterns = {"/servletFiltrarCompradores"})
 public class servletFiltrarCompradores extends TAWServlet {

@@ -16,7 +16,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author migue
+ * @author Alejandro Medina
  */
 @Stateless
 public class ProductoFacade extends AbstractFacade<Producto> {

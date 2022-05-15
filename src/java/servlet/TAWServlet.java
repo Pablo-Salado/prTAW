@@ -17,7 +17,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Usuario
+ * @author Javier Santiburcio 33%
+ *         Pablo Salado 33%
+ *         Miguel Angel Cosano 33%
  */
 public abstract class TAWServlet extends HttpServlet {
 

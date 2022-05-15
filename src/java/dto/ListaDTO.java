@@ -9,7 +9,7 @@ import entity.Usuario;
 
 /**
  *
- * @author javie
+ * @author Javier Santiburcio
  */
 public class ListaDTO {
     

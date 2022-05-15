@@ -14,7 +14,8 @@ import javax.persistence.Query;
 
 /**
  *
- * @author migue
+ * @author Miguel Angel Cosano metodo: comprobarUsuario
+ *         Pablo salado metodo: filtrarUsuarios y auxiliares
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> {

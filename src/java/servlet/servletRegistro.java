@@ -17,7 +17,7 @@ import service.UsuarioService;
 
 /**
  *
- * @author Usuario
+ * @author Miguel Angel Cosano
  */
 public class servletRegistro extends HttpServlet {
     @EJB UsuarioService userService;

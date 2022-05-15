@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author javie
+ * @author Javier Santiburcio
  */
 @Stateless
 public class ListaService {

@@ -15,7 +15,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Gorpax
+ * @author Miguel Angel Cosano
  */
 @Stateless
 public class PujadoresFacade extends AbstractFacade<Pujadores> {

@@ -18,7 +18,7 @@ import service.SubastaService;
 
 /**
  *
- * @author Gorpax
+ * @author Alejandro Medina 
  */
 public class servletFiltrarMisCompras extends TAWServlet {
 @EJB SubastaService subastaService;

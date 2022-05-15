@@ -20,7 +20,10 @@ import java.util.stream.Collectors;
 import javax.persistence.Query;
 /**
  *
- * @author Gorpax
+ * @author Alex Medina 25%
+ *         Miguel Angel Cosano 25%
+ *         Pablo Salado 25%
+ *         Javier Santiburcio 25%
  */
 @Stateless
 public class UsuarioService {

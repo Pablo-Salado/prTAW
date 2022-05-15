@@ -1,7 +1,7 @@
 <%-- 
     Document   : lista
     Created on : 14-may-2022, 18:53:26
-    Author     : javie
+    Author     : Javier Santiburcio
 --%>
 
 <%@page import="dto.ListaDTO"%>

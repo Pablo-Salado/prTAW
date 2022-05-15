@@ -1,7 +1,7 @@
 <%-- 
     Document   : misCompras
     Created on : 23-abr-2022, 11:15:26
-    Author     : Gorpax
+    Author     : Alejandro Medina 
 --%>
 
 

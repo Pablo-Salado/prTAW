@@ -1,7 +1,7 @@
 <%-- 
     Document   : marketing
     Created on : 04-may-2022, 13:36:01
-    Author     : javie
+    Author     : Javier Santiburcio
 --%>
 <%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>

@@ -1,3 +1,10 @@
+<%-- 
+    Document   : Subasta
+    Author     : Alejandro Medina 75%
+                 Miguel Angel Cosano 25%
+                 
+                 
+--%>
 
 
 <%@page import="dto.SubastaDTO"%>

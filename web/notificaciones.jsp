@@ -1,7 +1,7 @@
 <%-- 
     Document   : notificaciones
     Created on : 25-abr-2022, 15:09:21
-    Author     : Gorpax
+    Author     : Alejandro Medina
 --%>
 
 <%@page import="dto.NotificacionesDTO"%>

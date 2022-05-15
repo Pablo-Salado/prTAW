@@ -22,7 +22,7 @@ import service.UsuarioService;
 
 /**
  *
- * @author javie
+ * @author Javier Santiburcio
  */
 @WebServlet(name = "servletMarketing", urlPatterns = {"/servletMarketing"})
 public class servletMarketing extends TAWServlet {

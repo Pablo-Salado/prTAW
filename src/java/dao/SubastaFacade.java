@@ -16,7 +16,10 @@ import javax.persistence.Query;
 
 /**
  *
- * @author migue
+ * @author Miguel Angel Cosano metodo:obtenerSubastasUsuario
+ *         Alex Medina metodo: filtrarSubasta
+ * 
+ * 
  */
 @Stateless
 public class SubastaFacade extends AbstractFacade<Subasta> {

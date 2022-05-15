@@ -20,7 +20,7 @@ import service.SubastaService;
 
 /**
  *
- * @author Gorpax
+ * @author Alejandro Medina
  */
 public class servletListarNotificaciones extends TAWServlet {
     @EJB NotificacionesService notiService;

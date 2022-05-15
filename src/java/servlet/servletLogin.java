@@ -17,7 +17,10 @@ import service.UsuarioService;
 
 /**
  *
- * @author Usuario
+ * @author Alex Medina 25%
+ *         Miguel Angel Cosano 25%
+ *         Pablo Salado 25%
+ *         Javier Santiburcio 25%
  */
 public class servletLogin extends HttpServlet {
     @EJB UsuarioService userService;

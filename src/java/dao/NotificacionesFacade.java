@@ -14,7 +14,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Gorpax
+ * @author Alejandro Medina
  */
 @Stateless
 public class NotificacionesFacade extends AbstractFacade<Notificaciones> {

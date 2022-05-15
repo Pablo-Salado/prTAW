@@ -25,7 +25,7 @@ import service.UsuarioService;
 
 /**
  *
- * @author Gorpax
+ * @author Alejandro Medina
  */
 public class servletPujar extends HttpServlet {
     @EJB SubastaService subastaService;

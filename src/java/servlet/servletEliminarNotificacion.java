@@ -16,7 +16,7 @@ import service.NotificacionesService;
 
 /**
  *
- * @author Gorpax
+ * @author Alex Medina
  */
 public class servletEliminarNotificacion extends HttpServlet {
 @EJB NotificacionesService notiService;
