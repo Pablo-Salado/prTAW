@@ -52,6 +52,7 @@ public class servletMarketing extends TAWServlet {
             throws ServletException, IOException {
         if (comprobarMarketing(request, response)) {
         String strUsuario, accion = "todos";
+        Usuario usuario;
         List<Usuario> usuarios;
         
         String goTo = "marketing.jsp";
